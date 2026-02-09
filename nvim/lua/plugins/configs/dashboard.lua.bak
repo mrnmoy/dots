@@ -1,0 +1,47 @@
+local M = {}
+function M.setup()
+	local image_path = "~/Media/background.jpg"
+	local image_width = 20
+
+	local buf = vim.api.nvim_get_current_buf()
+	local win = vim.api.nvim_get_current_win()
+	local win_width = vim.api.nvim_win_get_width(win)
+
+	local text = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+	local row = nil
+	local col = nil
+	for i, line in ipairs(text) do
+		local start = string.find(line, "<image>")
+		if start then
+			row = i
+			col = start
+			break
+		end
+	end
+	if not row or not col then
+		error("Could not find <image> in the buffer")
+	end
+	col = math.floor(win_width / 2) - math.floor(image_width / 2)
+
+	local with_delay = false
+	local handler = with_delay and function(fn)
+		vim.defer_fn(fn, 0)
+	end or function(fn)
+		return fn()
+	end
+	handler(function()
+		if vim.api.nvim_get_current_buf() == buf then
+			return
+		end
+		image = require("image").from_file(image_path, {
+			window = win,
+			buffer = buf,
+			width = image_width,
+			x = col,
+			y = row,
+			with_virtual_padding = true,
+		})
+		image:render()
+	end)
+end
+return M

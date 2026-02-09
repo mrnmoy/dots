@@ -1,0 +1,44 @@
+modmap:
+  # - name: gen
+  #   remap:
+  #     KEY_CAPSLOCK: KEY_LEFTMETA
+  # - name: Left Thumb
+  #   remap:
+  #     KEY_LEFTALT: KEY_ESC
+  #     KEY_LEFTMETA: KEY_TAB
+  #     #KEY_SPACE: KEY_SPACE
+  # - name: Right Thumb
+  #   remap:
+  #     KEY_RIGHTALT: KEY_ENTER
+  #     KEY_RIGHTCTRL: KEY_BACKSPACE
+  # - name: Left Home Row
+  #   remap:
+  #     KEY_A:
+  #       held: KEY_LEFTALT
+  #       alone: KEY_A
+  #     KEY_S:
+  #       held: KEY_LEFTALT
+  #       alone: KEY_S
+  #     KEY_D:
+  #       held: KEY_LEFTCTRL
+  #       alone: KEY_D
+  #     KEY_F:
+  #       held: KEY_LEFTSHIFT
+  #       alone: KEY_F
+  # - name: Right Home Row
+  #   remap:
+  #     KEY_J:
+  #       held: KEY_LEFTSHIFT
+  #       alone: KEY_J
+  #     KEY_K:
+  #       held: KEY_LEFTCTRL
+  #       alone: KEY_K
+  #     KEY_L:
+  #       held: KEY_LEFTALT
+  #       alone: KEY_L
+  #     KEY_SEMICOLON:
+  #       held: KEY_LEFTALT
+  #       alone: KEY_SEMICOLON
+keymap:
+  - name: Nav
+    remap:

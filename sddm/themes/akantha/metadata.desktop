@@ -1,0 +1,14 @@
+[SddmGreeterTheme]
+Name=akantha
+Description=akantha
+Author=akantha
+Website=https://github.com/akantha/sddm
+License=GPL-3.0-or-later
+Type=sddm-theme
+Version=1.1
+ConfigFile=theme.conf
+MainScript=Main.qml
+TranslationsDirectory=translations
+Theme-Id=akantha
+Theme-API=2.0
+QtVersion=6

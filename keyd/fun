@@ -1,0 +1,19 @@
+[fun]
+s = layer(alt)
+d = layer(control)
+f = layer(shift)
+y = print
+h = scrolllock
+n = pause
+u = f7
+i = f8
+o = f9
+j = f4
+k = f5
+l = f6
+m = f1
+, = f2
+. = f3
+p = f12
+; = f11
+/ = f10

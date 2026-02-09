@@ -1,0 +1,6 @@
+[Unit]
+Description=Setup Android device as your webcam
+
+[Service]
+Type=oneshot
+ExecStart=/home/notscripter/.config/bin/android-cam.sh

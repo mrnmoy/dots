@@ -1,0 +1,21 @@
+set $wallpaper /home/notscripter/dotfiles/hypr/background.jpg
+
+set $background #170a15
+set $foreground #c5c1c4
+
+set $color0 #170a15
+set $color1 #A6416D
+set $color2 #69388F
+set $color3 #993B8C
+set $color4 #AC4798
+set $color5 #D154A5
+set $color6 #DA69D2
+set $color7 #c5c1c4
+set $color8 #6d5969
+set $color9 #A6416D
+set $color10 #69388F
+set $color11 #993B8C
+set $color12 #AC4798
+set $color13 #D154A5
+set $color14 #DA69D2
+set $color15 #c5c1c4

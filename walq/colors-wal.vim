@@ -1,0 +1,23 @@
+" Special
+let wallpaper  = "/home/notscripter/dotfiles/hypr/background.jpg"
+let background = "#170a15"
+let foreground = "#c5c1c4"
+let cursor     = "#c5c1c4"
+
+" Colors
+let color0  = "#170a15"
+let color1  = "#A6416D"
+let color2  = "#69388F"
+let color3  = "#993B8C"
+let color4  = "#AC4798"
+let color5  = "#D154A5"
+let color6  = "#DA69D2"
+let color7  = "#c5c1c4"
+let color8  = "#6d5969"
+let color9  = "#A6416D"
+let color10 = "#69388F"
+let color11 = "#993B8C"
+let color12 = "#AC4798"
+let color13 = "#D154A5"
+let color14 = "#DA69D2"
+let color15 = "#c5c1c4"

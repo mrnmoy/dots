@@ -1,0 +1,15 @@
+[media]
+a = prev
+s = volumedown
+d = mute
+f = volumeup
+g = next
+rightalt = stop
+rightcontrol = playpause
+space= playpause
+leftalt = stop
+h = prev
+j = volumedown
+k = mute
+l = volumeup
+; = next

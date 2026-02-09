@@ -1,0 +1,89 @@
+{
+  "appwriteAuth": {
+    "prefix": "appwriteAuth",
+    "body": [
+      "import { Account, Client, ID } from 'appwrite';",
+      "import { config } from '../conf/config'; ",
+      "",
+      "export class AuthService {",
+      " client = new Client();",
+      " account;",
+      "",
+      " constructor() {",
+      "  this.client",
+      " .setEndpoint(config.appwriteUrl)",
+      " .setProject(config.appwriteProjectId);",
+      " this.account = new Account(this.client)",
+      "}",
+      "",
+      " async createAccount({email, password, name}) {",
+      "  try {",
+      "  const userAccount = await this.account.create(ID.unique, email, password, name);",
+      "",
+      "   if (userAccount) {",
+      "    return this.login({email, password})",
+      "   } else {",
+      "    return userAccount;",
+      "   }",
+      "",
+      "  } catch (error) {",
+      "   throw error",
+      "  }",
+      " } ",
+      "",
+      " async login({email, password}) {",
+      "  try {",
+      "   return await this.account.createEmailSession(email, password);",
+      "  } catch (error) {",
+      "   throw error",
+      "  }",
+      " }",
+      "",
+      " async getCurrentUser() {",
+      "  try {",
+      "   return await this.account.get()",
+      "  } catch (error) {",
+      "   throw error",
+      "  }",
+      "  return null",
+      " }",
+      "",
+      " async logout() {",
+      "  try {",
+      "   return await this.account.deleteSessions()",
+      "  } catch (error) {",
+      "   throw error",
+      "  }",
+      " }",
+      "",
+      "}",
+      "",
+      "export const authService = new AuthService()"
+    ]
+  },
+
+  "TODO": {
+    "prefix": "todo",
+    "body": ["TODO: "]
+  },
+  "TODO NOTE": {
+    "prefix": "note",
+    "body": ["NOTE: "]
+  },
+  "TODO WARNING": {
+    "prefix": "warn",
+    "body": ["WARN: "]
+  },
+  "TODO PERF": {
+    "prefix": "perf",
+    "body": ["PERF: "]
+  },
+  "TODO HACK": {
+    "prefix": "hack",
+    "body": ["HACK: "]
+  },
+  "TODO TEST": {
+    "prefix": "test",
+    "body": ["TEST: "]
+  }
+}

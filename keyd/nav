@@ -1,0 +1,12 @@
+[nav]
+h = left
+k = up
+j = down
+l = right
+m = pagedown
+, = pageup
+. = end
+n = home
+s = layer(alt)
+d = layer(control)
+f = layer(shift)

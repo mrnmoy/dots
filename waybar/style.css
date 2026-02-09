@@ -1,0 +1,166 @@
+@import "../themes/colors-gtk.css";
+
+* {
+  all: unset;
+  font-size: 1rem;
+  font-weight: 900;
+  font-family:
+    JetBrainsMonoNerdFont,
+    Font Awesome,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  background-clip: border-box;
+}
+
+button {
+  color: @onPrimary;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 16px;
+  box-shadow: 0px 0px 8px 4px @shadow inset;
+  transition: all 50ms cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+button:hover {
+  color: @onPrimary;
+  background: @primary;
+}
+
+button.active {
+  color: @onPrimary;
+  background: @primary;
+}
+
+tooltip {
+  opacity: 1;
+}
+/* span { */
+/*   background-color: #ff0000; */
+/* } */
+
+window#waybar.empty #window {
+  background-color: transparent;
+}
+
+window {
+  /* background-color: red; */
+  /* background-color: @surface; */
+  border-radius: 16px;
+  /* box-shadow: 0px 0px 4px 1px @primary inset; */
+}
+
+#window {
+  color: @onPrimary;
+  margin-right: 8px;
+}
+
+#tray,
+#mpd,
+#network {
+  color: @onPrimary;
+}
+
+#workspaces,
+#custom-appmenu,
+#quicklinks,
+#media,
+#hardware,
+#clock,
+#custom-notification,
+#media {
+  color: @onPrimary;
+  /* background-color: @surface; */
+  /* background-color: red; */
+  border-radius: 16px;
+  box-shadow: 0px 0px 4px 1px @primary inset;
+  /* box-shadow: 0px 0px 4px 1px @primary; */
+  /* border: 2px @mauve solid; */
+}
+
+#media,
+#hardware,
+#clock {
+  padding: 0 8px;
+}
+
+#custom-quicklink1,
+#custom-quicklink2,
+#custom-quicklink3,
+#custom-quicklink4,
+#custom-quicklink5,
+#custom-quicklink6,
+#custom-quicklink7,
+#custom-quicklink8,
+#custom-quicklink9,
+#custom-quicklink10 {
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+}
+
+#cpu,
+#memory,
+#disk {
+  padding-right: 0.5rem;
+}
+
+#custom-appmenu,
+#custom-notification {
+  font-size: 24px;
+  min-width: 32px;
+  min-height: 32px;
+  padding-right: 4px;
+  border-radius: 16px;
+}
+
+#workspaces button {
+  margin-right: 2px;
+}
+#workspaces button:last-child {
+  margin-right: 0;
+}
+
+#taskbar {
+  font-weight: normal;
+  font-style: normal;
+}
+
+@keyframes blink {
+  to {
+    background-color: @primary;
+  }
+}
+
+#battery.critical:not(.charging) {
+  background-color: @primary;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: @primary;
+}
+
+label:focus {
+  background-color: @primary;
+}
+
+#backlight {
+  background-color: @primary;
+}
+
+#quicklinks {
+}
+
+#temperature.critical {
+  color: red;
+}

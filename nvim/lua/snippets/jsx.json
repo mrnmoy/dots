@@ -1,0 +1,13 @@
+{
+  "use client": {
+    "prefix": "useclient",
+    "body": ["\"use client\""],
+    "description": ""
+  },
+
+  "fregment": {
+    "prefix": "freg",
+    "body": ["\t<>", "\t\t$0", "\t</>"],
+    "description": ""
+  }
+}

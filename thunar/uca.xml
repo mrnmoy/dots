@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<submenu></submenu>
+	<unique-id>1729489255811816-1</unique-id>
+	<command>exo-open --working-directory %f --launch TerminalEmulator</command>
+	<description>Example for a custom action</description>
+	<range></range>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon>stock_folder-move</icon>
+	<name>Flatten Folder</name>
+	<submenu></submenu>
+	<unique-id>1735396235701772-1</unique-id>
+	<command>find . -mindepth 2 -type f -exec mv &quot;{}&quot; . \; &amp;&amp; find . -type d -empty -delete</command>
+	<description>Moves all files from sub-folders to parent (current) folder, then removes all empty folders inside the current folder.</description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>format-text-bold</icon>
+	<name>Rename to lower-case</name>
+	<submenu></submenu>
+	<unique-id>1735396440749798-2</unique-id>
+	<command>for file in %N; do mv &quot;$file&quot; &quot;$(echo &quot;$file&quot; | tr &apos;[:upper:]&apos; &apos;[:lower:]&apos;)&quot;; done</command>
+	<description>Rename the currently selected files, making the filenames lower-case.</description>
+	<range>*</range>
+	<patterns>*</patterns>
+</action>
+<action>
+	<icon>format-text-strikethrough</icon>
+	<name>Slugify Filename</name>
+	<submenu></submenu>
+	<unique-id>1735396541141959-3</unique-id>
+	<command>for file in %N; do mv &quot;$file&quot; &quot;$(echo &quot;$file&quot; | tr -s &apos; &apos; | tr &apos; A-Z&apos; &apos;-a-z&apos; | tr -s &apos;-&apos; | tr -c &apos;[:alnum:][:cntrl:].&apos; &apos;-&apos;)&quot;; done</command>
+	<description>Rename the currently selected files, making the filenames lower-case &amp; replacing spaces with dashes.</description>
+	<range>*</range>
+	<patterns>*</patterns>
+</action>
+<action>
+	<icon>preferences-desktop-keyboard-shortcuts</icon>
+	<name>Copy Contents to Clipboard</name>
+	<submenu></submenu>
+	<unique-id>1735396593022035-4</unique-id>
+	<command>cat &quot;%F&quot; | clipse -i -selection clipboard</command>
+	<description>Copies the contents of the selected file to the clipboard.</description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<text-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Compare</name>
+	<submenu></submenu>
+	<unique-id>1735396660710156-5</unique-id>
+	<command>meld %F</command>
+	<description>Compares selected files or folders in Meld</description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<directories/>
+	<text-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Compress with Advpng</name>
+	<submenu></submenu>
+	<unique-id>1735396736726198-6</unique-id>
+	<command>for file in %F; do advpng -z -4 -q &quot;$file&quot;; done</command>
+	<description>Runs Advpng on each of the selected PNG Files.</description>
+	<range>*</range>
+	<patterns>*.png</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Quantize with pngnq</name>
+	<submenu></submenu>
+	<unique-id>1735396779169815-7</unique-id>
+	<command>for file in %F; do pngnq -s1 &quot;$file&quot;; done</command>
+	<description>Reduce to 8bit colour, by running pngnq on each of the selected PNG Files.</description>
+	<range>*</range>
+	<patterns>*.png</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Optimize with jpegoptim</name>
+	<submenu></submenu>
+	<unique-id>1735396825118065-8</unique-id>
+	<command>for file in %F; do jpegoptim --strip-all -of &quot;$file&quot;; done</command>
+	<description>Losslessly optimize JPEGs, by optimizing the Huffman tables and stripping comments and EXIF metadata from the file.</description>
+	<range>*</range>
+	<patterns>*.jpg;.jpeg</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon>org.xfce.thunar</icon>
+	<name>Open as admin</name>
+	<submenu></submenu>
+	<unique-id>1735398297032534-1</unique-id>
+	<command>pkexec thunar %f</command>
+	<description></description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+</actions>

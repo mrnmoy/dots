@@ -1,0 +1,15 @@
+wallpaper=/home/notscripter/.config/themes/background.jpg
+
+primary=#e97648
+secondary=#cf4129
+tertiary=#b22e1b
+surface=#00000001
+onPrimary=#f3d296
+onSecondary=#f3d296
+onTertiary=#f3d296
+onSurface=#f3d296
+
+highlight=#ffffff14
+radius=16px
+shadow=0px 0px 8px 4px #e97648
+transition=all 50ms cubic-bezier(0.85, 0, 0.15, 1)

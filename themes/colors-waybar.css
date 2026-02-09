@@ -1,0 +1,8 @@
+@define-color primary #8c3864;
+@define-color secondary #7f46a3;
+@define-color tertiary #572339;
+@define-color surface rgba(0, 0, 0, 0.004);
+@define-color onPrimary #eac6e7;
+@define-color onSecondary #eac6e7;
+@define-color onTertiary #eac6e7;
+@define-color onSurface #eac6e7;

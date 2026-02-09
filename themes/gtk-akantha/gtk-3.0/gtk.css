@@ -1,0 +1,72 @@
+@import "../../../themes/colors-gtk.css";
+
+* {
+  /* background-clip: padding-box; */
+  /* color: @onPrimary; */
+  /* font-family: Sans; */
+  /* font-size: 10pt; */
+}
+
+/* General background */
+window,
+.background {
+  color: @onPrimary;
+  background-color: transparent;
+}
+
+/* === Buttons === */
+button,
+entry,
+menuitem,
+modelbutton {
+  color: @onPrimary;
+  background-color: transparent;
+  border-radius: 16px;
+  padding: 8px;
+}
+
+button:hover,
+entry:hover,
+menuitem:hover,
+modelbutton:hover {
+  color: @onPrimary;
+  background-color: @red;
+  border: none;
+}
+
+/* === Popups, Menus, Popovers === */
+menu,
+popover,
+.context-menu {
+  background-color: @surface;
+  color: @onPrimary;
+  border-radius: 16px;
+  padding: 8px;
+}
+
+/* === Scrollbars === */
+scrollbar slider {
+  background-color: @highlight;
+  border-radius: 16px;
+}
+
+scrollbar slider:hover {
+  background-color: alpha(@highlight, 0.8);
+}
+
+/* === Toolbars, Headerbars === */
+headerbar,
+toolbar {
+  background-color: transparent;
+  border: none;
+  color: @onPrimary;
+}
+
+/* === Decorations === */
+window.csd,
+decoration {
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}

@@ -1,0 +1,11 @@
+#!/bin/sh
+exec tail -n +3 $0
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+
+menuentry "PrimeOS" --class android --class android-x86_64 --class gnu-linux --class os {
+    set root=(hd0,gpt3)
+    linux /android-2.1.3/kernel root=/dev/ram0 SERIAL=random logo.showlogo=1 androidboot.selinux=permissive quiet DATA= USB_DATA-PARTITION=1
+    initrd /android-2.1.3/initrd.img
+}

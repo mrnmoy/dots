@@ -1,0 +1,27 @@
+source = ~/.config/hypr/akantha.conf
+
+decoration {
+    rounding = 16
+    blur {
+        enabled = true
+        size = 1
+        passes = 5
+        contrast = 1
+        brightness = 0.6
+        # vibrancy = 0
+        # vibrancy_darkness = 0
+        popups = true
+        popups_ignorealpha = 1
+        special = false #expensive
+    }
+    shadow {
+        enabled = false
+        range = 4
+        render_power = 4
+        scale = 4
+        color = $mauve
+        color_inactive = $surface0
+    }
+    # active_opacity = 1.0
+    # inactive_opacity = 0.6
+}
