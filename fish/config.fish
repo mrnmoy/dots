@@ -110,6 +110,8 @@ alias inor='arduino-cli compile && arduino-cli upload'
 alias pde='processing cli'
 alias gen-colors='wal -i ~/dotfiles/hypr/background.jpg -n -s --out-dir ~/dotfiles/wal'
 
+alias setwal='~/dotfiles/scripts/setwal.sh'
+
 # alias cbuild="cmake -S . -B build && cmake --build build --target $basename $pwd"
 # set bn $basename $pwd
 # alias bname="bname is $bn"

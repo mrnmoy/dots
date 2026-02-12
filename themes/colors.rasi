@@ -1,14 +1,14 @@
 * {
     wallpaper: url('/home/notscripter/.config/themes/background.jpg');
 
-    primary: #e97648;
-    secondary: #cf4129;
-    tertiary: #b22e1b;
+    primary: #d89034;
+    secondary: #c2ab90;
+    tertiary: #bb7f35;
     surface: #00000001;
-    onPrimary: #f3d296;
-    onSecondary: #f3d296;
-    onTertiary: #f3d296;
-    onSurface: #f3d296;
+    onPrimary: #f4c67c;
+    onSecondary: #f4c67c;
+    onTertiary: #f4c67c;
+    onSurface: #f4c67c;
 
     highlight: #ffffff14;
     radius: 16px;

@@ -3,10 +3,10 @@
     "position": "top", // Waybar position (top|bottom|left|right)
     "height": 16, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 8, // Gaps between modules (4px)
-    "margin-top": 8,
-    "margin-left": 8,
-    "margin-right": 8,
+    "spacing": 4, // Gaps between modules (4px)
+    "margin-top": 4,
+    "margin-left": 4,
+    "margin-right": 4,
     "mode": "dock",
     "reload_style_on_change": true,
     "include": [

@@ -147,6 +147,21 @@ echo "\$wallpaper = $wallpaper
 \$radius = $radius
 \$shadow = $shadow
 \$transition = $transition" > $themes/colors.conf
+# echo "\$wallpaper = $wallpaper
+#
+# \$primary = $primary
+# \$secondary = $secondary
+# \$tertiary = $tertiary
+# \$surface = $surface
+# \$onPrimary = $onPrimary
+# \$onSecondary = $onSecondary
+# \$onTertiary = $onTertiary
+# \$onSurface = $onSurface
+#
+# \$highlight = $highlight
+# \$radius = $radius
+# \$shadow = $shadow
+# \$transition = $transition" > $themes/colors.conf
 
 # Lua colors
 echo "return {
