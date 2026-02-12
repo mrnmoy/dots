@@ -1,9 +1,11 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/notscripter/dotfiles
-    - /home/notscripter/namaste-rpi
-    - /home/notscripter/namaste-ino
     - /home/notscripter/Arduino/libraries/FastRadio
+    - /home/notscripter/namaste-ino
+    - /home/notscripter/namaste-kotlin
+    - /home/notscripter/namaste-cpp
+    - /home/notscripter/namaste-rpi
     - /home/notscripter/namaste-pde
     - /home/notscripter/multiosci
     - /home/notscripter/my-internet-fork
@@ -23,7 +25,6 @@ recentrepos:
     - /home/notscripter/fluidnc-configs
     - /home/notscripter/immersive-internet
     - /home/notscripter/namaste-clikt
-    - /home/notscripter/namaste-kotlin
     - /home/notscripter/baremetal-esp8266
     - /home/notscripter/my-internet
     - /home/notscripter/projects/ne555-pd-decoy
