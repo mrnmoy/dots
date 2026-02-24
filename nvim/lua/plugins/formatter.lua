@@ -24,6 +24,8 @@ return {
 					python = { "isort", "black" },
 					c = { "clangd" },
 					cpp = { "clangd" },
+					h = { "clangd" },
+					hpp = { "clangd" },
 					arduino = { "clangd" },
 					ino = { "clangd" },
 					pde = { "clangd" },

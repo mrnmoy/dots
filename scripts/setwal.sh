@@ -12,7 +12,8 @@ wallpaper=$themes/background."${1##*.}"
 cp $1 $wallpaper
 
 # Set wallpaper
-hyprctl hyprpaper reload ,$wallpaper
+# hyprctl hyprpaper reload ,$wallpaper
+hyprctl hyprpaper wallpaper ", $wallpaper"
 
 # Set colors
 readarray -t colors <<< $(palgen -i $wallpaper -c 16)

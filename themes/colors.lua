@@ -1,17 +1,17 @@
 return {
     wallpaper = '/home/notscripter/.config/themes/background.jpg',
 
-    primary = '#d89034',
-    secondary = '#c2ab90',
-    tertiary = '#bb7f35',
+    primary = '#da9235',
+    secondary = '#bd8136',
+    tertiary = '#bbaa94',
     surface = '#00000001',
-    onPrimary = '#f4c67c',
-    onSecondary = '#f4c67c',
-    onTertiary = '#f4c67c',
-    onSurface = '#f4c67c',
+    onPrimary = '#f4c77e',
+    onSecondary = '#f4c77e',
+    onTertiary = '#f4c77e',
+    onSurface = '#f4c77e',
 
     highlight = '#ffffff14',
     radius = '16px',
-    shadow = '0px 0px 8px 4px #d89034',
+    shadow = '0px 0px 8px 4px #da9235',
     transition = 'all 50ms cubic-bezier(0.85, 0, 0.15, 1)'
 }

@@ -1,11 +1,14 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/notscripter/dotfiles
-    - /home/notscripter/Arduino/libraries/FastRadio
+    - /home/notscripter/Arduino/libraries/fastlibs
     - /home/notscripter/namaste-ino
+    - /home/notscripter/aur
+    - /home/notscripter/aur/ulaa-browser-bin
+    - /home/notscripter/Arduino/libraries/FastRadio
+    - /home/notscripter/namaste-rpi
     - /home/notscripter/namaste-kotlin
     - /home/notscripter/namaste-cpp
-    - /home/notscripter/namaste-rpi
     - /home/notscripter/namaste-pde
     - /home/notscripter/multiosci
     - /home/notscripter/my-internet-fork
@@ -20,7 +23,6 @@ recentrepos:
     - /home/notscripter/imuc
     - /home/notscripter/madeofsoil.gitlab.io
     - /home/notscripter/mrinmoy.gitab.io
-    - /home/notscripter/aur
     - /home/notscripter/compose.nvim
     - /home/notscripter/fluidnc-configs
     - /home/notscripter/immersive-internet
@@ -46,7 +48,7 @@ recentrepos:
     - /home/notscripter/kicad
 startuppopupversion: 5
 didshowhunkstaginghint: false
-lastversion: 0.57.0
+lastversion: 0.59.0
 customcommandshistory:
     - git tag v2
     - Z ..
