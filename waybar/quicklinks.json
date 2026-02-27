@@ -20,7 +20,7 @@
     "tooltip-format": "Neovim"
   },
   "custom/quicklink5": {
-    "format": "🐟",
+    "format": "󰘳 ",
     "on-click": "alacritty",
     "tooltip-format": "Terminal"
   },

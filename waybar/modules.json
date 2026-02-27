@@ -1,5 +1,4 @@
 {
-  // Workspaces
   "hyprland/workspaces": {
     "on-click": "activate",
     "active-only": false,
@@ -15,7 +14,6 @@
     }
   },
 
-  // Hyprland Window
   "hyprland/window": {
     "rewrite": {
       "(.*) - Zen Browser": "$1",
@@ -28,16 +26,14 @@
     "separate-outputs": true
   },
 
-  // Rofi Application Launcher
   "custom/appmenu": {
-    "format": "",
+    "format": "󰣇",
     "tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings",
-    "on-click": "rofi -show drun -replace & sleep 0.2; hyprctl dispatch focuswindow '^(Rofi)'",
+    "on-click": "rofi -show drun -theme ~/.config/rofi/launcher.rasi",
     "on-click-right": "~/.config/notscripter/scripts/keybindings.sh",
     "tooltip": false
   },
 
-  // Power Menu
   "custom/exit": {
     "format": "",
     "tooltip-format": "Powermenu",
@@ -47,7 +43,6 @@
 
   "custom/notification": {
     "tooltip": false,
-    // "format": "{} {icon}",
     "format": "{icon}",
     "format-icons": {
       "notification": "󱅫",
@@ -67,26 +62,12 @@
     "escape": true
   },
 
-  // Keyboard State
-  //"keyboard-state": {
-  //  //"numlock": true,
-  //  //"capslock": true,
-  //  //"format": "{name} {icon}",
-  //  //"format-icons": {
-  //  //  //"locked": "",
-  //  //  //"unlocked": ""
-  //  //}
-  //},
-
-  // System tray
   "tray": {
     "icon-size": 24,
     "spacing": 8
   },
 
-  // Clock
   "clock": {
-    // "timezone": "America/New_York",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "format": "󰥔 {0:%H:%M}",
     "format-alt": "󰥔 {0:%H:%M}   {0:%d-%m-%Y}"
@@ -96,7 +77,6 @@
     "format": "/ K {short}"
   },
 
-  // Network
   "network": {
     "format": "{ifname}",
     "format-wifi": "  {signalStrength}%  {bandwidthDownBytes}  {bandwidthUpBytes} ",
@@ -111,10 +91,8 @@
     "on-click": "nm-connection-editor"
   },
 
-  // Battery
   "battery": {
     "states": {
-      // "good": 95,
       "warning": 30,
       "critical": 15
     },
@@ -122,12 +100,9 @@
     "format-charging": "  {capacity}%",
     "format-plugged": "  {capacity}%",
     "format-alt": "{icon}  {time}",
-    // "format-good": "", // An empty format will hide the module
-    // "format-full": "",
     "format-icons": [" ", " ", " ", " ", " "]
   },
 
-  // Bluetooth
   "bluetooth": {
     "format-disabled": "",
     "format-off": "",
@@ -136,14 +111,12 @@
     "format-no-controller": ""
   },
 
-  // Other
   "user": {
     "format": "{user}",
     "interval": 60,
     "icon": false
   },
 
-  // Idle Inhibator
   "idle_inhibitor": {
     "format": "{icon}",
     "tooltip": true,

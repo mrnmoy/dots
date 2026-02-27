@@ -1,11 +1,11 @@
 
-@define-color primary #da9235;
-@define-color secondary #bd8136;
-@define-color tertiary #bbaa94;
+@define-color primary #dfa976;
+@define-color secondary #d19466;
+@define-color tertiary #c27f55;
 @define-color surface rgba(0, 0, 0, 0.004);
-@define-color onPrimary #f4c77e;
-@define-color onSecondary #f4c77e;
-@define-color onTertiary #f4c77e;
-@define-color onSurface #f4c77e;
+@define-color onPrimary #f9f2ce;
+@define-color onSecondary #f9f2ce;
+@define-color onTertiary #f9f2ce;
+@define-color onSurface #f9f2ce;
 
 @define-color highlight rgba(255, 255, 255, 0.078);

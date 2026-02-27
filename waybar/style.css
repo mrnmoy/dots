@@ -35,20 +35,16 @@ button.active {
 
 tooltip {
   opacity: 1;
+  background-color: @surface;
+  border-radius: 16px;
 }
-/* span { */
-/*   background-color: #ff0000; */
-/* } */
 
 window#waybar.empty #window {
   background-color: transparent;
 }
 
 window {
-  /* background-color: red; */
-  /* background-color: @surface; */
   border-radius: 16px;
-  /* box-shadow: 0px 0px 4px 1px @primary inset; */
 }
 
 #window {
@@ -71,12 +67,9 @@ window {
 #custom-notification,
 #media {
   color: @onPrimary;
-  /* background-color: @surface; */
-  /* background-color: red; */
+  background-color: @surface;
   border-radius: 16px;
-  box-shadow: 0px 0px 4px 1px @primary inset;
-  /* box-shadow: 0px 0px 4px 1px @primary; */
-  /* border: 2px @mauve solid; */
+  /* box-shadow: 0px 0px 4px 1px @primary inset; */
 }
 
 #media,

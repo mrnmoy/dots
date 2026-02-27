@@ -1,18 +1,18 @@
 [colors.primary]
-background = "#da9235"
-foreground = "#f4c77e"
+background = "#dfa976"
+foreground = "#f9f2ce"
 
 [colors.cursor]
-text = "#da9235"
-cursor = "#f4c77e"
+text = "#dfa976"
+cursor = "#f9f2ce"
 
 [colors.vi_mode_cursor]
-text = "#da9235"
-cursor = "#f4c77e"
+text = "#dfa976"
+cursor = "#f9f2ce"
 
 [colors.search.matches]
-foreground = "#f4c77e"
-background = "#bd8136"
+foreground = "#f9f2ce"
+background = "#d19466"
 
 [colors.search.focused_match]
 foreground = "#1e1e2e"
