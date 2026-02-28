@@ -22,7 +22,7 @@ g.markdown_fenced_languages = {
 }
 
 o.laststatus = 0
-o.cmdheight = 0
+o.cmdheight = 4
 o.showmode = false
 
 --NOTE: Barbecue
