@@ -14,9 +14,10 @@ element-text, element-icon , mode-switcher {
 }
 
 window {
+    transparency: "real";
     width: 480px;
     height: 600px;
-    border: 2px;
+    // border: 2px;
     background-color: @surface;
     border-radius: 16px;
     padding: 8px;

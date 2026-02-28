@@ -11,6 +11,7 @@ configuration {
 
 /*****----- Main Window -----*****/
 window {
+    enabled: true;
     transparency: "real";
     location: center;
     anchor: center;
@@ -20,7 +21,6 @@ window {
     x-offset: 0px;
     y-offset: 0px;
 
-    enabled: true;
     margin: 0px;
     padding: 0px;
     border: 0px solid;
