@@ -57,6 +57,6 @@ format = '[[ $symbol ($version) ](fg:mauve bg:mantle)]($style)'
 
 [time]
 disabled = false
-time_format = "%R" # Hour:Minute Format
+time_format = "%R"
 style = "bg:crust"
 format = '[[  $time ](fg:mauve bg:crust)]($style)'

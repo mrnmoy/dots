@@ -1,0 +1,17 @@
+[Match]
+Name=*
+#Name=enp0s20u1
+#Name=enp0s20u2
+
+[Link]
+RequiredForOnline=routable
+Multicast=yes
+AllMulticast=yes
+
+[Network]
+DHCP=yes
+MulticastDNS=yes
+DNSOverTLS=no
+LLMNR=no
+DNSSEC=no
+

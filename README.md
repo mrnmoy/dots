@@ -1,5 +1,7 @@
 ![2025-03-30-192051_hyprshot](/uploads/452b0986790d62ebcdf2a2336b7fbcf5/2025-03-30-192051_hyprshot.png)
 
+<!-- Disabled systemd servide NetworkManager -->
+
 # Installation
 
 ## Linux

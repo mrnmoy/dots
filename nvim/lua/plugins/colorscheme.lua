@@ -101,7 +101,7 @@ return {
 		"projekt0n/github-nvim-theme",
 		"rebelot/kanagawa.nvim",
 		"rose-pine/neovim",
-		"scottmckendray/cyberdream.nvim",
+		"scottmckendry/cyberdream.nvim",
 		"sainnhe/everforest",
 		"navarasu/onedark.nvim",
 		"sainnhe/gruvbox-material",

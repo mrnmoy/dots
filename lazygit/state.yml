@@ -1,9 +1,14 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/notscripter/dotfiles
+    - /home/notscripter/mrinmoyin.github.io
+    - /home/notscripter/namaste-qt
+    - /home/notscripter/namaste-inkscape
+    - /home/notscripter/fluidnc-configs
+    - /home/notscripter/namaste-freecad
+    - /home/notscripter/aur
     - /home/notscripter/Arduino/libraries/fastlibs
     - /home/notscripter/namaste-ino
-    - /home/notscripter/aur
     - /home/notscripter/aur/ulaa-browser-bin
     - /home/notscripter/Arduino/libraries/FastRadio
     - /home/notscripter/namaste-rpi
@@ -23,7 +28,6 @@ recentrepos:
     - /home/notscripter/madeofsoil.gitlab.io
     - /home/notscripter/mrinmoy.gitab.io
     - /home/notscripter/compose.nvim
-    - /home/notscripter/fluidnc-configs
     - /home/notscripter/immersive-internet
     - /home/notscripter/namaste-clikt
     - /home/notscripter/baremetal-esp8266
