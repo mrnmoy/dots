@@ -89,6 +89,15 @@ installer_packages=(
     "mpc" #mpd controller
     "rmpc" #mpd client
     "atomicparsley" # ffmpeg dep
+
+    # LSPs
+    "vscode-html-languageserver" 
+    "vscode-css-languageserver"
+    "typescript-language-server"
+    "tailwindcss-language-server"
+    "marksman"
+    "lua-language-server"
+    "bash-language-server"
 )
 
 installer_yay=(
@@ -115,6 +124,9 @@ installer_yay=(
     "hardinfo2"
     "quickshell"
     "as-cmd-bin" #audio-share
+
+    # LSPs
+    "cmake-language-server"
 )
 
 
