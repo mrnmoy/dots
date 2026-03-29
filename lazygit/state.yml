@@ -1,9 +1,12 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/notscripter/dotfiles
-    - /home/notscripter/mrinmoyin.github.io
-    - /home/notscripter/namaste-qt
+    - /home/notscripter/webpage/api
+    - /home/notscripter/webpage/app
+    - /home/notscripter/fastcom
+    - /home/notscripter/aur/ulaa-browser
     - /home/notscripter/namaste-inkscape
+    - /home/notscripter/namaste-qt
     - /home/notscripter/fluidnc-configs
     - /home/notscripter/namaste-freecad
     - /home/notscripter/aur

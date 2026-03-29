@@ -4,9 +4,6 @@
     "height": 16, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
-    "margin-top": 4,
-    "margin-left": 4,
-    "margin-right": 4,
     "mode": "dock",
     "reload_style_on_change": true,
     "include": [
@@ -18,14 +15,10 @@
     ],
     "modules-left": [
         "custom/appmenu",
-        "group/quicklinks",
         "tray",
-        "mpd",
+        // "mpd",
         "mpris",
         "hyprland/window"
-    ],
-    "modules-center": [
-        "hyprland/workspaces"
     ],
     "modules-right": [
         "network",

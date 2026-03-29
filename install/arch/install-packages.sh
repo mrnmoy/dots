@@ -89,6 +89,8 @@ installer_packages=(
     "mpc" #mpd controller
     "rmpc" #mpd client
     "atomicparsley" # ffmpeg dep
+    "mpd-mpris"
+    "mpv-mpris"
 
     # LSPs
     "vscode-html-languageserver" 
