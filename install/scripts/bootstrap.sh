@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-#
+
 # bootstrap installs things.
 
-cd "$(dirname "$0")/.."
-cd .. #NOTE: this is needed because we moved this scripts under another subdir
+cd "$(dirname "$0")/../.."
+# cd .. #NOTE: this is needed because we moved this scripts under another subdir
 DOTFILES=$(pwd -P)
 
 set -e
@@ -120,10 +120,15 @@ install_dotfiles () {
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  find -H "$DOTFILES" -maxdepth 2 -name 'links.prop' -not -path '*.git*' | while read linkfile
+  case "${1}" in
+    --termux)
+  find -H "$DOTFILES" -maxdepth 1 -name 'links-termux.prop' -not -path '*.git*' | while read linkfile
   do
     cat "$linkfile" | while read line
     do
+      line=$(echo "$line" | sed 's/^[ \t]*//;s/[ \t]*$//')
+    [[ -z "$line" ]] && continue
+
         local src dst dir
         src=$(eval echo "$line" | cut -d '=' -f 1)
         dst=$(eval echo "$line" | cut -d '=' -f 2)
@@ -133,6 +138,28 @@ install_dotfiles () {
         link_file "$src" "$dst"
     done
   done
+    ;;
+    *)
+  find -H "$DOTFILES" -maxdepth 1 -name 'links.prop' -not -path '*.git*' | while read linkfile
+  do
+    cat "$linkfile" | while read line
+    do
+      line=$(echo "$line" | sed 's/^[ \t]*//;s/[ \t]*$//')
+    [[ -z "$line" ]] && continue
+
+        local src dst dir
+        src=$(eval echo "$line" | cut -d '=' -f 1)
+        dst=$(eval echo "$line" | cut -d '=' -f 2)
+        dir=$(dirname $dst)
+
+        mkdir -p "$dir"
+        link_file "$src" "$dst"
+    done
+  done
+    ;;
+  esac
+  
+
 }
 
 create_env_file () {
@@ -144,7 +171,7 @@ create_env_file () {
     fi
 }
 
-install_dotfiles
+install_dotfiles $1
 create_env_file
 
 echo ''

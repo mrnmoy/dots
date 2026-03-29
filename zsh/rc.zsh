@@ -1,5 +1,5 @@
 export QT_STYLE_OVERRIDE=kvantum
-export QT_QPA_PLATFORMTHEME=qt5ct
+#export QT_QPA_PLATFORMTHEME=qt5ct
 
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 # export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel ${_JAVA_OPTIONS}"
@@ -13,6 +13,12 @@ export PATH=$PATH:/home/notscripter/.local/bin
 # for fedora
 # export PATH=$PATH:/home/notscripter/bin
 
+export DOTFILES=~/dotfiles
+export ANDROID_SDK=~/opt/android-sdk
+# export PATH=/opt/android-sdk/emulator
+# export PATH=/opt/android-sdk/platform-tools
+# export PATH=$ANDROID_SDK/emulator:$ANDROID_SDK/tools:$PATH
+
 # Shell integrations
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
 eval "$(oh-my-posh init zsh --config ~/.config/zsh/theme.omp.yaml)"
@@ -23,15 +29,28 @@ eval "$(zoxide init zsh)"
 # Aliases
 alias ls='ls --color'
 alias la='ls -A --color'
+alias du='du -h'
 alias n='nvim'
 alias c='clear'
 alias q='exit'
+alias grubup='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+alias cpc='sudo pacman -Sc && yay -Sc'
 
 alias bunst='bun start'
 alias bunrd='bun run dev'
 
 alias yt='yt-dlp -F'
 alias ytd='yt-dlp -f'
+alias ytp='sh ./dotfiles/scripts/ytdlp-segment.sh'
+alias ytdk='ytd 244+251-drc'
+alias ytdm='ytd 135+140-drc'
+
+alias mkpaper='sh $DOTFILES/scripts/setpaper.sh'
+
+# alias ..="z .."
+setopt autocd
+setopt cdsilent
+setopt histignoredups
 
 # Keybindings
 bindkey -e

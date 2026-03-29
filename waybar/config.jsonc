@@ -1,38 +1,31 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 30, // Waybar height (to be removed for auto height)
+    "height": 16, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 0, // Gaps between modules (4px)
-    "margin-top": 10,
-    "margin-left": 10,
-    "margin-right": 10,
+    "spacing": 4, // Gaps between modules (4px)
     "mode": "dock",
     "reload_style_on_change": true,
-
     "include": [
+        "~/.config/waybar/modules.json",
         "~/.config/waybar/quicklinks.json",
-        "~/.config/waybar/modules.json"
+        "~/.config/waybar/hardware.json",
+        "~/.config/waybar/media.json",
+        "~/.config/waybar/media.json"
     ],
     "modules-left": [
         "custom/appmenu",
-        "group/quicklinks",
+        "tray",
+        // "mpd",
+        "mpris",
         "hyprland/window"
     ],
-    "modules-center": [
-        "hyprland/workspaces"
-    ],
     "modules-right": [
-        "tray",
         "network",
-        "mpd",
-        "pulseaudio",
-        "cpu",
-        "memory",
-        "temperature",
-        "keyboard-state",
-        "battery",
+        // "mpd",
+        "group/media",
+        "group/hardware",
         "clock",
-        "custom/notification",
+        "custom/notification"
     ]
 }

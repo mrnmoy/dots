@@ -8,6 +8,13 @@ return {
 			require("plugins.configs.treesitter").setup()
 		end,
 	},
+	{
+		"nvim-telescope/telescope-project.nvim",
+		event = "BufWinEnter",
+		setup = function()
+			vim.cmd([[packadd telescope.nvim]])
+		end,
+	},
 	-- {
 	--   "folke/trouble.nvim",
 	--   branch = "dev",
@@ -66,18 +73,18 @@ return {
 		dependencies = "nvim-lua/plenary.nvim",
 	},
 
-	-- {
-	--   'windwp/nvim-autopairs',
-	--   event = "InsertEnter",
-	--   opts = {},
-	-- },
 	{
-		"altermo/ultimate-autopair.nvim",
-    -- enabled = false,
-		event = { "InsertEnter", "CmdlineEnter" },
-		-- branch = "v0.6",
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
 		opts = {},
 	},
+	-- {
+	-- 	"altermo/ultimate-autopair.nvim",
+	--    -- enabled = false,
+	-- 	event = { "InsertEnter", "CmdlineEnter" },
+	-- 	-- branch = "v0.6",
+	-- 	opts = {},
+	-- },
 
 	{
 		"kylechui/nvim-surround",
@@ -88,7 +95,7 @@ return {
 
 	{
 		"rmagatti/auto-session",
-    enabled = false,
+		enabled = false,
 		config = function()
 			require("auto-session").setup({
 				log_level = "error",

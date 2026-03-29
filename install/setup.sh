@@ -9,7 +9,7 @@ ENDCOLOR="\e[0m"
 
 branch=""
 cmd_prefix=""
-repo="https://github.com/not-scripter/dotfiles.git"
+repo="https://gitlab.com/notscripter/dotfiles.git"
 
 info () {
   printf "\r  [ \033[00;34m..\033[0m ] $1\n"

@@ -1,5 +1,16 @@
 return {
 	{
+		"md3.nvim",
+		dir = "~/md3.nvim",
+		-- name = "md3",
+		-- lazy = false,
+		-- priority = 1000,
+		config = function()
+			require("md3").setup()
+		end,
+	},
+
+	{
 		"catppuccin/nvim",
 		name = "catppuccin",
 		opts = {

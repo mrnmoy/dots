@@ -1,0 +1,32 @@
+{
+  "cpu": {
+    "format": " {usage}%",
+    "on-click": "kitty -e htop"
+  },
+
+  "memory": {
+    "format": " {}%",
+    "on-click": "kitty -e htop"
+  },
+
+  "disk": {
+    "interval": 30,
+    "format": "D {percentage_used}% ",
+    "path": "/",
+    "on-click": "kitty -e htop"
+  },
+
+  "temperature": {
+    "format": "{icon} {temperatureC}°C",
+    "format-icons": ["", "", ""],
+    "interval": 1,
+    "critical-threshold": 80,
+    "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
+    "input-filename": "temp1_input"
+  },
+
+  "group/hardware": {
+    "orientation": "horizontal",
+    "modules": ["cpu", "memory", "disc", "temperature"]
+  }
+}

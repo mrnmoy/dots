@@ -1,5 +1,36 @@
 return {
 	{
+		"compose.nvim",
+		enabled = false,
+		dir = "~/compose.nvim",
+		config = function()
+			require("compose").setup()
+		end,
+	},
+	{
+		"kmp.nvim",
+		enabled = false,
+		dir = "~/kmp.nvim",
+		config = function()
+			require("kmp").setup()
+		end,
+	},
+
+	{
+		"3rd/image.nvim",
+		build = false,
+		opts = {
+			processor = "magick_cli",
+		},
+	},
+	{
+		"nvim-pack/nvim-spectre",
+		dependencies = "nvim-lua/plenary.nvim",
+		config = function()
+			require("spectre").setup()
+		end,
+	},
+	{
 		"ThePrimeagen/vim-be-good",
 	},
 
@@ -24,46 +55,11 @@ return {
 	},
 
 	{
-		"nvim-telescope/telescope-project.nvim",
-		event = "BufWinEnter",
-		setup = function()
-			vim.cmd([[packadd telescope.nvim]])
-		end,
-	},
-
-	--TEST: replacing null-ls
-	-- {
-	--   'mfussenegger/nvim-lint',
-	--   enabled = false,
-	--   config = function()
-	--     local lint = require("lint")
-	--     lint.linters_by_ft = {
-	--       markdown = {'vale',},
-	--       -- javascript = {"eslint"}
-	--     }
-	--
-	--     vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	--       callback = function()
-	--         lint.try_lint()
-	--         lint.try_lint("cspell")
-	--       end,
-	--     })
-	--   end
-	-- },
-
-	--TEST: Floating win bar
-	{
-		"b0o/incline.nvim",
+		"ariedov/android-nvim",
 		enabled = false,
-		event = "VeryLazy",
 		config = function()
-			local helpers = require("incline.helpers")
-			local navic = require("nvim-navic")
-			local devicons = require("nvim-web-devicons")
-			require("incline").setup({})
+			vim.g.android_sdk = "/opt/android-sdk"
+			require("android-nvim").setup()
 		end,
 	},
-
-	--TEST: music player
-	--TEST: color picker
 }

@@ -1,63 +1,44 @@
-@define-color rosewater #f5e0dc;
-@define-color flamingo #f2cdcd;
-@define-color pink #f5c2e7;
-@define-color mauve #cba6f7;
-@define-color red #f38ba8;
-@define-color maroon #eba0ac;
-@define-color peach #fab387;
-@define-color yellow #f9e2af;
-@define-color green #a6e3a1;
-@define-color teal #94e2d5;
-@define-color sky #89dceb;
-@define-color sapphire #74c7ec;
-@define-color blue #89b4fa;
-@define-color lavender #b4befe;
-@define-color text #cdd6f4;
-@define-color subtext1 #bac2de;
-@define-color subtext0 #a6adc8;
-@define-color overlay2 #9399b2;
-@define-color overlay1 #7f849c;
-@define-color overlay0 #6c7086;
-@define-color surface2 #585b70;
-@define-color surface1 #45475a;
-@define-color surface0 #313244;
-@define-color base #1e1e2e;
-@define-color mantle #181825;
-@define-color crust #11111b;
+@import "../themes/colors-gtk.css";
 
 * {
+  all: unset;
   font-size: 3rem;
-  font-weight: bold;
-  font-family: Fira Code Medium;
+  font-weight: 900;
+  font-family:
+    JetBrainsMonoNerdFont,
+    Font Awesome,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  transition: 500ms;
 }
 
 window {
-  color: @text;
-  background-color: rgba(0, 0, 0, 0.95);
+  background-color: @surface;
 }
 
 button {
-  background-color: alpha(@crust, 0.5);
+  background-color: @surface;
+  color: @text;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 30%;
-  animation: gradient_f 0.5s ease-in infinite;
-  border-radius: 80px; /* Increased border radius for a more rounded look */
-  margin: 2rem;
+  background-size: 40%;
+  animation: gradient_f 50ms ease-in infinite;
+  border-radius: 80px;
+  margin: 1rem;
 }
 
 button:hover,
 button:focus,
 button:active {
-  background-color: alpha(@crust, 0.95);
-  color: @text;
-  background-size: 50%;
-  margin: 1rem;
+  color: @onPrimary;
+  background-color: @primary;
+  background-size: 60%;
   transition:
-    all 0.3s cubic-bezier(0.55, 0, 0.28, 1.682),
-    box-shadow 0.2s ease-in-out,
-    background-color 0.2s ease-in-out;
-  box-shadow: 0 0 20px @lavender;
+    all 50ms cubic-bezier(0.55, 0, 0.28, 1.682),
+    box-shadow 50ms ease-in-out,
+    background-color 200ms ease-in-out;
 }
 
 #lock {
@@ -74,4 +55,26 @@ button:active {
 
 #reboot {
   background-image: image(url("./icons/reboot.png"));
+}
+
+#lock:hover,
+#lock:active,
+#lock:focus {
+  background-image: image(url("./icons/lock-dark.png"));
+}
+#logout:hover,
+#logout:active,
+#logout:focus {
+  background-image: image(url("./icons/logout-dark.png"));
+}
+#shutdown:hover,
+#shutdown:active,
+#shutdown:focus {
+  background-image: image(url("./icons/shutdown-dark.png"));
+}
+
+#reboot:hover,
+#reboot:active,
+#reboot:focus {
+  background-image: image(url("./icons/reboot-dark.png"));
 }

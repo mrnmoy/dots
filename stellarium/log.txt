@@ -1,0 +1,233 @@
+2025-03-11T22:56:45
+Operating System: Arch Linux
+Compiled using GNU 14.2.1
+Qt runtime version: 6.8.1
+Qt compilation version: 6.8.1
+Build ABI: x86_64-little_endian-lp64
+Addressing mode: 64-bit
+Processor architecture: x86_64
+Processor name: Intel(R) Core(TM) i5-4570 CPU @ 3.20GHz
+Processor maximum speed: 3600 MHz
+Processor logical cores: 4
+Total physical memory: 7857 MB
+Total virtual memory: 11786 MB
+stellarium --startup-script= 
+ -------------------------------------------------------------
+[ This is Stellarium 24.4 (v24.4.0) - https://stellarium.org/ ]
+[ Copyright (C) 2000-2025 Stellarium Developers               ]
+ -------------------------------------------------------------
+Writing log file to: /home/notscripter/.stellarium/log.txt
+File search paths:
+ [0]: /home/notscripter/.stellarium
+ [1]: /usr/share/stellarium
+Config file: /home/notscripter/.stellarium/config.ini
+Default surface format:  QSurfaceFormat(version 2.0, options QFlags<QSurfaceFormat::FormatOption>(), depthBufferSize -1, redBufferSize -1, greenBufferSize -1, blueBufferSize -1, alphaBufferSize -1, stencilBufferSize -1, samples -1, swapBehavior QSurfaceFormat::DefaultSwapBehavior, swapInterval 1, colorSpace QColorSpace(), profile  QSurfaceFormat::NoProfile)
+OpenGL module type: desktop OpenGL
+Warning: Setting a new default format with a different version or profile after the global shared context is created may cause issues with context sharing.
+System language (ISO 639 / ISO 3166): en_IN
+Default surface format:  QSurfaceFormat(version 3.3, options QFlags<QSurfaceFormat::FormatOption>(), depthBufferSize 24, redBufferSize 8, greenBufferSize 8, blueBufferSize 8, alphaBufferSize -1, stencilBufferSize 8, samples -1, swapBehavior QSurfaceFormat::DefaultSwapBehavior, swapInterval 1, colorSpace QColorSpace(), profile  QSurfaceFormat::CoreProfile)
+OpenGL module type: desktop OpenGL
+StelGLWidget constructor
+StelGraphicsScene constructor
+initializeGL(windowWidth = 944, windowHeight = 1016)
+OpenGL supported version:  "4.6 (Core Profile) Mesa 24.3.2-arch1.1"
+Current Format:  QSurfaceFormat(version 4.6, options QFlags<QSurfaceFormat::FormatOption>(), depthBufferSize 24, redBufferSize 8, greenBufferSize 8, blueBufferSize 8, alphaBufferSize 0, stencilBufferSize 8, samples 0, swapBehavior QSurfaceFormat::DefaultSwapBehavior, swapInterval 1, colorSpace QColorSpace(), profile  QSurfaceFormat::CoreProfile)
+Initialization StelMainView
+Luminance textures are not supported
+Running in High Graphics Mode
+Maximum texture anisotropy: 16
+Maximum 2D texture size: 16384
+Detected: OpenGL 4.6
+Driver version string: 4.6 (Core Profile) Mesa 24.3.2-arch1.1
+GL vendor: Intel
+GL renderer: Mesa Intel(R) HD Graphics 4600 (HSW GT2)
+GL Shading Language version: 4.60
+MESA Version Number detected: 24.3
+Mesa version is fine, we should not see a graphics problem.
+GLSL Version Number detected: 4.6
+GLSL version is fine, we should not see a graphics problem.
+stel.OpenGLArray: Vertex Array Objects are supported
+Sky language: en_IN
+Planetary features language: en_IN
+Application language: en_IN
+Scripts language: en_IN
+Cache directory: /home/notscripter/.cache/stellarium/stellarium
+Loaded 252 countries
+Loaded 193 regions
+Loading Solar System data (1: planets and moons) ...
+Loading from: /usr/share/stellarium/data/ssystem_major.ini
+Loaded 83 Solar System bodies from  "/usr/share/stellarium/data/ssystem_major.ini"
+Solar System now has 83 entries.
+Loading Solar System data (2: minor bodies) ...
+Loading from: /home/notscripter/.stellarium/data/ssystem_minor.ini
+Loaded 254 Solar System bodies from  "/home/notscripter/.stellarium/data/ssystem_minor.ini"
+Solar System now has 337 entries.
+File ssystem_minor.ini is loaded successfully...
+SolarSystem: We have configured 0 threads (plus main thread) for computePositions().
+qt.gui.imageio: libpng warning: iCCP: profile 'ICC profile': 'RGB ': RGB color space not permitted on grayscale PNG
+Loading nomenclature for Solar system bodies ...
+Loaded 16000 / 16020 items of planetary surface nomenclature
+INFO: Cannot find these planetary objects to assign nomenclature items: "Arrokoth, Dactyl, Didymos, Dimorphos"
+Loading star data ...
+Loading star catalog: /usr/share/stellarium/stars/default/stars_0_0v0_8.cat - 0_0v0_8; 4979 entries
+Loading star catalog: /usr/share/stellarium/stars/default/stars_1_0v0_8.cat - 1_0v0_8; 21806 entries
+Loading star catalog: /usr/share/stellarium/stars/default/stars_2_0v0_8.cat - 2_0v0_8; 150826 entries
+Loading star catalog: /usr/share/stellarium/stars/default/stars_3_1v0_4.cat - 3_1v0_4; 425807 entries
+Finished loading star catalogue data, max_geodesic_level: 3
+Loading scientific star names from /usr/share/stellarium/stars/default/name.fab
+Loaded 4942 / 4942 scientific star names
+Loading scientific star extra names from /usr/share/stellarium/stars/default/extra_name.fab
+Loaded 26200 / 26200 scientific star extra names
+Loading variable stars from /usr/share/stellarium/stars/default/gcvs_hip_part.dat
+Loaded 6862 / 6862 variable stars
+Loading double stars from /usr/share/stellarium/stars/default/wds_hip_part.dat
+Loaded 22992 / 22992 double stars
+Loading cross-identification data from /usr/share/stellarium/stars/default/cross-id.dat
+qt.gui.imageio: libpng warning: iCCP: profile 'icc': 'GRAY': Gray color space not permitted on RGB PNG
+Loaded 108378 / 108378 cross-identification data records for stars
+Loading parallax errors data from /usr/share/stellarium/stars/default/hip_plx_err.dat
+Loaded 117703 / 117703 parallax error data records for stars
+Loading proper motion data from /usr/share/stellarium/stars/default/hip_pm.dat
+Loaded 117955 / 117955 proper motion data records for stars
+navigation/preset_sky_time is a double - treating as jday: 2451514.25001
+Loading DSO data ...
+[...] Stellarium DSO Catalog, version 3.20 (standard edition)
+Loaded 94660 DSO records
+Loading DSO outline data ...
+Loaded 98 DSO outline records successfully
+Loading DSO discovery data ...
+Loaded 183 / 183 DSO discovery records successfully
+LandscapeMgr: initialized Cache for 100 MB.
+Loaded 7 / 7 native names of planets
+Loading star names from /usr/share/stellarium/skycultures/indian/star_names.fab
+Loaded 33 / 33 common star names
+Loading DSO name data ...
+Loaded 1339 / 1364 DSO name records successfully
+WARNING - No position data for 25 objects: PGC 2798, PGC 2907, PGC 23521, PGC 28759, PGC 29167, PGC 34658, PGC 42102, PGC 44750, PGC 54559, PGC 59117, PGC 59858, PGC 59953, PGC 69018, PGC 69877, PGC 73957, PGC 95597, PGC 100170, PGC 100170, PGC 119230, PGC 1000714, PGC 1436754, PGC 1694462, PGC 2822840, PGC 2826829, PGC 3098124
+Loaded 50 / 50 constellation records successfully for culture "indian"
+qt.gui.imageio: libpng warning: iCCP: profile 'ICC profile': 'RGB ': RGB color space not permitted on grayscale PNG
+qt.gui.imageio: libpng warning: iCCP: profile 'ICC profile': 'GRAY': Gray color space not permitted on RGB PNG
+qt.gui.imageio: libpng warning: iCCP: profile 'ICC profile': 'GRAY': Gray color space not permitted on RGB PNG
+qt.gui.imageio: libpng warning: iCCP: profile 'ICC profile': 'RGB ': RGB color space not permitted on grayscale PNG
+qt.gui.imageio: libpng warning: iCCP: profile 'ICC profile': 'RGB ': RGB color space not permitted on grayscale PNG
+Loaded 28 / 28 constellation art records successfully for culture "indian"
+Loaded 49 / 49 constellation names
+Loaded 0 / 0 asterism records successfully for culture "indian"
+Initializing basic GL shaders... 
+Creating GUI ...
+Loading style file: :/graphicGui/normalStyle.css
+Got location "Kolkata, West Bengal, India (22.5655, 88.3653; Asia/Kolkata)" for IP "157.40.82.44"
+Loaded plugin "Exoplanets"
+[Exoplanets] Version of the format of the catalog: 1
+[Exoplanets] loading catalog file: /home/notscripter/.stellarium/modules/Exoplanets/exoplanets.json
+Loaded plugin "MeteorShowers"
+[MeteorShowersMgr] Loading catalog file: /home/notscripter/.stellarium/modules/MeteorShowers/MeteorShowers.json
+[MeteorShowersMgr] Version of the format of the catalog: 2
+Loaded plugin "MissingStars"
+[MissingStars] Loaded 62 extra stars (missing in main catalogs)
+Loaded plugin "Novae"
+[Novae] version of the catalog: 1
+[Novae] Loading catalog file: /home/notscripter/.stellarium/modules/Novae/novae.json
+Loaded plugin "Oculars"
+Oculars::validateAndLoadIniFile() ocular.ini exists at: /home/notscripter/.stellarium/modules/Oculars/ocular.ini . Checking version...
+Oculars::validateAndLoadIniFile() found existing ini file version 3.1
+Loaded plugin "Satellites"
+[Satellites] loading catalogue file: /home/notscripter/.stellarium/modules/Satellites/satellites.json
+Loaded plugin "SolarSystemEditor"
+Using the ssystem_minor.ini file that already exists in the user directory...
+SSE: Comet cross-index data: Overwriting entry for "453P"
+Creating scene FBO with size 944x1016
+Max thread count (Global Pool):  4
+Creating scene FBO with size 960x518
+Creating scene FBO with size 944x1016
+Initializing planets GL shaders... 
+qt.gui.imageio: libpng warning: iCCP: known incorrect sRGB profile
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+qt.qpa.input.methods: failed to create compose table
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+[Satellites] restore TLE sources...
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+Creating scene FBO with size 1920x1080
+Creating scene FBO with size 944x1016
+This plugin does not support setting window opacity
+This plugin does not support setting window opacity
+Unloaded plugin "SolarSystemEditor"
+Unloaded plugin "Satellites"
+Unloaded plugin "Oculars"
+Unloaded plugin "Novae"
+Unloaded plugin "MissingStars"
+Unloaded plugin "MeteorShowers"
+Unloaded plugin "Exoplanets"
+Downloaded 1 files (0 kbytes) in a session of 2433.24 sec (average of 0 kB/s + 0 files from cache (0 kB)).
+LandscapeMgr: Clearing cache of 0 landscapes totalling about  0 MB.

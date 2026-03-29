@@ -1,20 +1,62 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/notscripter/dotfiles.bak
     - /home/notscripter/dotfiles
-    - /home/notscripter/arduino
-    - /home/notscripter/dsa-in-cpp
-    - /home/notscripter/chai-aur-backend
-    - /home/notscripter/chai-aur-cpp
+    - /home/notscripter/webpage/api
+    - /home/notscripter/webpage/app
+    - /home/notscripter/fastcom
+    - /home/notscripter/aur/ulaa-browser
+    - /home/notscripter/namaste-inkscape
+    - /home/notscripter/namaste-qt
+    - /home/notscripter/fluidnc-configs
+    - /home/notscripter/namaste-freecad
+    - /home/notscripter/aur
+    - /home/notscripter/Arduino/libraries/fastlibs
+    - /home/notscripter/namaste-ino
+    - /home/notscripter/aur/ulaa-browser-bin
+    - /home/notscripter/Arduino/libraries/FastRadio
+    - /home/notscripter/namaste-rpi
+    - /home/notscripter/namaste-kotlin
+    - /home/notscripter/namaste-cpp
+    - /home/notscripter/namaste-pde
+    - /home/notscripter/multiosci
+    - /home/notscripter/my-internet-fork
+    - /home/notscripter/sadafit/frontend
+    - /home/notscripter/namaste-compose
+    - /home/notscripter/projects/cnc
+    - /home/notscripter/AkashVahan.gitlab.io
+    - /home/notscripter/md3.nvim
+    - /home/notscripter/immersive-zen
+    - /home/notscripter/compose-cli
+    - /home/notscripter/imuc
+    - /home/notscripter/madeofsoil.gitlab.io
+    - /home/notscripter/mrinmoy.gitab.io
+    - /home/notscripter/compose.nvim
+    - /home/notscripter/immersive-internet
+    - /home/notscripter/namaste-clikt
+    - /home/notscripter/baremetal-esp8266
+    - /home/notscripter/my-internet
+    - /home/notscripter/projects/ne555-pd-decoy
+    - /home/notscripter/android-nvim
+    - /home/notscripter/akantha/freecad
+    - /home/notscripter/catppuccin-freecad
+    - /home/notscripter/namaste-ncurses
+    - /home/notscripter/notscripter.gitlab.io
+    - /home/notscripter/projects/strainwave-gears
+    - /home/notscripter/hookism
+    - /home/notscripter/.password-store
+    - /home/notscripter/akantha/swaync
+    - /home/notscripter/akantha/gitlab-profile
+    - /home/notscripter/akantha/wlogout
+    - /home/notscripter/akantha/starship
+    - /home/notscripter/akantha/neovim
+    - /home/notscripter/projects/aatmaa
+    - /home/notscripter/projects/netra
+    - /home/notscripter/kicad
 startuppopupversion: 5
-lastversion: 0.44.1
+didshowhunkstaginghint: false
+lastversion: 0.59.0
 customcommandshistory:
     - git tag v2
     - Z ..
 hidecommandlog: true
-ignorewhitespaceindiffview: false
-diffcontextsize: 3
-renamesimilaritythreshold: 50
-localbranchsortorder: recency
-remotebranchsortorder: alphabetical
-gitlogorder: topo-order
-gitlogshowgraph: always

@@ -5,14 +5,14 @@
   "layer": "overlay",
   "cssPriority": "user",
 
-  "control-center-width": 368,
+  "control-center-width": 360,
   "control-center-height": 860,
-  "control-center-margin-top": 5,
-  "control-center-margin-bottom": 5,
-  "control-center-margin-right": 10,
+  "control-center-margin-top": 4,
+  "control-center-margin-bottom": 4,
+  "control-center-margin-right": 4,
   "control-center-margin-left": 0,
 
-  "notification-window-width": 400,
+  "notification-window-width": 328,
   "notification-icon-size": 48,
   "notification-body-image-height": 160,
   "notification-body-image-width": 200,
@@ -37,14 +37,14 @@
     }
   },
   "widgets": [
-    "label",
     "buttons-grid",
-    "volume",
     "backlight",
+    "volume",
     "mpris",
     "dnd",
     "title",
-    "notifications"
+    "notifications",
+    "label"
   ],
   "widget-config": {
     "title": {
@@ -56,41 +56,44 @@
       "text": "DND"
     },
     "label": {
-      "max-lines": 1,
+      "max-lines": 0,
       "text": " "
     },
     "mpris": {
       "image-size": 96,
-      "image-radius": 12
-    },
-    "volume": {
-      "label": "",
-      "expand-button-label": "",
-      "collapse-button-label": "",
-      "show-per-app": true,
-      "show-per-app-icon": false,
-      "show-per-app-label": true
+      "image-radius": 16
     },
     "backlight": {
-      "label": "󰃟"
+      "label": "󰃟 ",
+      "subsystem": "backlight"
+    },
+    "volume": {
+      "label": " ",
+      "expand-button-label": "",
+      "collapse-button-label": "",
+      "show-per-app": true,
+      "show-per-app-icon": true,
+      "show-per-app-label": false
     },
     "buttons-grid": {
       "actions": [
         {
-          "label": "",
-          "command": "amixer set Master toggle"
-        },
-        {
-          "label": "",
-          "command": "amixer set Capture toggle"
-        },
-        {
-          "label": "",
-          "command": "nm-connection-editor"
+          "label": " ",
+          "type": "toggle",
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
+          "update-command": "sh -c '[[ $(nmcli r wifi) == \"enabled\" ]] && echo true || echo false'"
         },
         {
           "label": "",
-          "command": "blueman-manager"
+          "type": "toggle",
+          "command": "",
+          "update-command": ""
+        },
+        {
+          "label": " ",
+          "type": "toggle",
+          "command": "amixer set Capture toggle",
+          "update-command": "amixer get Capture | grep -q '\\[on\\]' && echo true || echo false"
         },
         {
           "label": "",

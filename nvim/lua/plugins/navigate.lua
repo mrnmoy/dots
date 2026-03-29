@@ -103,12 +103,6 @@ return {
 		opts = {},
 	},
 
-	--BUG:
-	--  {
-	--    "ahmedkhalf/project.nvim",
-	--    opts = {},
-	--  },
-
 	--NOTE: Replace w, e, b motion
 	{
 		"chrisgrieser/nvim-spider",

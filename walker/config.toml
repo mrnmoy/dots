@@ -1,0 +1,34 @@
+terminal_title_flag = ""
+locale = ""
+close_when_open = false
+monitor = ""
+hotreload_theme = false
+as_window = false
+timeout = 0
+force_keyboard_focus = false
+js_runtime = "node"
+# locations to search for themes and plugin scripts
+theme_location = []
+plugin_location = []
+# theme name and optional base stack
+theme = "default"
+# theme_base = ["base1", "default"]
+
+[keys]
+next = ["down", "j"]
+prev = ["up", "k"]
+
+[events]
+# see Events page
+
+[list]
+# see List options below
+
+[search]
+# see Search options below
+
+[activation_mode]
+# see Activation Mode below
+
+[builtins]
+# module-specific sections, see Built-ins pages

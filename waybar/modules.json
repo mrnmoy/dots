@@ -1,5 +1,4 @@
 {
-  // Workspaces
   "hyprland/workspaces": {
     "on-click": "activate",
     "active-only": false,
@@ -15,7 +14,6 @@
     }
   },
 
-  // Hyprland Window
   "hyprland/window": {
     "rewrite": {
       "(.*) - Zen Browser": "$1",
@@ -28,16 +26,14 @@
     "separate-outputs": true
   },
 
-  // Rofi Application Launcher
   "custom/appmenu": {
-    "format": "Apps",
+    "format": "󰣇",
     "tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings",
-    "on-click": "rofi -show drun -replace & sleep 0.2; hyprctl dispatch focuswindow '^(Rofi)'",
+    "on-click": "rofi -show drun -theme ~/.config/rofi/launcher.rasi",
     "on-click-right": "~/.config/notscripter/scripts/keybindings.sh",
     "tooltip": false
   },
 
-  // Power Menu
   "custom/exit": {
     "format": "",
     "tooltip-format": "Powermenu",
@@ -49,14 +45,14 @@
     "tooltip": false,
     "format": "{icon}",
     "format-icons": {
-      "notification": "<span foreground='red'><sup></sup></span>",
-      "none": "",
-      "dnd-notification": "󰂛<span foreground='red'><sup></sup></span>",
+      "notification": "󱅫",
+      "none": "󰂚",
+      "dnd-notification": "󱅫",
       "dnd-none": "󰂛",
-      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "inhibited-notification": "",
       "inhibited-none": "",
-      "dnd-inhibited-notification": "󰂛<span foreground='red'><sup></sup></span>",
-      "dnd-inhibited-none": "󰂛"
+      "dnd-inhibited-notification": "",
+      "dnd-inhibited-none": ""
     },
     "return-type": "json",
     "exec-if": "which swaync-client",
@@ -66,89 +62,26 @@
     "escape": true
   },
 
-  "temperature": {
-    "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
-    "input-filename": "temp1_input",
-    // "input-filename": "temp2_input",
-    // "thermal-zone": 2,
-    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-    "critical-threshold": 80,
-    "format": "{icon}  {temperatureC}°C",
-    "format-icons": ["", "", ""]
-  },
-
-  // Keyboard State
-  //"keyboard-state": {
-  //  //"numlock": true,
-  //  //"capslock": true,
-  //  //"format": "{name} {icon}",
-  //  //"format-icons": {
-  //  //  //"locked": "",
-  //  //  //"unlocked": ""
-  //  //}
-  //},
-
-  // System tray
   "tray": {
-    "icon-size": 21,
-    "spacing": 10
+    "icon-size": 24,
+    "spacing": 8
   },
 
-  // Clock
   "clock": {
-    // "timezone": "America/New_York",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "  {0:%H:%M}",
-    "format-alt": "  {0:%H:%M}    {0:%d-%m-%Y}"
-  },
-
-  // System
-  "custom/system": {
-    "format": "",
-    "tooltip": false
-  },
-
-  // CPU
-  "cpu": {
-    "format": "  {usage}%",
-    "on-click": "kitty -e htop"
-  },
-
-  // Memory
-  "memory": {
-    "format": "  {}%",
-    "on-click": "kitty -e htop"
-  },
-
-  // Harddisc space used
-  "disk": {
-    "interval": 30,
-    "format": "D {percentage_used}% ",
-    "path": "/",
-    "on-click": "kitty -e htop"
+    "format": "󰥔 {0:%H:%M}",
+    "format-alt": "󰥔 {0:%H:%M}   {0:%d-%m-%Y}"
   },
 
   "hyprland/language": {
     "format": "/ K {short}"
   },
 
-  // Group Hardware
-  "group/hardware": {
-    "orientation": "inherit",
-    "drawer": {
-      "transition-duration": 300,
-      "children-class": "not-memory",
-      "transition-left-to-right": false
-    },
-    "modules": ["custom/system", "disk", "cpu", "memory", "hyprland/language"]
-  },
-
-  // Network
   "network": {
     "format": "{ifname}",
-    "format-wifi": "   {signalStrength}%  {bandwidthDownBytes}  {bandwidthUpBytes} ",
+    "format-wifi": "  {signalStrength}%  {bandwidthDownBytes}  {bandwidthUpBytes} ",
     "format-ethernet": "   {bandwidthDownBytes}  {bandwidthUpBytes} ",
-    "format-disconnected": "Not connected",
+    "format-disconnected": "󰲛 ",
     "tooltip-format": "  {ifname} via {gwaddri}",
     "tooltip-format-wifi": "   {essid} ({signalStrength}%)",
     "tooltip-format-ethernet": "  {ifname} ({ipaddr}/{cidr})",
@@ -158,10 +91,8 @@
     "on-click": "nm-connection-editor"
   },
 
-  // Battery
   "battery": {
     "states": {
-      // "good": 95,
       "warning": 30,
       "critical": 15
     },
@@ -169,45 +100,9 @@
     "format-charging": "  {capacity}%",
     "format-plugged": "  {capacity}%",
     "format-alt": "{icon}  {time}",
-    // "format-good": "", // An empty format will hide the module
-    // "format-full": "",
     "format-icons": [" ", " ", " ", " ", " "]
   },
 
-  // Pulseaudio
-  // "scroll-step": 1, // %, can be a float
-  "pulseaudio": {
-    "format": "{icon} {volume}%  {format_source}",
-    "format-bluetooth": "{volume}% {icon}  {format_source}",
-    "format-bluetooth-muted": "  {icon}  {format_source}",
-    "format-muted": "  {format_source}",
-    "format-source": " {volume}%",
-    "format-source-muted": "",
-    "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": [" ", " ", " "]
-    },
-    "on-click": "pavucontrol"
-  },
-
-  //"custom/pipewire": {
-  //  //"format": "{icon}",
-  //  //"return-type": "json",
-  //  //"signal": 8,
-  //  //"interval": "once",
-  //  //"format-icons": {
-  //  //  //"mute": "",
-  //  //  //"default": ["", "", "", ""]
-  //  //},
-  //  //"exec": "pw-volume status"
-  //},
-
-  // Bluetooth
   "bluetooth": {
     "format-disabled": "",
     "format-off": "",
@@ -216,14 +111,12 @@
     "format-no-controller": ""
   },
 
-  // Other
   "user": {
     "format": "{user}",
     "interval": 60,
     "icon": false
   },
 
-  // Idle Inhibator
   "idle_inhibitor": {
     "format": "{icon}",
     "tooltip": true,
