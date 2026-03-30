@@ -1,2 +1,4 @@
+/* @import "../themes/colors-gtk.css" */
+@import "~/.config/themes/colors-gtk.css"
 @import "styles/notifications.css";
 @import "styles/central_control.css";

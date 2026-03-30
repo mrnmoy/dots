@@ -1,6 +1,7 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/notscripter/dotfiles
+    - /home/notscripter/Arduino/libraries/fastlib
     - /home/notscripter/dotfiles.bak
     - /home/notscripter/webpage/api
     - /home/notscripter/webpage/app
@@ -11,7 +12,6 @@ recentrepos:
     - /home/notscripter/fluidnc-configs
     - /home/notscripter/namaste-freecad
     - /home/notscripter/aur
-    - /home/notscripter/Arduino/libraries/fastlibs
     - /home/notscripter/namaste-ino
     - /home/notscripter/aur/ulaa-browser-bin
     - /home/notscripter/Arduino/libraries/FastRadio
