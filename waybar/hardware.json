@@ -1,12 +1,12 @@
 {
   "cpu": {
     "format": " {usage}%",
-    "on-click": "kitty -e htop"
+    "on-click": "alacritty --command htop"
   },
 
   "memory": {
     "format": " {}%",
-    "on-click": "kitty -e htop"
+    "on-click": "alacritty --command htop"
   },
 
   "disk": {
