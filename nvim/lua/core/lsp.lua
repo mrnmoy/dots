@@ -87,11 +87,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 --         'typescriptreact',
 --     },
 -- })
--- vim.lsp.config("qmlls", {
---     cmd = { "qmlls6" },
---     filetypes = { 'qml', 'qmljs' },
---     root_markers = { 'main.cpp' },
--- })
+vim.lsp.config("qmlls", {
+    cmd = { "qmlls6" },
+    filetypes = { 'qml', 'qmljs' },
+    root_markers = { 'main.cpp', "Main.qml" },
+})
 -- vim.lsp.config("kotlin-lsp", {
 --     cmd = { "kotlin-lsp", '--stdio' },
 --     filetypes = { 'kotlin' },
