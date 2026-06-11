@@ -1,6 +1,8 @@
 local g = vim.g
 local o = vim.opt
 
+vim.lsp.log.set_level("WARN")
+
 g.mapleader = " "
 g.maplocalleader = " "
 g.t_co = 256
@@ -11,14 +13,14 @@ g.netrw_banner = 0
 g.netrw_liststyle = 0
 -- Give me some fenced codeblock goodness
 g.markdown_fenced_languages = {
-	"html",
-	"javascript",
-	"javascriptreact",
-	"json",
-	"css",
-	"lua",
-	"vim",
-	"bash",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "css",
+    "lua",
+    "vim",
+    "bash",
 }
 
 o.laststatus = 0
@@ -88,7 +90,7 @@ o.timeout = true
 o.timeoutlen = 300
 
 if vim.fn.has("nvim-0.10") == 1 then
-	o.smoothscroll = true
+    o.smoothscroll = true
 end
 
 -- highlight on yank
@@ -101,10 +103,10 @@ vim.cmd([[autocmd BufNewFile,BufRead *.mdx set filetype=markdown.mdx]])
 -- vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
 
 --UFO
-o.foldcolumn = "0"
+-- o.foldcolumn = "0"
 o.foldlevel = 99
 o.foldlevelstart = 99
-o.foldenable = true
+-- o.foldenable = true
 
 --TEST:
 -- o.spelllang = 'en_us'
