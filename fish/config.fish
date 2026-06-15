@@ -1,5 +1,12 @@
 # source $HOME/.config/themes/colors.fish
 
+# if uwsm check may-start && uwsm select; then
+# 	uwsm start default
+# end
+if uwsm check may-start; then
+	uwsm start hyprland.desktop && hyprlock
+end
+
 set -g fish_greeting
 
 # set fish_color_autosuggestion $onPrimary

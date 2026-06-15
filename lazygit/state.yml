@@ -1,8 +1,10 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/notscripter/dotfiles
-    - /home/notscripter/rc-remote
     - /home/notscripter/qt-qml-ble
+    - /home/notscripter/qt-ble-esp-ota
+    - /home/notscripter/qt-qml-style
+    - /home/notscripter/rc-remote
     - /home/notscripter/Arduino/libraries/fastlib
     - /home/notscripter/Arduino/libraries/FastRadio
     - /home/notscripter/sadafit/app
@@ -118,6 +120,24 @@ githubPullRequests:
           headRepositoryOwner: mrnmoy
     /home/notscripter/aham: []
     /home/notscripter/dotfiles:
+        - headRefName: main
+          number: 43
+          title: merging
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/43
+          headRepositoryOwner: mrnmoy
+        - headRefName: main
+          number: 30
+          title: Nic on droid fix
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/30
+          headRepositoryOwner: mrnmoy
+        - headRefName: main
+          number: 28
+          title: Added nix on droid
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/28
+          headRepositoryOwner: mrnmoy
         - headRefName: nightly
           number: 56
           title: Nightly
@@ -148,27 +168,11 @@ githubPullRequests:
           state: MERGED
           url: https://github.com/mrnmoy/dots/pull/52
           headRepositoryOwner: mrnmoy
-        - headRefName: main
-          number: 43
-          title: merging
-          state: MERGED
-          url: https://github.com/mrnmoy/dots/pull/43
-          headRepositoryOwner: mrnmoy
-        - headRefName: main
-          number: 30
-          title: Nic on droid fix
-          state: MERGED
-          url: https://github.com/mrnmoy/dots/pull/30
-          headRepositoryOwner: mrnmoy
-        - headRefName: main
-          number: 28
-          title: Added nix on droid
-          state: MERGED
-          url: https://github.com/mrnmoy/dots/pull/28
-          headRepositoryOwner: mrnmoy
     /home/notscripter/fastcom: []
     /home/notscripter/namaste-ino: []
+    /home/notscripter/qt-ble-esp-ota: []
     /home/notscripter/qt-qml-ble: []
+    /home/notscripter/qt-qml-style: []
     /home/notscripter/rc-remote: []
     /home/notscripter/rc_remote-qml:
         - headRefName: qml

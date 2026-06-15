@@ -28,6 +28,12 @@ onSecondary=${colors[0]}
 onTertiary=${colors[0]}
 onSurface=${colors[0]}
 
+# sddm theme
+sddmConf=/usr/share/sddm/themes/pixie/theme.conf
+sed -i "/background=/c\background=${wallpaper}" $sddmConf
+sed -i "/primaryColor=/c\primaryColor=${primary}" $sddmConf
+sed -i "/accentColor=/c\accentColor=${secondary}" $sddmConf
+
 # highlight='hsla(0, 0%, 100%, 0.08)'
 highlight='#ffffff14'
 radius='16px'

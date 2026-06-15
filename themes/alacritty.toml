@@ -1,18 +1,18 @@
 [colors.primary]
-background = "#daa171"
+background = "#daa270"
 foreground = "#f8f0cb"
 
 [colors.cursor]
-text = "#daa171"
+text = "#daa270"
 cursor = "#f8f0cb"
 
 [colors.vi_mode_cursor]
-text = "#daa171"
+text = "#daa270"
 cursor = "#f8f0cb"
 
 [colors.search.matches]
 foreground = "#f8f0cb"
-background = "#cc8a5b"
+background = "#cc8a59"
 
 [colors.search.focused_match]
 foreground = "#1e1e2e"
