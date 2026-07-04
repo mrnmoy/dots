@@ -1,15 +1,23 @@
-[language-server.qml]
+[language-server.qmlls]
 command = "qmlls6"
 
-[[ language ]]
+[[language]]
 name = "qml"
-language-servers = ["qml"]
+language-servers = ["qmlls"]
 
-[language-server.typescript]
+[language-server.typescript-language-server]
 command = "typescript-language-server"
 args = [ "--stdio" ]
 
-[[ language ]]
+[[language]]
 name = "typescript"
-# language-servers = [ "typescript-language-server" ]
+language-servers = [ "typescript-language-server" ]
 # code-actions-on-save = [ "source.addMissingImports.ts" ]
+
+# [language-server.kotlin]
+# command = "kotlin-lsp"
+# args = ["--stdio"]
+
+[[language]]
+name = "kotlin"
+language-servers = ["kotlin-lsp"]

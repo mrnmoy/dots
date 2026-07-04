@@ -2,6 +2,9 @@ inherits = "catppuccin_mocha"
 
 "ui.background" = { bg="transparent" }
 "ui.statusline" = { bg="transparent" }
+"ui.bufferline" = { bg="transparent" }
+"ui.bufferline.background" = { bg="transparent" }
+"ui.bufferline.active" = { modifiers = ["bold", "italic"] }
 "ui.menu" = { bg="transparent" }
 "ui.popup" = { bg="transparent" }
 "ui.help" = { bg="transparent" }
