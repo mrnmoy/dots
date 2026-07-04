@@ -1,0 +1,15 @@
+[language-server.qml]
+command = "qmlls6"
+
+[[ language ]]
+name = "qml"
+language-servers = ["qml"]
+
+[language-server.typescript]
+command = "typescript-language-server"
+args = [ "--stdio" ]
+
+[[ language ]]
+name = "typescript"
+# language-servers = [ "typescript-language-server" ]
+# code-actions-on-save = [ "source.addMissingImports.ts" ]

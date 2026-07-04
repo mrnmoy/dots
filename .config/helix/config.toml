@@ -1,0 +1,63 @@
+theme = "akantha"
+
+[editor]
+cursorline = true
+color-modes = true
+auto-pairs = true
+true-color = true
+mouse = false
+scrolloff = 10
+bufferline = "multiple"
+line-number = "relative"
+continue-comments = false
+# completion-replace = true
+popup-border = "all"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.statusline]
+left = [
+  "mode",
+  "spinner",
+  "file-name",
+  "read-only-indicator",
+  "file-modification-indicator",
+  "version-control"
+   ]
+center = []
+right = [ "diagnostics", "selections", "position", "position-percentage" ]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.file-picker]
+hidden = false
+
+[keys.normal]
+space.w = ":write"
+space.W = ":write!"
+space.q = ":quit"
+space.Q = ":quit!"
+space.x = ":buffer-close"
+# space.X = ":buffer-close!"
+space.X = ":buffer-close-others"
+tab = ":buffer-next"
+S-tab = ":buffer-previous"
+# g.j = "goto_last_line"
+# g.k = "goto_file_start"
+# g.j = "goto_file_end"
+
+[keys.insert]
+# S-tab = "move_parent_node_end"
+
+[editor.lsp]
+display-messages = true
+display-progress-messages = true
+display-inlay-hints = true
+
+# [editor.word-completion]
+# trigger-length = 1
