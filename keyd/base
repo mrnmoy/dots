@@ -15,6 +15,9 @@ rightalt = overload(sym, enter)
 rightcontrol = layer(num)
 rightcontrol = overload(num, backspace)
 
+compose = layer(num)
+compose = overload(num, backspace)
+
 a = overloadt2(meta, a, 250)
 s = overloadt2(alt, s, 250)
 d = overloadt2(control, d, 250)

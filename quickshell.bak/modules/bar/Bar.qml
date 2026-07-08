@@ -1,184 +1,249 @@
-pragma ComponentBehavior: Bound
-
-import qs.services
-import qs.config
-import "popouts" as BarPopouts
-import "components"
-import "components/workspaces"
-import Quickshell
+import "./weather"
 import QtQuick
 import QtQuick.Layouts
+import Quickshell
+import Quickshell.Io
+import Quickshell.Wayland
+import Quickshell.Hyprland
+import Quickshell.Services.UPower
+import qs
+import qs.services
+import qs.modules.common
+import qs.modules.common.widgets
+import qs.modules.common.functions
 
-ColumnLayout {
-    id: root
+Scope {
+    id: bar
 
-    required property ShellScreen screen
-    required property PersistentProperties visibilities
-    required property BarPopouts.Wrapper popouts
-    readonly property int padding: Math.max(Appearance.padding.smaller, Config.border.thickness)
-    readonly property int vPadding: Appearance.padding.large
+    readonly property int osdHideMouseMoveThreshold: 20
+    property bool showBarBackground: Config.options.bar.showBackground
 
-    function checkPopout(y: real): void {
-        const ch = childAt(width / 2, y) as WrappedLoader;
-        if (!ch) {
-            popouts.hasCurrent = false;
-            return;
+    Variants {
+        // For each monitor
+        model: {
+            const screens = Quickshell.screens;
+            const list = Config.options.bar.screenList;
+            if (!list || list.length === 0)
+                return screens;
+            return screens.filter(screen => list.includes(screen.name));
         }
+        LazyLoader {
+            id: barLoader
+            active: GlobalStates.barOpen && !GlobalStates.screenLocked
+            required property ShellScreen modelData
+            component: PanelWindow { // Bar window
+                id: barRoot
+                screen: barLoader.modelData
 
-        const id = ch.id;
-        const top = ch.y;
-        const item = ch.item;
-        const itemHeight = item.implicitHeight;
+                property var brightnessMonitor: Brightness.getMonitorForScreen(barLoader.modelData)
+                property real useShortenedForm: (Appearance.sizes.barHellaShortenScreenWidthThreshold >= screen.width) ? 2 : (Appearance.sizes.barShortenScreenWidthThreshold >= screen.width) ? 1 : 0
+                readonly property int centerSideModuleWidth: (useShortenedForm == 2) ? Appearance.sizes.barCenterSideModuleWidthHellaShortened : (useShortenedForm == 1) ? Appearance.sizes.barCenterSideModuleWidthShortened : Appearance.sizes.barCenterSideModuleWidth
 
-        if (id === "statusIcons") {
-            const items = item.items;
-            const icon = items.childAt(items.width / 2, mapToItem(items, 0, y).y);
-            if (icon) {
-                popouts.currentName = icon.name;
-                popouts.currentCenter = Qt.binding(() => icon.mapToItem(root, 0, icon.implicitHeight / 2).y);
-                popouts.hasCurrent = true;
-            }
-        } else if (id === "tray") {
-            const index = Math.floor(((y - top) / itemHeight) * item.items.count);
-            const trayItem = item.items.itemAt(index);
-            if (trayItem) {
-                popouts.currentName = `traymenu${index}`;
-                popouts.currentCenter = Qt.binding(() => trayItem.mapToItem(root, 0, trayItem.implicitHeight / 2).y);
-                popouts.hasCurrent = true;
-            }
-        } else if (id === "activeWindow") {
-            popouts.currentName = id.toLowerCase();
-            popouts.currentCenter = item.mapToItem(root, 0, itemHeight / 2).y;
-            popouts.hasCurrent = true;
-        }
-    }
-
-    function handleWheel(y: real, angleDelta: point): void {
-        const ch = childAt(width / 2, y) as WrappedLoader;
-        if (ch?.id === "workspaces") {
-            // Workspace scroll
-            const activeWs = Hyprland.activeToplevel?.workspace?.name;
-            if (activeWs?.startsWith("special:"))
-                Hyprland.dispatch(`togglespecialworkspace ${activeWs.slice(8)}`);
-            else if (angleDelta.y < 0 || Hyprland.activeWsId > 1)
-                Hyprland.dispatch(`workspace r${angleDelta.y > 0 ? "-" : "+"}1`);
-        } else if (y < screen.height / 2) {
-            // Volume scroll on top half
-            if (angleDelta.y > 0)
-                Audio.incrementVolume();
-            else if (angleDelta.y < 0)
-                Audio.decrementVolume();
-        } else {
-            // Brightness scroll on bottom half
-            const monitor = Brightness.getMonitorForScreen(screen);
-            if (angleDelta.y > 0)
-                monitor.setBrightness(monitor.brightness + 0.1);
-            else if (angleDelta.y < 0)
-                monitor.setBrightness(monitor.brightness - 0.1);
-        }
-    }
-
-    spacing: Appearance.spacing.normal
-
-    Repeater {
-        id: repeater
-
-        model: Config.bar.entries
-
-        DelegateChooser {
-            role: "id"
-
-            DelegateChoice {
-                roleValue: "spacer"
-                delegate: WrappedLoader {
-                    Layout.fillHeight: enabled
+                Timer {
+                    id: showBarTimer
+                    interval: (Config?.options.bar.autoHide.showWhenPressingSuper.delay ?? 100)
+                    repeat: false
+                    onTriggered: {
+                        barRoot.superShow = true
+                    }
                 }
-            }
-            DelegateChoice {
-                roleValue: "logo"
-                delegate: WrappedLoader {
-                    sourceComponent: OsIcon {}
+                Connections {
+                    target: GlobalStates
+                    function onSuperDownChanged() {
+                        if (!Config?.options.bar.autoHide.showWhenPressingSuper.enable) return;
+                        if (GlobalStates.superDown) showBarTimer.restart();
+                        else {
+                            showBarTimer.stop();
+                            barRoot.superShow = false;
+                        }
+                    }
                 }
-            }
-            DelegateChoice {
-                roleValue: "workspaces"
-                delegate: WrappedLoader {
-                    sourceComponent: Workspaces {
-                        screen: root.screen
+                property bool superShow: false
+                property bool mustShow: hoverRegion.containsMouse || superShow
+                exclusionMode: ExclusionMode.Ignore
+                exclusiveZone: (Config?.options.bar.autoHide.enable && (!mustShow || !Config?.options.bar.autoHide.pushWindows)) ? 0 :
+                    Appearance.sizes.baseBarHeight + (Config.options.bar.cornerStyle === 1 ? Appearance.sizes.hyprlandGapsOut : 0)
+                WlrLayershell.namespace: "quickshell:bar"
+                implicitHeight: Appearance.sizes.barHeight + Appearance.rounding.screenRounding
+                mask: Region {
+                    item: hoverMaskRegion
+                }
+                color: "transparent"
+
+                anchors {
+                    top: !Config.options.bar.bottom
+                    bottom: Config.options.bar.bottom
+                    left: true
+                    right: true
+                }
+
+                MouseArea  {
+                    id: hoverRegion
+                    hoverEnabled: true
+                    anchors.fill: parent
+
+                    Item {
+                        id: hoverMaskRegion
+                        anchors {
+                            fill: barContent
+                            topMargin: -1
+                            bottomMargin: -1
+                        }
+                    }
+
+                    BarContent {
+                        id: barContent
+                        
+                        implicitHeight: Appearance.sizes.barHeight
+                        anchors {
+                            right: parent.right
+                            left: parent.left
+                            top: parent.top
+                            bottom: undefined
+                            topMargin: (Config?.options.bar.autoHide.enable && !mustShow) ? -Appearance.sizes.barHeight : 0
+                            bottomMargin: 0
+                        }
+                        Behavior on anchors.topMargin {
+                            animation: Appearance.animation.elementMoveFast.numberAnimation.createObject(this)
+                        }
+                        Behavior on anchors.bottomMargin {
+                            animation: Appearance.animation.elementMoveFast.numberAnimation.createObject(this)
+                        }
+
+                        states: State {
+                            name: "bottom"
+                            when: Config.options.bar.bottom
+                            AnchorChanges {
+                                target: barContent
+                                anchors {
+                                    right: parent.right
+                                    left: parent.left
+                                    top: undefined
+                                    bottom: parent.bottom
+                                }
+                            }
+                            PropertyChanges {
+                                target: barContent
+                                anchors.topMargin: 0
+                                anchors.bottomMargin: (Config?.options.bar.autoHide.enable && !mustShow) ? -Appearance.sizes.barHeight : 0
+                            }
+                        }
+                    }
+
+                    // Round decorators
+                    Loader {
+                        id: roundDecorators
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            top: barContent.bottom
+                            bottom: undefined
+                        }
+                        height: Appearance.rounding.screenRounding
+                        active: showBarBackground && Config.options.bar.cornerStyle === 0 // Hug
+
+                        states: State {
+                            name: "bottom"
+                            when: Config.options.bar.bottom
+                            AnchorChanges {
+                                target: roundDecorators
+                                anchors {
+                                    right: parent.right
+                                    left: parent.left
+                                    top: undefined
+                                    bottom: barContent.top
+                                }
+                            }
+                        }
+
+                        sourceComponent: Item {
+                            implicitHeight: Appearance.rounding.screenRounding
+                            RoundCorner {
+                                id: leftCorner
+                                anchors {
+                                    top: parent.top
+                                    bottom: parent.bottom
+                                    left: parent.left
+                                }
+
+                                implicitSize: Appearance.rounding.screenRounding
+                                color: showBarBackground ? Appearance.colors.colLayer0 : "transparent"
+
+                                corner: RoundCorner.CornerEnum.TopLeft
+                                states: State {
+                                    name: "bottom"
+                                    when: Config.options.bar.bottom
+                                    PropertyChanges {
+                                        leftCorner.corner: RoundCorner.CornerEnum.BottomLeft
+                                    }
+                                }
+                            }
+                            RoundCorner {
+                                id: rightCorner
+                                anchors {
+                                    right: parent.right
+                                    top: !Config.options.bar.bottom ? parent.top : undefined
+                                    bottom: Config.options.bar.bottom ? parent.bottom : undefined
+                                }
+                                implicitSize: Appearance.rounding.screenRounding
+                                color: showBarBackground ? Appearance.colors.colLayer0 : "transparent"
+
+                                corner: RoundCorner.CornerEnum.TopRight
+                                states: State {
+                                    name: "bottom"
+                                    when: Config.options.bar.bottom
+                                    PropertyChanges {
+                                        rightCorner.corner: RoundCorner.CornerEnum.BottomRight
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
-            DelegateChoice {
-                roleValue: "activeWindow"
-                delegate: WrappedLoader {
-                    sourceComponent: ActiveWindow {
-                        bar: root
-                        monitor: Brightness.getMonitorForScreen(root.screen)
-                    }
-                }
-            }
-            DelegateChoice {
-                roleValue: "tray"
-                delegate: WrappedLoader {
-                    sourceComponent: Tray {}
-                }
-            }
-            DelegateChoice {
-                roleValue: "clock"
-                delegate: WrappedLoader {
-                    sourceComponent: Clock {}
-                }
-            }
-            DelegateChoice {
-                roleValue: "statusIcons"
-                delegate: WrappedLoader {
-                    sourceComponent: StatusIcons {}
-                }
-            }
-            DelegateChoice {
-                roleValue: "power"
-                delegate: WrappedLoader {
-                    sourceComponent: Power {
-                        visibilities: root.visibilities
-                    }
-                }
-            }
         }
     }
 
-    component WrappedLoader: Loader {
-        required property bool enabled
-        required property string id
-        required property int index
+    IpcHandler {
+        target: "bar"
 
-        function findFirstEnabled(): Item {
-            const count = repeater.count;
-            for (let i = 0; i < count; i++) {
-                const item = repeater.itemAt(i);
-                if (item?.enabled)
-                    return item;
-            }
-            return null;
+        function toggle(): void {
+            GlobalStates.barOpen = !GlobalStates.barOpen
         }
 
-        function findLastEnabled(): Item {
-            for (let i = repeater.count - 1; i >= 0; i--) {
-                const item = repeater.itemAt(i);
-                if (item?.enabled)
-                    return item;
-            }
-            return null;
+        function close(): void {
+            GlobalStates.barOpen = false
         }
 
-        Layout.alignment: Qt.AlignHCenter
-        Layout.leftMargin: root.padding
-        Layout.rightMargin: root.padding
+        function open(): void {
+            GlobalStates.barOpen = true
+        }
+    }
 
-        // Cursed ahh thing to add padding to first and last enabled components
-        Layout.topMargin: findFirstEnabled() === this ? root.vPadding : 0
-        Layout.bottomMargin: findLastEnabled() === this ? root.vPadding : 0
+    GlobalShortcut {
+        name: "barToggle"
+        description: "Toggles bar on press"
 
-        visible: enabled
-        active: enabled
+        onPressed: {
+            GlobalStates.barOpen = !GlobalStates.barOpen;
+        }
+    }
+
+    GlobalShortcut {
+        name: "barOpen"
+        description: "Opens bar on press"
+
+        onPressed: {
+            GlobalStates.barOpen = true;
+        }
+    }
+
+    GlobalShortcut {
+        name: "barClose"
+        description: "Closes bar on press"
+
+        onPressed: {
+            GlobalStates.barOpen = false;
+        }
     }
 }

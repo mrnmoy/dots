@@ -187,40 +187,40 @@ vim.lsp.config("arduino_language_server", {
     --         "arduino-language-server",
     --         "-fqbn", "esp8266:esp8266:nodemcuv2"
     --     },
-    -- filetypes = { 'arduino' },
+    filetypes = { 'arduino' },
     root_markers = { 'sketch.yaml' },
 })
 
-vim.lsp.enable({
-    "vimls",
-    "lua_ls",
-    "cmake",
-    "clangd",
-    "bashls",
-    "hyprls",
-    "marksman",
-    "html",
-    "cssls",
-    "ts_ls",
-    -- "astro",
-    "qmlls",
-    "kotlin-lsp",
-    "tailwindcss",
-    "arduino-language-server"
-})
+-- vim.lsp.enable({
+--     "vimls",
+--     "lua_ls",
+--     "cmake",
+--     "clangd",
+--     "bashls",
+--     "hyprls",
+--     "marksman",
+--     "html",
+--     "cssls",
+--     "ts_ls",
+--     -- "astro",
+--     "qmlls",
+--     "kotlin-lsp",
+--     "tailwindcss",
+--     "arduino-language-server"
+-- })
 
--- vim.lsp.enable("vimls")
--- vim.lsp.enable("lua_ls")
--- vim.lsp.enable("cmake")
--- vim.lsp.enable("clangd")
--- vim.lsp.enable("bashls")
--- vim.lsp.enable("hyprls")
--- vim.lsp.enable("marksman")
--- vim.lsp.enable("html")
--- vim.lsp.enable("cssls")
--- vim.lsp.enable("ts_ls")
--- vim.lsp.enable("qmlls")
--- vim.lsp.enable("kotlin-lsp")
--- vim.lsp.enable("tailwindcss")
--- vim.lsp.enable("astro")
--- vim.lsp.enable("arduino_language_server")
+vim.lsp.enable("vimls")
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("cmake")
+vim.lsp.enable("clangd")
+vim.lsp.enable("bashls")
+vim.lsp.enable("hyprls")
+vim.lsp.enable("marksman")
+vim.lsp.enable("html")
+vim.lsp.enable("cssls")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("qmlls")
+vim.lsp.enable("kotlin-lsp")
+vim.lsp.enable("tailwindcss")
+vim.lsp.enable("astro")
+vim.lsp.enable("arduino_language_server")

@@ -1,6 +1,17 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/notscripter/dotfiles
+    - /home/notscripter/namaste-freecad
+    - /home/notscripter/dotfiles-stow
+    - /home/notscripter/arduino-ota-over-ble
+    - /home/notscripter/android-ble
+    - /home/notscripter/android-splash-screen
+    - /home/notscripter/android-pref-datastore
+    - /home/notscripter/android-proto-datastore
+    - /home/notscripter/android-json-datastore
+    - /home/notscripter/android-room-database
+    - /home/notscripter/arduino-nimble-esp32
+    - /home/notscripter/arduino-ble-esp32
     - /home/notscripter/qt-qml-ble
     - /home/notscripter/qt-ble-esp-ota
     - /home/notscripter/qt-qml-style
@@ -21,7 +32,6 @@ recentrepos:
     - /home/notscripter/namaste-inkscape
     - /home/notscripter/namaste-qt
     - /home/notscripter/fluidnc-configs
-    - /home/notscripter/namaste-freecad
     - /home/notscripter/aur
     - /home/notscripter/aur/ulaa-browser-bin
     - /home/notscripter/namaste-rpi
@@ -62,7 +72,7 @@ recentrepos:
     - /home/notscripter/kicad
 startuppopupversion: 5
 didshowhunkstaginghint: false
-lastversion: 0.61.0
+lastversion: 0.63.0
 customcommandshistory:
     - git tag v2
     - Z ..
@@ -119,7 +129,66 @@ githubPullRequests:
           url: https://github.com/mrnmoy/fastlib/pull/1
           headRepositoryOwner: mrnmoy
     /home/notscripter/aham: []
+    /home/notscripter/android-ble: []
+    /home/notscripter/android-datastore: []
+    /home/notscripter/android-json-datastore: []
+    /home/notscripter/android-pref-datastore: []
+    /home/notscripter/android-proto-datastore: []
+    /home/notscripter/android-room-database: []
+    /home/notscripter/android-splash-screen: []
+    /home/notscripter/arduino-ble-esp32: []
+    /home/notscripter/arduino-nimble-esp32: []
+    /home/notscripter/arduino-ota-over-ble: []
     /home/notscripter/dotfiles:
+        - headRefName: nightly
+          number: 56
+          title: Nightly
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/56
+          headRepositoryOwner: mrnmoy
+        - headRefName: nightly
+          number: 55
+          title: Nightly
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/55
+          headRepositoryOwner: mrnmoy
+        - headRefName: nightly
+          number: 54
+          title: fixed keyd cin
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/54
+          headRepositoryOwner: mrnmoy
+        - headRefName: nightly
+          number: 53
+          title: separeted keyd config to individual files
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/53
+          headRepositoryOwner: mrnmoy
+        - headRefName: nightly
+          number: 52
+          title: Nightly
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/52
+          headRepositoryOwner: mrnmoy
+        - headRefName: main
+          number: 43
+          title: merging
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/43
+          headRepositoryOwner: mrnmoy
+        - headRefName: main
+          number: 30
+          title: Nic on droid fix
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/30
+          headRepositoryOwner: mrnmoy
+        - headRefName: main
+          number: 28
+          title: Added nix on droid
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/28
+          headRepositoryOwner: mrnmoy
+    /home/notscripter/dotfiles-stow:
         - headRefName: main
           number: 43
           title: merging
@@ -168,7 +237,57 @@ githubPullRequests:
           state: MERGED
           url: https://github.com/mrnmoy/dots/pull/52
           headRepositoryOwner: mrnmoy
+    /home/notscripter/dotfiles.stow:
+        - headRefName: nightly
+          number: 56
+          title: Nightly
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/56
+          headRepositoryOwner: mrnmoy
+        - headRefName: nightly
+          number: 55
+          title: Nightly
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/55
+          headRepositoryOwner: mrnmoy
+        - headRefName: nightly
+          number: 54
+          title: fixed keyd cin
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/54
+          headRepositoryOwner: mrnmoy
+        - headRefName: nightly
+          number: 53
+          title: separeted keyd config to individual files
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/53
+          headRepositoryOwner: mrnmoy
+        - headRefName: nightly
+          number: 52
+          title: Nightly
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/52
+          headRepositoryOwner: mrnmoy
+        - headRefName: main
+          number: 43
+          title: merging
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/43
+          headRepositoryOwner: mrnmoy
+        - headRefName: main
+          number: 30
+          title: Nic on droid fix
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/30
+          headRepositoryOwner: mrnmoy
+        - headRefName: main
+          number: 28
+          title: Added nix on droid
+          state: MERGED
+          url: https://github.com/mrnmoy/dots/pull/28
+          headRepositoryOwner: mrnmoy
     /home/notscripter/fastcom: []
+    /home/notscripter/namaste-freecad: []
     /home/notscripter/namaste-ino: []
     /home/notscripter/qt-ble-esp-ota: []
     /home/notscripter/qt-qml-ble: []
