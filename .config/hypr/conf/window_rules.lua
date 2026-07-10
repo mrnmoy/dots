@@ -2,7 +2,8 @@ hl.window_rule({
     name = "pip",
     match = { title = "Picture-in-Picture" },
     float = true,
-    move = "20 monitor_w-120"
+    keep_aspect_ratio = true
+    -- move = "20 monitor_w-120"
 })
 hl.window_rule({
     name = "file-progress-float",
@@ -25,6 +26,12 @@ hl.window_rule({
     match = { class = "scrcpy" },
     float = true,
     keep_aspect_ratio = true
+})
+hl.window_rule({
+    name = "qtpass-float",
+    match = { title = "QtPass" },
+    float = true,
+    no_screen_share = true
 })
 hl.window_rule({
     name = "rmpc-float",

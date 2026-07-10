@@ -9,3 +9,5 @@ require("conf.decoration")
 require("conf.animation")
 require("conf.input")
 require("conf.misc")
+
+-- require("~/.config/themes/colors.lua")
