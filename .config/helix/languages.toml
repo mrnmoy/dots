@@ -1,9 +1,44 @@
+[language-server.bashls]
+command = "bashls"
+
+[[language]]
+name = "bash"
+language-servers = ["bashls"]
+
+[language-server.lua-language-server]
+command = "lua-language-server"
+args = [ "--stdio" ]
+
+[[language]]
+name = "lua"
+language-servers = [ "lua-language-server" ]
+
 [language-server.qmlls]
 command = "qmlls6"
 
 [[language]]
 name = "qml"
 language-servers = ["qmlls"]
+
+[language-server.tailwindcss-ls]
+command = "tailwindcss-language-server"
+args = ["--stdio"]
+
+[[language]]
+name = "html"
+language-servers = [ "vscode-html-language-server", "tailwindcss-ls" ]
+
+[[language]]
+name = "css"
+language-servers = [ "vscode-css-language-server", "tailwindcss-ls" ]
+
+[[language]]
+name = "jsx"
+language-servers = [ "typescript-language-server", "tailwindcss-ls" ]
+
+[[language]]
+name = "tsx"
+language-servers = [ "typescript-language-server", "tailwindcss-ls" ]
 
 [language-server.typescript-language-server]
 command = "typescript-language-server"
@@ -14,6 +49,15 @@ name = "typescript"
 language-servers = [ "typescript-language-server" ]
 # code-actions-on-save = [ "source.addMissingImports.ts" ]
 
+[language-server.astro-ls]
+command = "astro-ls"
+args = [ "--stdio" ]
+
+[[language]]
+name = "astro"
+auto-format = true
+language-servers = [ "astro-ls", "tailwind-ls" ]
+
 # [language-server.kotlin]
 # command = "kotlin-lsp"
 # args = ["--stdio"]
@@ -21,3 +65,15 @@ language-servers = [ "typescript-language-server" ]
 [[language]]
 name = "kotlin"
 language-servers = ["kotlin-lsp"]
+
+
+[language-server.gh-actions-language-server]
+command = 'gh-actions-language-server'
+args = ['--stdio']
+config = { sessionToken = ""}
+
+[[language]]
+name = "yaml"
+file-types = [{ glob = ".github/workflows/*.yml" }, { glob = ".github/workflows/*.yaml" }]
+language-servers = ["gh-actions-language-server"]
+roots = [".github", ".git"]

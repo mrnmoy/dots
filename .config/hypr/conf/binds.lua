@@ -1,0 +1,37 @@
+local mainMod = "SUPER"
+local terminal = "alacritty"
+local fileManager = "thunar"
+local browser = "zen-browser"
+local menu = "rofi -show drun -theme ~/.config/rofi/launcher.rasi"
+
+hl.bind(mainMod .. " + X", hl.dsp.window.close())
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("wlogout -b 4"))
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("~/config/hypr/scripts/reload.sh"))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("swaync-client -t -sw"))
+
+hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
+hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
+hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
+
+hl.bind(mainMod .. " + SHIFT + X", hl.dsp.focus({ workspace = 1 }))
+hl.bind(mainMod .. " + SHIFT + C", hl.dsp.focus({ workspace = 2 }))
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.focus({ workspace = 3 }))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.focus({ workspace = 4 }))
+hl.bind(mainMod .. " + SHIFT + D", hl.dsp.focus({ workspace = 5 }))
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.focus({ workspace = 6 }))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.focus({ workspace = 7 }))
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.focus({ workspace = 8 }))
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.focus({ workspace = 9 }))
+hl.bind(mainMod .. " + SHIFT + SPACE", hl.dsp.focus({ workspace = 10 }))
+
+for i = 1, 10 do
+    local key = i % 10 -- 10 maps to key 0
+    -- hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+    hl.bind(mainMod .. " + " .. key, hl.dsp.window.move({ workspace = i }))
+end
