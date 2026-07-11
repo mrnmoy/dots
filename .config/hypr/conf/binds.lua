@@ -46,3 +46,7 @@ hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+hl.bind(mainMod .. " + A", hl.dsp.global("quickshell:app_launcher"))
+hl.bind(mainMod .. " + slash", hl.dsp.global("quickshell:keybinds_help"))
+-- hl.bind(mainMod .. " + SHIFT + slash", hl.dsp.global("quickshell:keybinds_help"))
