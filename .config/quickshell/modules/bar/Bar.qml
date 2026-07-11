@@ -92,17 +92,13 @@ Scope {
         name: "app_launcher"
         description: "Application Launcher"
 
-        onPressed: {
-            console.log("app_launcher triggered");
-        }
+        onPressed: {}
     }
 
     GlobalShortcut {
         name: "keybinds_help"
         description: "Keybinds help"
 
-        onPressed: {
-            console.log("keybinds_help triggered");
-        }
+        onPressed: {}
     }
 }
