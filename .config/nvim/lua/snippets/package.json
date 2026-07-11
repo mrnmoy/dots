@@ -1,0 +1,55 @@
+{
+  "name": "snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "all"
+        ],
+        "path": "./all.json"
+      },
+      {
+        "language": [
+          "lua"
+        ],
+        "path": "./lua.json"
+      },
+      {
+        "language": [
+          "html"
+        ],
+        "path": "./html.json"
+      },
+      {
+        "language": [
+          "css"
+        ],
+        "path": "./css.json"
+      },
+      {
+        "language": [
+          "javascript"
+        ],
+        "path": "./js.json"
+      },
+      {
+        "language": [
+          "javascriptreact"
+        ],
+        "path": "./jsx.json"
+      },
+      {
+        "language": [
+          "typescript"
+        ],
+        "path": "./ts.json"
+      },
+      {
+        "language": [
+          "typescriptreact"
+        ],
+        "path": "./tsx.json"
+      }
+    ]
+  }
+}

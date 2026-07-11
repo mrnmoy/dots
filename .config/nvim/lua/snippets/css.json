@@ -1,0 +1,32 @@
+{
+	"transform": {
+		"prefix": "tf",
+		"body": [
+			"transform: translate(${1:-50%}, ${2:-50%};)"
+		],
+  "description": ""
+	},
+	"transition": {
+		"prefix": "tr",
+		"body": [
+			"transition: all ${1:.5s} ease-in-out;"
+		],
+  "description": ""
+	},
+
+	"*": {
+		"prefix": "*",
+		"body": [
+			"*{",
+			"margin: 0;",
+			"padding: 0;",
+   "box-sizing: border-box;",
+   "}",
+   "",
+   "html, body{",
+   " $1",
+   "}"
+		],
+  "description": ""
+	}
+}
