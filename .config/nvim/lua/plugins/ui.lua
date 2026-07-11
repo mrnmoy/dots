@@ -127,13 +127,23 @@ return {
     },
 
     {
-        "gen740/SmoothCursor.nvim",
+        "sphamba/smear-cursor.nvim",
         opts = {
-            type = "default",
-            cursor = "",
-            texthl = "@text.environment",
+            smear_between_buffers = true,
+            smear_between_neighbor_lines = true,
+            scroll_buffer_space = true,
+            legacy_computing_symbols_support = false,
+            smear_insert_mode = true,
         },
     },
+    -- {
+    --     "gen740/SmoothCursor.nvim",
+    --     opts = {
+    --         type = "default",
+    --         cursor = "",
+    --         texthl = "@text.environment",
+    --     },
+    -- },
 
     --NOTE: Dim Inactive Code
     {
