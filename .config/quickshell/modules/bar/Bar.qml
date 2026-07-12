@@ -13,8 +13,8 @@ import "../appMenu"
 Scope {
     id: root
     property string time
-    readonly property int gapIn: 5
-    readonly property int gapOut: 15
+    readonly property int gapIn: 4
+    readonly property int gapOut: 8
 
     Variants {
         model: Quickshell.screens
@@ -42,11 +42,6 @@ Scope {
                 }
                 spacing: root.gapIn
 
-                Text {
-                    text: "Left"
-                    color: "#ffffff"
-                }
-
                 AppMenuButton {}
             }
 
@@ -63,6 +58,7 @@ Scope {
                 Text {
                     text: ClockService.time
                     color: "#ffffff"
+                    font.pixelSize: 16
                 }
             }
 
@@ -88,12 +84,12 @@ Scope {
         }
     }
 
-    GlobalShortcut {
-        name: "app_launcher"
-        description: "Application Launcher"
-
-        onPressed: {}
-    }
+    // GlobalShortcut {
+    //     name: "app_launcher"
+    //     description: "Application Launcher"
+    //
+    //     onPressed: {}
+    // }
 
     GlobalShortcut {
         name: "keybinds_help"

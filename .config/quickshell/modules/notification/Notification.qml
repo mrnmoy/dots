@@ -67,6 +67,7 @@ Scope {
 
         Rectangle {
             anchors.fill: parent
+            anchors.margins: 8
             radius: 8
             color: "#01000000"
             border.width: 2
@@ -74,40 +75,62 @@ Scope {
 
             ColumnLayout {
                 anchors.fill: parent
+                anchors.margins: 8
+                spacing: 8
 
-                RowLayout {
-                    Layout.fillWidth: true
-                    implicitHeight: 60
-
-                    Text {
-                        Layout.fillWidth: true
-                        text: "Notifications"
-                        color: "orange"
-                        // font.family: Config.fontFamily
-                        // font.pixelSize: Config.fontSize
-                        font.bold: true
-                        elide: Text.ElideRight
-                    }
-
-                    BarButton {
-                        contentItem: Text {
-                            text: "Clear All"
-                            color: "red"
-                            // font.family: Config.fontFamily
-                            // font.pixelSize: Config.fontSize
-                            font.bold: true
-                        }
-                        onClicked: NotificationService.clearHistory()
-                    }
-                }
+                // RowLayout {
+                //     Layout.fillWidth: true
+                //     implicitHeight: 60
+                //
+                //     Text {
+                //         Layout.fillWidth: true
+                //         text: "Notifications"
+                //         color: "orange"
+                //         // font.family: Config.fontFamily
+                //         // font.pixelSize: Config.fontSize
+                //         font.pixelSize: 20
+                //         font.bold: true
+                //         elide: Text.ElideRight
+                //     }
+                //
+                //     BarButton {
+                //         icon: "󰎟"
+                //         // contentItem: Text {
+                //         //     text: "Clear All"
+                //         //     color: "red"
+                //         //     font.bold: true
+                //         // }
+                //         onClicked: NotificationService.clearHistory()
+                //     }
+                // }
 
                 ListView {
                     id: listView
                     // anchors.fill: parent
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    spacing: 8
                     // model: history
                     model: NotificationService.history
+                    header: RowLayout {
+                        implicitWidth: parent.width
+                        // implicitHeight: 40
+
+                        Text {
+                            Layout.fillWidth: true
+                            text: "Notifications"
+                            color: "orange"
+                            // font.family: Config.fontFamily
+                            // font.pixelSize: Config.fontSize
+                            font.pixelSize: 20
+                            font.bold: true
+                        }
+
+                        BarButton {
+                            icon: "󰎟"
+                            onClicked: NotificationService.clearHistory()
+                        }
+                    }
                     delegate: Item {
                         NotificationCard {
                             modelData: model

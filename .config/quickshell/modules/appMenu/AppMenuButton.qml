@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Layouts
+import Quickshell.Hyprland
 import "../../components"
 
 BarButton {
@@ -8,13 +8,20 @@ BarButton {
     active: appMenuPopup.visible
     onClicked: appMenuPopup.visible = !appMenuPopup.visible
 
-    contentItem: Text {
-        text: "AppMenuBtn"
-        color: "#ffffff"
-    }
+    icon: "󰣇"
+    // text: "AppMenu"
 
     AppMenuPopup {
         id: appMenuPopup
-        visible: true
+        visible: false
+    }
+
+    GlobalShortcut {
+        name: "app_launcher"
+        description: "Application Launcher"
+
+        onPressed: {
+            appMenuPopup.visible = !appMenuPopup.visible;
+        }
     }
 }

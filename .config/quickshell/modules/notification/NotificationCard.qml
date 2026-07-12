@@ -13,22 +13,22 @@ Rectangle {
     Layout.preferredHeight: 60
     // Layout.preferredHeight: layout.implicitHeight + 20
     radius: 8
-    color: "#0f0f0f"
+    color: "#01000000"
     border.width: 2
     border.color: modelData.urgency === NotificationUrgency.Critical ? "#ff0000" : "#0fffffff"
 
     RowLayout {
         id: content
         anchors.fill: parent
-        anchors.margins: 10
-        spacing: 10
+        anchors.margins: 8
+        spacing: 8
 
         Image {
             Layout.preferredWidth: 36
             Layout.preferredHeight: 36
             Layout.alignment: Qt.AlignTop
             fillMode: Image.PreserveAspectFit
-            visible: source.toString() !== ""
+            // visible: source.toString() !== ""
             source: root.modelData.image || root.modelData.appIcon || ""
         }
 
@@ -46,18 +46,14 @@ Rectangle {
                     color: "orange"
                     // font.family: Config.fontFamily
                     // font.pixelSize: Config.fontSize
+                    font.pixelSize: 16
                     font.bold: true
                     elide: Text.ElideRight
                 }
 
                 BarButton {
-                    onClicked: {
-                        dismiss();
-                    }
-                    contentItem: Text {
-                        text: "close"
-                        color: "red"
-                    }
+                    icon: ""
+                    onClicked: dismiss()
                 }
             }
 
@@ -68,6 +64,7 @@ Rectangle {
                 color: "#ffffff"
                 // font.family: Config.fontFamily
                 // font.pixelSize: Config.fontSize - 1
+                font.pixelSize: 14
                 wrapMode: Text.WordWrap
             }
 
@@ -78,6 +75,7 @@ Rectangle {
                 color: "#ffffff"
                 // font.family: Config.fontFamily
                 // font.pixelSize: Config.fontSize - 3
+                font.pixelSize: 12
                 wrapMode: Text.WordWrap
             }
         }
