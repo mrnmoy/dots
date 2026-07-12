@@ -1,6 +1,7 @@
 import Quickshell
 import "./modules/bar"
 import "./modules/notification"
+import "./modules/network"
 
 // import "./modules"
 
@@ -9,4 +10,5 @@ ShellRoot {
 
     Bar {}
     Notification {}
+    Network {}
 }
