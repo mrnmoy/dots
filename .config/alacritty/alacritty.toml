@@ -1,0 +1,29 @@
+general.import = [
+  "~/.config/themes/alacritty.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+opacity = 0
+padding = {x = 4, y = 4}
+
+[font]
+# size = 12.0
+
+[font.bold]
+family = "JetBrainsMonoNerdFont"
+style = "Bold"
+
+[font.bold_italic]
+family = "JetBrainsMonoNerdFont"
+style = "Bold Italic"
+
+[font.italic]
+family = "JetBrainsMonoNerdFont"
+style = "Italic"
+
+[font.normal]
+family = "JetBrainsMonoNerdFont"
+style = "Regular"
