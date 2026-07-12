@@ -19,37 +19,38 @@ Scope {
             right: 12
         }
 
-        implicitWidth: 380
-        implicitHeight: Math.max(1, content.implicitHeight)
+        implicitWidth: 320
+        implicitHeight: 640
+        // implicitHeight: Math.max(1, content.implicitHeight)
         color: "transparent"
         exclusionMode: ExclusionMode.Ignore
 
-        ColumnLayout {
-            id: content
-            implicitWidth: parent.width
+        ListView {
+            anchors.fill: parent
             spacing: 8
+            model: NotificationService.onScreenNotifications
 
-            Repeater {
-                model: NotificationService.onScreenNotifications
-                delegate: NotificationCard {
-                    id: card
-                    color: "#0fffffff"
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 60
+            delegate: NotificationCard {
+                id: card
 
-                    required property int index
+                required property int index
 
-                    Timer {
-                        // running: modelData.urgency !== NotificationUrgency.Critical
-                        running: true
-                        interval: 5000
-                        onTriggered: NotificationService.onScreenNotifications.remove(card.index)
-                    }
-
-                    onDismiss: {
-                        NotificationService.dismiss(index);
-                    }
+                Timer {
+                    running: !mouseArea.containsMouse
+                    interval: 5000
+                    onTriggered: NotificationService.onScreenNotifications.remove(card.index)
                 }
+
+                onDismiss: {
+                    NotificationService.dismiss(index);
+                }
+            }
+
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
             }
         }
     }
@@ -62,19 +63,19 @@ Scope {
             right: true
         }
         margins {
-            top: 30 + 12
-            right: 12
+            top: 30 + 8
+            right: 8
         }
 
-        implicitWidth: 380
+        implicitWidth: 320
+        implicitHeight: 640
         // implicitHeight: centerCol.implicitHeight + 24
-        implicitHeight: 600
         color: "transparent"
         exclusionMode: ExclusionMode.Ignore
 
         Rectangle {
             anchors.fill: parent
-            anchors.margins: 8
+            // anchors.margins: 8
             radius: 8
             color: "#01000000"
             border.width: 2
@@ -87,7 +88,7 @@ Scope {
 
                 RowLayout {
                     Layout.fillWidth: true
-                    implicitHeight: 60
+                    implicitHeight: 20
 
                     Text {
                         Layout.fillWidth: true
@@ -111,27 +112,10 @@ Scope {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     spacing: 8
-                    // model: history
                     model: NotificationService.trackedNotifications
-                    // }
-                    delegate: Item {
-                        id: card
 
-                        implicitWidth: parent.width
-                        // anchors {
-                        //     left: parent.left
-                        //     right: parent.right
-                        // }
-                        // implicitHeight: card.implicitHeight
-                        implicitHeight: 60
-
-                        required property var modelData
-
-                        NotificationCard {
-                            anchors.fill: parent
-                            modelData: card.modelData
-                            onDismiss: modelData.dismiss()
-                        }
+                    delegate: NotificationCard {
+                        onDismiss: modelData.dismiss()
                     }
                 }
             }

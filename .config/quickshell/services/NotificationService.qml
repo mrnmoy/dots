@@ -41,7 +41,10 @@ Singleton {
         bodyImagesSupported: true
 
         onNotification: n => {
+            console.log(JSON.stringify(n));
+            // TODO inline reply support, launch app onclick
             n.tracked = true;
+            n.time = Qt.formatDateTime(new Date(), "HH:mm");
             if (!root.centerOpen) {
                 onScreenNotifications.insert(0, {
                     id: n.id,
@@ -49,7 +52,7 @@ Singleton {
                     body: n.body,
                     appName: n.appName,
                     urgency: n.urgency,
-                    time: Qt.formatDateTime(new Date(), "HH:mm")
+                    time: n.time
                 });
             }
         }

@@ -16,8 +16,8 @@ PanelWindow {
     margins.top: 30
 
     // implicitHeight: content.implicitHeight + 24
-    // color: "transparent"
-    color: "#01000000"
+    color: "transparent"
+    // color: "#01000000"
     exclusionMode: ExclusionMode.Ignore
 
     Rectangle {
@@ -28,23 +28,42 @@ PanelWindow {
         implicitHeight: 640
         anchors.margins: 8
         radius: 16
-        color: "#01000000"
-        border.width: 2
-        border.color: "#0fffffff"
+        color: "transparent"
+        // color: "#01000000"
+        // border.width: 2
+        // border.color: "#0fffffff"
 
         ColumnLayout {
             anchors.fill: parent
+            spacing: 8
 
-            RowLayout {
-                Layout.fillWidth: true
+            Rectangle {
+                radius: 8
+                color: "#01000000"
+                implicitWidth: parent.width
                 implicitHeight: 60
-
-                Text {
-                    text: "🔍"
-                }
-
-                TextField {}
+            }
+            Rectangle {
+                radius: 8
+                color: "#01000000"
+                implicitWidth: parent.width
+                implicitHeight: 60
             }
         }
+
+        // ColumnLayout {
+        //     anchors.fill: parent
+        //
+        //     RowLayout {
+        //         Layout.fillWidth: true
+        //         implicitHeight: 60
+        //
+        //         Text {
+        //             text: "🔍"
+        //         }
+        //
+        //         TextField {}
+        //     }
+        // }
     }
 }
