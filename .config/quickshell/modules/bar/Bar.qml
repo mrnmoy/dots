@@ -31,7 +31,7 @@ Scope {
                 right: true
             }
 
-            implicitHeight: 30
+            implicitHeight: 34
 
             // Left
             RowLayout {
