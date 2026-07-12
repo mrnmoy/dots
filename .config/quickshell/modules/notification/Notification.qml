@@ -9,8 +9,6 @@ import "../../services"
 Scope {
     id: root
 
-    property bool centerOpen: false
-
     PanelWindow {
         anchors {
             top: true
@@ -32,16 +30,25 @@ Scope {
             spacing: 8
 
             Repeater {
-                model: NotificationService.trackedNotifications
+                model: NotificationService.onScreenNotifications
                 delegate: NotificationCard {
+                    id: card
+                    color: "#0fffffff"
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 60
+
+                    required property int index
 
                     Timer {
-                        running: modelData.urgency !== NotificationUrgency.Critical
+                        // running: modelData.urgency !== NotificationUrgency.Critical
+                        running: true
                         interval: 5000
-                        onTriggered: modelData.dismiss()
+                        onTriggered: NotificationService.onScreenNotifications.remove(card.index)
                     }
 
-                    onDismiss: modelData.dismiss()
+                    onDismiss: {
+                        NotificationService.dismiss(index);
+                    }
                 }
             }
         }
@@ -49,7 +56,7 @@ Scope {
 
     // Notification Center
     PanelWindow {
-        visible: root.centerOpen
+        visible: NotificationService.centerOpen
         anchors {
             top: true
             right: true
@@ -78,77 +85,56 @@ Scope {
                 anchors.margins: 8
                 spacing: 8
 
-                // RowLayout {
-                //     Layout.fillWidth: true
-                //     implicitHeight: 60
-                //
-                //     Text {
-                //         Layout.fillWidth: true
-                //         text: "Notifications"
-                //         color: "orange"
-                //         // font.family: Config.fontFamily
-                //         // font.pixelSize: Config.fontSize
-                //         font.pixelSize: 20
-                //         font.bold: true
-                //         elide: Text.ElideRight
-                //     }
-                //
-                //     BarButton {
-                //         icon: "󰎟"
-                //         // contentItem: Text {
-                //         //     text: "Clear All"
-                //         //     color: "red"
-                //         //     font.bold: true
-                //         // }
-                //         onClicked: NotificationService.clearHistory()
-                //     }
-                // }
+                RowLayout {
+                    Layout.fillWidth: true
+                    implicitHeight: 60
+
+                    Text {
+                        Layout.fillWidth: true
+                        text: "Notifications"
+                        color: "orange"
+                        // font.family: Config.fontFamily
+                        // font.pixelSize: Config.fontSize
+                        font.pixelSize: 20
+                        font.bold: true
+                        elide: Text.ElideRight
+                    }
+
+                    BarButton {
+                        icon: "󰎟"
+                        onClicked: NotificationService.dismissAll()
+                    }
+                }
 
                 ListView {
-                    id: listView
-                    // anchors.fill: parent
+                    id: trackedNotifications
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     spacing: 8
                     // model: history
-                    model: NotificationService.history
-                    header: RowLayout {
-                        implicitWidth: parent.width
-                        // implicitHeight: 40
-
-                        Text {
-                            Layout.fillWidth: true
-                            text: "Notifications"
-                            color: "orange"
-                            // font.family: Config.fontFamily
-                            // font.pixelSize: Config.fontSize
-                            font.pixelSize: 20
-                            font.bold: true
-                        }
-
-                        BarButton {
-                            icon: "󰎟"
-                            onClicked: NotificationService.clearHistory()
-                        }
-                    }
+                    model: NotificationService.trackedNotifications
+                    // }
                     delegate: Item {
+                        id: card
+
+                        implicitWidth: parent.width
+                        // anchors {
+                        //     left: parent.left
+                        //     right: parent.right
+                        // }
+                        // implicitHeight: card.implicitHeight
+                        implicitHeight: 60
+
+                        required property var modelData
+
                         NotificationCard {
-                            modelData: model
-                            // onDismiss: history.remove(index)
-                            onDismiss: NotificationService.removeHistory(index)
+                            anchors.fill: parent
+                            modelData: card.modelData
+                            onDismiss: modelData.dismiss()
                         }
                     }
                 }
             }
-        }
-    }
-
-    GlobalShortcut {
-        name: "controls_center"
-        description: "Controls Center"
-
-        onPressed: {
-            root.centerOpen = !root.centerOpen;
         }
     }
 }

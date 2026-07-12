@@ -5,12 +5,14 @@ import "../../components"
 
 Rectangle {
     id: root
+
     required property var modelData
 
     signal dismiss
 
-    Layout.fillWidth: true
-    Layout.preferredHeight: 60
+    // anchors.fill: parent
+    // Layout.fillWidth: true
+    // Layout.preferredHeight: 60
     // Layout.preferredHeight: layout.implicitHeight + 20
     radius: 8
     color: "#01000000"
