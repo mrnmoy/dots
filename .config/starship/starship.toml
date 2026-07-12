@@ -1,0 +1,62 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+
+format = """
+[  ]()\
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$rust\
+$golang\
+$php\
+\n$character"""
+
+[directory]
+style = ""
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+"Media" = " "
+
+[git_branch]
+symbol = ""
+style = "bg:crust"
+format = '[[ $symbol $branch ](fg:mauve bg:crust)]($style)'
+
+[git_status]
+style = "bg:crust"
+format = '[[($all_status$ahead_behind )](fg:mauve bg:crust)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:mantle"
+format = '[[ $symbol ($version) ](fg:mauve bg:mantle)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:mantle"
+format = '[[ $symbol ($version) ](fg:mauve bg:mantle)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:mantle"
+format = '[[ $symbol ($version) ](fg:mauve bg:mantle)]($style)'
+
+[php]
+symbol = ""
+style = "bg:mantle"
+format = '[[ $symbol ($version) ](fg:mauve bg:mantle)]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:crust"
+format = '[[  $time ](fg:mauve bg:crust)]($style)'
