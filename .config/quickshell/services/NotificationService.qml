@@ -44,7 +44,9 @@ Singleton {
             console.log(JSON.stringify(n));
             // TODO inline reply support, launch app onclick and expire
             n.tracked = true;
-            n.time = Qt.formatDateTime(new Date(), "HH:mm");
+            // n.time = Date.now();
+            n.time = new Date();
+            // n.time = Qt.formatDateTime(new Date(), "HH:mm");
             if (!root.centerOpen) {
                 onScreenNotifications.insert(0, {
                     id: n.id,

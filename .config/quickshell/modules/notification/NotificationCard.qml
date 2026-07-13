@@ -11,8 +11,8 @@ Rectangle {
     signal dismiss
 
     implicitWidth: parent.width
-    implicitHeight: 80
-    radius: 8
+    implicitHeight: 100
+    radius: 16
     // color: "#01000000"
     color: modelData.urgency === NotificationUrgency.Critical ? "#0fff0000" : "#0fffffff"
     // border.width: 2
@@ -29,6 +29,7 @@ Rectangle {
             implicitHeight: 16
 
             Image {
+                id: appIcon
                 visible: root.modelData.image !== "" || source.toString() !== ""
                 source: root.modelData.appIcon || ""
 
@@ -38,22 +39,43 @@ Rectangle {
                 fillMode: Image.PreserveAspectFit
             }
 
-            Text {
-                visible: text !== ""
-                text: root.modelData.appName
+            Rectangle {
+                visible: !appIcon.visible
+                radius: 99
+                color: "#0fffffff"
+                implicitWidth: 24
+                implicitHeight: 24
 
-                Layout.fillWidth: true
-                color: "#ffffff"
-                font.pixelSize: 12
+                Text {
+                    text: "󰂚"
+                    anchors.centerIn: parent
+
+                    color: "#ffffff"
+                    font.pixelSize: 16
+                }
             }
 
-            Text {
-                visible: text !== ""
-                text: root.modelData.time
+            ColumnLayout {
+                Layout.fillWidth: true
+                implicitHeight: 24
+                spacing: 0
 
-                Layout.alignment: Qt.AlignRight
-                color: "#ffffff"
-                font.pixelSize: 12
+                Text {
+                    text: root.modelData.appName || "Unknown"
+
+                    color: "#ffffff"
+                    font.pixelSize: 12
+                }
+
+                Text {
+                    visible: text !== ""
+                    // text: root.modelData.time
+                    text: formatTime(root.modelData.time)
+
+                    // Layout.alignment: Qt.AlignRight
+                    color: "#ffffff"
+                    font.pixelSize: 10
+                }
             }
         }
 
@@ -111,5 +133,13 @@ Rectangle {
                 }
             }
         }
+    }
+
+    function formatTime(date: Date): string {
+        switch (date.getHours()) {
+            case 0: return "just now";
+            break;
+        }
+        return date.getHours();
     }
 }

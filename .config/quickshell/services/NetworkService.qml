@@ -51,7 +51,7 @@ Singleton {
             // const txBytes = parseInt(txFile.text().trim() || "0", 10) || 0;
             let rxBytes = parseInt(rxFile.text().trim());
             let txBytes = parseInt(txFile.text().trim());
-            console.log("rxBytes", rxBytes, "txBytes", txBytes);
+            // console.log("rxBytes", rxBytes, "txBytes", txBytes);
 
             if (!state.initialized) {
                 state.prevRxBytes = rxBytes;
@@ -68,15 +68,15 @@ Singleton {
             state.prevTxBytes = txBytes;
             root._state = state;
 
-            if (root.downBytesSec < 1024) {
-                console.log("DownByte", root.downBytesSec);
-            } else if (root.downBytesSec < 1024000) {
-                console.log("DownKB", (root.downBytesSec / 1024.0).toFixed(1));
-            } else if (root.downBytesSec < 1024000000) {
-                console.log("DownMB", (root.downBytesSec / 1024000.0).toFixed(1));
-            } else if (root.downBytesSec < 1024000000000) {
-                console.log("DownGB", (root.downBytesSec / 1024000000.0).toFixed(1));
-            }
+            // if (root.downBytesSec < 1024) {
+            //     console.log("DownByte", root.downBytesSec);
+            // } else if (root.downBytesSec < 1024000) {
+            //     console.log("DownKB", (root.downBytesSec / 1024.0).toFixed(1));
+            // } else if (root.downBytesSec < 1024000000) {
+            //     console.log("DownMB", (root.downBytesSec / 1024000.0).toFixed(1));
+            // } else if (root.downBytesSec < 1024000000000) {
+            //     console.log("DownGB", (root.downBytesSec / 1024000000.0).toFixed(1));
+            // }
         }
     }
 

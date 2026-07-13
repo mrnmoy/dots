@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Networking
+// import Quickshell.Networking
 import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Hyprland
@@ -13,8 +13,8 @@ import "../appMenu"
 Scope {
     id: root
     property string time
-    readonly property int gapIn: 4
-    readonly property int gapOut: 8
+    readonly property int gapIn: 8
+    readonly property int gapOut: 4
 
     Variants {
         model: Quickshell.screens
@@ -54,12 +54,6 @@ Scope {
                     rightMargin: root.gapOut
                 }
                 spacing: root.gapIn
-
-                Text {
-                    text: ClockService.time
-                    color: "#ffffff"
-                    font.pixelSize: 16
-                }
             }
 
             // Right
@@ -71,9 +65,11 @@ Scope {
                 }
                 spacing: root.gapIn
 
+                Network {}
                 Text {
-                    text: "Right"
+                    text: ClockService.time
                     color: "#ffffff"
+                    font.pixelSize: 16
                 }
             }
 

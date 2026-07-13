@@ -20,13 +20,19 @@ Scope {
         }
 
         implicitWidth: 320
-        implicitHeight: 640
-        // implicitHeight: Math.max(1, content.implicitHeight)
+        // implicitHeight: 640
+        // implicitHeight: content.implicitHeight
         color: "transparent"
         exclusionMode: ExclusionMode.Ignore
 
         ListView {
-            anchors.fill: parent
+            id: content
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+            }
+            // anchors.fill: parent
             spacing: 8
             model: NotificationService.onScreenNotifications
 
