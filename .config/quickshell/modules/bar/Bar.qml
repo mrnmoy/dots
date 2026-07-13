@@ -11,24 +11,21 @@ import "../launcher"
 
 PanelWindow {
     id: root
+    anchors {
+        top: true
+        left: true
+        right: true
+    }
+    implicitHeight: 34
+    color: "#01000000"
+    // color: "transparent"
+    screen: Quickshell.screens[0]
 
     readonly property int gapIn: 8
     readonly property int gapOut: 4
 
     required property var launcherWindow
     required property var controlcenterWindow
-
-    screen: Quickshell.screens[0]
-    // color: "transparent"
-    color: "#01000000"
-
-    anchors {
-        top: true
-        left: true
-        right: true
-    }
-
-    implicitHeight: 34
 
     // Left
     RowLayout {
@@ -79,24 +76,5 @@ PanelWindow {
             icon: "󰒓"
             onClicked: root.controlcenterWindow.visible = !root.controlcenterWindow.visible
         }
-    }
-
-    // Text {
-    //     text: Network.connected ? "Connected" : "Disconnected"
-    //     color: "#ffffff"
-    // }
-
-    // GlobalShortcut {
-    //     name: "app_launcher"
-    //     description: "Application Launcher"
-    //
-    //     onPressed: {}
-    // }
-
-    GlobalShortcut {
-        name: "keybinds_help"
-        description: "Keybinds help"
-
-        onPressed: {}
     }
 }

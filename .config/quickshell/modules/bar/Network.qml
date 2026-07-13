@@ -29,6 +29,9 @@ RowLayout {
     }
 
     function formatBytes(bytes: int): string {
+        // const gb = bytes / (1024 ** 3);
+        // const mb = bytes / (1024 ** 2);
+        // const kb = bytes / (1024);
         if (bytes < 1024) {
             return (bytes / 1.0).toFixed(1) + "B/s";
         } else if (bytes < 1024000) {

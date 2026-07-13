@@ -25,7 +25,7 @@ ShellRoot {
         id: launcherWindow
         visible: false
     }
-    LauncherWindow {
+    HelpWindow {
         id: helpWindow
         visible: false
     }

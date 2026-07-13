@@ -11,15 +11,16 @@ PanelWindow {
     id: root
 
     anchors {
-        left: true
-        right: true
+        // left: true
         bottom: true
+        // right: true
     }
-    margins {
-        left: 8
-        right: 8
-        bottom: 0
-    }
+    exclusionMode: ExclusionMode.Ignore
+    // margins {
+    //     left: 8
+    //     right: 8
+    //     bottom: 0
+    // }
 
     implicitWidth: Math.min(640, screen.width / 1.5)
     implicitHeight: Math.min(420, screen.height - 40)
@@ -39,22 +40,22 @@ PanelWindow {
         focus: true
         Keys.onEscapePressed: root.visible = false
 
-        // HoverHandler {
-        //     id: hoverHandler
-        //     onHoveredChanged: {
-        //         if (hovered)
-        //             closeTimer.stop();
-        //         else if (root.visible)
-        //             closeTimer.restart();
-        //     }
-        // }
+        HoverHandler {
+            id: hoverHandler
+            onHoveredChanged: {
+                if (hovered)
+                    closeTimer.stop();
+                else if (root.visible)
+                    closeTimer.restart();
+            }
+        }
 
-        // Timer {
-        //     id: closeTimer
-        //     interval: 500
-        //     onTriggered: if (!hoverHandler.hovered)
-        //         root.visible = false
-        // }
+        Timer {
+            id: closeTimer
+            interval: 150
+            onTriggered: if (!hoverHandler.hovered)
+                root.visible = false
+        }
 
         // Behavior on scale {
         //     NumberAnimation {

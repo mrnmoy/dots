@@ -25,6 +25,7 @@ PanelWindow {
 
     screen: Quickshell.screens[0]
     WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+    // SystemUsage.active: active
 
     FocusScope {
         id: panelContent
@@ -186,4 +187,8 @@ PanelWindow {
             }
         }
     }
+
+    // Component.onCompleted: {
+    //     SystemUsage.active = root.active;
+    // }
 }

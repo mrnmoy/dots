@@ -22,7 +22,7 @@ PanelWindow {
     //     bottom: 8
     // }
 
-    implicitWidth: 420
+    implicitWidth: Math.min(640, screen.width - 40)
     implicitHeight: Math.min(860, screen.height - 40)
     color: "transparent"
 
@@ -73,6 +73,8 @@ PanelWindow {
         Rectangle {
             id: panel
             anchors.fill: parent
+            // implicitWidth: 100
+            // implicitHeight: 50
             anchors.margins: 16
             radius: 16
             color: "#0fffffff"
