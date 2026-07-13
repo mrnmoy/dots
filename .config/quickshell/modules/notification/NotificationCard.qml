@@ -68,6 +68,7 @@ Rectangle {
                 }
 
                 Text {
+                    id: time
                     visible: text !== ""
                     // text: root.modelData.time
                     text: formatTime(root.modelData.time)
@@ -75,7 +76,23 @@ Rectangle {
                     // Layout.alignment: Qt.AlignRight
                     color: "#ffffff"
                     font.pixelSize: 10
+
+                    Timer {
+                        // running: true
+                        running: root.visible
+                        interval: 60000
+                        repeat: true
+                        // triggeredOnStart: true
+                        triggeredOnStart: false
+
+                        onTriggered: time.text = formatTime(root.modelData.time)
+                    }
                 }
+            }
+
+            BarButton {
+                icon: ""
+                onClicked: dismiss()
             }
         }
 
@@ -113,11 +130,6 @@ Rectangle {
                         font.bold: true
                         elide: Text.ElideRight
                     }
-
-                    BarButton {
-                        icon: ""
-                        onClicked: dismiss()
-                    }
                 }
 
                 Text {
@@ -135,11 +147,27 @@ Rectangle {
         }
     }
 
-    function formatTime(date: Date): string {
-        switch (date.getHours()) {
-            case 0: return "just now";
-            break;
+    function formatTime(date): string {
+        const currentDate = new Date();
+        // const deltaM = currentDate.getMinutes() - date.getMinutes()
+        const deltaT = Math.floor((currentDate.getTime() - date.getTime()) / 60000);
+        // console.log("deltaT", deltaT);
+        if (deltaT < 1) {
+            return "Just now";
+        } else if (deltaT < 60) {
+            return deltaT + " Min ago";
+        } else if (deltaT < (60 * 24)) {
+            return (currentDate.getHours() - date.getHours()) + " Hours" + (currentDate.getMinutes() - date.getMinutes()) + " Min ago";
         }
-        return date.getHours();
+        return date.toDateString();
+
+        // const deltaT = (time - Date.now()) / 60000;
+        // if (deltaT < 1) {
+        //     return "Just now";
+        // } else if (deltaT < 60) {
+        //     return deltaT + "Mins ago";
+        // } else if (deltaT < (60 * 24)) {
+        //     return deltaT / 60 + "Hours" + "Mins ago";
+        // }
     }
 }

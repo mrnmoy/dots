@@ -22,17 +22,19 @@ Scope {
         implicitWidth: 320
         // implicitHeight: 640
         // implicitHeight: content.implicitHeight
+        // implicitHeight: content.height
         color: "transparent"
         exclusionMode: ExclusionMode.Ignore
 
         ListView {
             id: content
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-            }
+            // anchors {
+            //     top: parent.top
+            //     left: parent.left
+            //     right: parent.right
+            // }
             // anchors.fill: parent
+            implicitWidth: parent.width
             spacing: 8
             model: NotificationService.onScreenNotifications
 
@@ -116,9 +118,10 @@ Scope {
                 ListView {
                     id: trackedNotifications
                     Layout.fillWidth: true
-                    Layout.fillHeight: true
+                    // Layout.fillHeight: true
                     spacing: 8
                     model: NotificationService.trackedNotifications
+                    verticalLayoutDirection: ListView.BottomToTop
 
                     delegate: NotificationCard {
                         onDismiss: modelData.dismiss()

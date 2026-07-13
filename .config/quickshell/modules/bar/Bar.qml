@@ -68,8 +68,11 @@ Scope {
                 Network {}
                 Text {
                     text: ClockService.time
-                    color: "#ffffff"
+                    font.family: "Inter"
                     font.pixelSize: 16
+                    font.weight: Font.Black
+                    color: "#ffffff"
+                    lineHeight: 0.9
                 }
             }
 

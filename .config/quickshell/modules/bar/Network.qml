@@ -12,12 +12,12 @@ RowLayout {
     id: root
 
     Text {
-        text: formatBytes(NetworkService.downBytesSec)
+        text: " " + formatBytes(NetworkService.downBytesSec)
         color: "#ffffff"
         font.pixelSize: 16
     }
     Text {
-        text: formatBytes(NetworkService.upBytesSec)
+        text: " " + formatBytes(NetworkService.upBytesSec)
         color: "#ffffff"
         font.pixelSize: 16
     }

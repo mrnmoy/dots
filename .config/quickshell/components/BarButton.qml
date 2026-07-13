@@ -9,7 +9,7 @@ Rectangle {
     property string text: ""
     property string desc: ""
     property color textColor: "#ffffff"
-    property color hoveredTextColor: "#00ff00"
+    property color hoveredTextColor: "#ff9933"
     readonly property bool hovered: mouseArea.containsMouse
 
     signal clicked

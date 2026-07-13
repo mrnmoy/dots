@@ -60,14 +60,14 @@ Singleton {
         }
     }
 
-    GlobalShortcut {
-        name: "controls_center"
-        description: "Controls Center"
-
-        onPressed: {
-            root.centerOpen = !root.centerOpen;
-            if (root.centerOpen)
-                root.onScreenNotifications.clear();
-        }
-    }
+    // GlobalShortcut {
+    //     name: "controls_center"
+    //     description: "Controls Center"
+    //
+    //     onPressed: {
+    //         root.centerOpen = !root.centerOpen;
+    //         if (root.centerOpen)
+    //             root.onScreenNotifications.clear();
+    //     }
+    // }
 }
