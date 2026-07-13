@@ -13,13 +13,19 @@ RowLayout {
 
     Text {
         text: " " + formatBytes(NetworkService.downBytesSec)
-        color: "#ffffff"
+        font.family: "Inter"
         font.pixelSize: 16
+        font.weight: Font.Black
+        color: "#ffffff"
+        lineHeight: 0.9
     }
     Text {
         text: " " + formatBytes(NetworkService.upBytesSec)
-        color: "#ffffff"
+        font.family: "Inter"
         font.pixelSize: 16
+        font.weight: Font.Black
+        color: "#ffffff"
+        lineHeight: 0.9
     }
 
     function formatBytes(bytes: int): string {
@@ -34,15 +40,3 @@ RowLayout {
         }
     }
 }
-
-// Scope {
-//     id: root
-//
-//     Variants {
-//         model: Quickshell.screens
-//
-//         Component.onCompleted: {
-//             NetworkService.interfacename = "enp0s20u1";
-//         }
-//     }
-// }

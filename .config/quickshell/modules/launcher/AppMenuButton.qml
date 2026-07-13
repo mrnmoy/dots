@@ -16,12 +16,12 @@ BarButton {
         visible: false
     }
 
-    GlobalShortcut {
-        name: "app_launcher"
-        description: "Application Launcher"
-
-        onPressed: {
-            appMenuPopup.visible = !appMenuPopup.visible;
-        }
-    }
+    // GlobalShortcut {
+    //     name: "app_launcher"
+    //     description: "Application Launcher"
+    //
+    //     onPressed: {
+    //         appMenuPopup.visible = !appMenuPopup.visible;
+    //     }
+    // }
 }
