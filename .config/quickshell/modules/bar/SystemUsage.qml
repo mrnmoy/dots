@@ -22,7 +22,7 @@ RowLayout {
         size: 28
         lineWidth: 3
         icon: ""
-        value: SystemUsage.diskTemp
+        value: SystemUsage.diskUsage
     }
     CircularProgressBar {
         size: 28
