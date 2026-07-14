@@ -1,40 +1,30 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
+import QtQuick.Effects
+import QtQuick.Shapes
 import Quickshell
 import Quickshell.Wayland
-import Quickshell.Hyprland
-import "../../components"
-import "../../services"
-import "../notification"
 
 PanelWindow {
     id: root
 
     anchors {
-        // left: true
         bottom: true
-        // right: true
     }
-    exclusionMode: ExclusionMode.Ignore
-    // margins {
-    //     left: 8
-    //     right: 8
-    //     bottom: 0
-    // }
 
-    implicitWidth: Math.min(640, screen.width / 1.5) + 32
-    implicitHeight: Math.min(420, screen.height - 40)
     color: "transparent"
+    implicitWidth: Math.min(540, screen.width - 40)
+    implicitHeight: Math.min(640, screen.height - 40)
 
     screen: Quickshell.screens[0]
     WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+    exclusionMode: ExclusionMode.Ignore
 
     FocusScope {
         id: panelContent
         anchors.fill: parent
 
-        transformOrigin: Item.TopRight
+        transformOrigin: Item.Bottom
         scale: visible ? 1.0 : 0.5
         opacity: visible ? 1.0 : 0.0
 
@@ -53,7 +43,7 @@ PanelWindow {
 
         Timer {
             id: closeTimer
-            interval: 150
+            interval: 500
             onTriggered: if (!hoverHandler.hovered)
                 root.visible = false
         }
@@ -71,100 +61,155 @@ PanelWindow {
         //     }
         // }
 
-        InvertedCorner {
-            anchors {
-                left: parent.left
-                bottom: parent.bottom
-            }
-            rotation: 90
-        }
-        InvertedCorner {
-            anchors {
-                right: parent.right
-                bottom: parent.bottom
-            }
-            rotation: 180
+        MultiEffect {
+            source: background
+            anchors.fill: background
+            maskEnabled: true
+            maskSource: mask
+
+            layer.smooth: true
+
+            maskThresholdMin: 0.5
+            maskSpreadAtMin: 1.0
         }
 
         Rectangle {
-            id: panel
-            // anchors.fill: parent
-            anchors.horizontalCenter: parent.horizontalCenter
-            implicitWidth: parent.width - 32
-            implicitHeight: parent.height
-            color: "#0fffffff"
-            topRightRadius: 16
-            topLeftRadius: 16
+            id: background
+            anchors.fill: parent
+            visible: false
+            smooth: true
+            color: "#01000000"
+        }
+
+        Shape {
+            id: mask
+            anchors.fill: background
+            antialiasing: true
+
+            visible: false
             layer.enabled: true
-            clip: true
 
-            ColumnLayout {
-                anchors.fill: parent
-                anchors.margins: 16
-                spacing: 16
+            preferredRendererType: Shape.CurveRenderer
 
-                Rectangle {
-                    Layout.fillWidth: true
-                    implicitHeight: 32
-                    // Layout.alignment: Qt.AlignTop
-                    color: "#0fffffff"
-                    radius: 16
+            ShapePath {
+                strokeColor: "transparent"
 
-                    RowLayout {
-                        anchors.fill: parent
-                        Layout.leftMargin: 16
-                        Layout.rightMargin: 16
-                        spacing: 16
+                startX: 0
+                startY: mask.height
 
-                        Text {
-                            text: ""
-                            font.pixelSize: 16
-                            font.weight: Font.Black
-                            color: "#ffffff"
-                            // lineHeight: 0.9
-                        }
-                        TextField {
-                            font.family: "Inter"
-                            font.pixelSize: 16
-                            font.weight: Font.Medium
-                            color: "#f1f1f1"
-                        }
-                    }
+                PathArc {
+                    direction: PathArc.Counterclockwise
+                    radiusX: 20
+                    radiusY: 20
+                    x: 20
+                    y: mask.height - 20
                 }
+                PathLine {
+                    x: 20
+                    y: 20
+                }
+                PathArc {
+                    radiusX: 20
+                    radiusY: 20
+                    x: 40
+                    y: 0
+                }
+                PathLine {
+                    x: mask.width - 40
+                    y: 0
+                }
+                PathArc {
+                    direction: PathArc.Clockwise
+                    radiusX: 20
+                    radiusY: 20
+                    x: mask.width - 20
+                    y: 20
+                }
+                PathLine {
+                    x: mask.width - 20
+                    y: mask.height - 20
+                }
+                PathArc {
+                    direction: PathArc.Counterclockwise
+                    radiusX: 20
+                    radiusY: 20
+                    x: mask.width
+                    y: mask.height
+                }
+                PathLine {
+                    x: 0
+                    y: mask.height
+                }
+            }
+        }
 
-                Flickable {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    clip: true
-                    // contentHeight: content.height
+        ColumnLayout {
+            anchors.fill: background
+            anchors.topMargin: 16
+            anchors.leftMargin: 32
+            anchors.rightMargin: 32
+            spacing: 16
 
-                    maximumFlickVelocity: 3000
-                    flickDeceleration: 1500
-                    boundsBehavior: Flickable.DragAndOvershootBounds
-                    boundsMovement: Flickable.FollowBoundsBehavior
+            Rectangle {
+                Layout.fillWidth: true
+                implicitHeight: 40
+                color: "#0fffffff"
+                radius: 20
 
-                    rebound: Transition {
-                        NumberAnimation {
-                            properties: "x,y"
-                            duration: 150
-                            easing.bezierCurve: [0.85, 0, 0.15, 1]
-                        }
+                RowLayout {
+                    anchors.fill: parent
+                    Layout.leftMargin: 16
+                    Layout.rightMargin: 16
+                    spacing: 16
+
+                    Text {
+                        text: "󰣇"
+                        font.pixelSize: 20
+                        font.weight: Font.Black
+                        color: "#ffffff"
+                        Layout.leftMargin: 16
                     }
-
-                    ColumnLayout {
-                        Layout.fillWidth: true
-                        spacing: 0
-
-                        // Sliders
-                    }
-
-                    // ListView {
-                    //     clip: true
-                    //     spacing: 8
-                    //     model: NotificationService.trackedNotifications ?? []
-                    //     delegate: NotificationCard {}
+                    // TextField {
+                    //     font.family: "Inter"
+                    //     font.pixelSize: 16
+                    //     font.weight: Font.Medium
+                    //     color: "#f1f1f1"
                     // }
                 }
+            }
+
+            Flickable {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                clip: true
+                // contentHeight: content.height
+
+                maximumFlickVelocity: 3000
+                flickDeceleration: 1500
+                boundsBehavior: Flickable.DragAndOvershootBounds
+                boundsMovement: Flickable.FollowBoundsBehavior
+
+                rebound: Transition {
+                    NumberAnimation {
+                        properties: "x,y"
+                        duration: 150
+                        easing.bezierCurve: [0.85, 0, 0.15, 1]
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 0
+
+                    // Sliders
+                }
+
+                // ListView {
+                //     clip: true
+                //     spacing: 8
+                //     model: NotificationService.trackedNotifications ?? []
+                //     delegate: NotificationCard {}
+                // }
             }
         }
     }

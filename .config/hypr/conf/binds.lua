@@ -6,6 +6,7 @@ local menu = "rofi -show drun -theme ~/.config/rofi/launcher.rasi"
 local clipboard = "cliphist list | rofi -dmenu -theme ~/.config/rofi/clipboard.rasi | cliphist decode | wl-copy"
 local passManager = "qtpass"
 
+-- Actions
 hl.bind(mainMod .. " + X", hl.dsp.window.close())
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))
@@ -18,12 +19,25 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("swaync-client -t -sw"))
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd(clipboard))
 hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd(passManager))
+hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("flameshot gui"))
 
+-- Media Controls
+hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("alacritty --title rmpc --command rmpc"))
+hl.bind(mainMod .. " + ALT + SPACE", hl.dsp.exec_cmd("mpc toggle"))
+hl.bind(mainMod .. " + ALT + H", hl.dsp.exec_cmd("mpc seek -5%"))
+hl.bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd("mpc seek +5%"))
+hl.bind(mainMod .. " + ALT + J", hl.dsp.exec_cmd("amixer set Master 5%-"))
+hl.bind(mainMod .. " + ALT + K", hl.dsp.exec_cmd("amixer set Master 5%+"))
+hl.bind(mainMod .. " + ALT + N", hl.dsp.exec_cmd("mpc next"))
+hl.bind(mainMod .. " + ALT + P", hl.dsp.exec_cmd("mpc prev"))
+
+-- Navigations
 hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
 hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
 
+-- Workspaces
 hl.bind(mainMod .. " + SHIFT + X", hl.dsp.focus({ workspace = 1 }))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.focus({ workspace = 2 }))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.focus({ workspace = 3 }))
