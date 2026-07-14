@@ -15,19 +15,19 @@ RowLayout {
     CircularProgressBar {
         size: 28
         lineWidth: 3
-        icon: ""
+        icon: ""
         value: SystemUsage.memUsage
     }
     CircularProgressBar {
         size: 28
         lineWidth: 3
-        icon: ""
+        icon: "󰋊"
         value: SystemUsage.diskUsage
     }
     CircularProgressBar {
         size: 28
         lineWidth: 3
-        icon: ""
-        value: SystemUsage.cpuTemp
+        icon: "󰔄"
+        value: SystemUsage.cpuTemp / 100
     }
 }
