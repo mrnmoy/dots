@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Hyprland
@@ -22,7 +23,7 @@ PanelWindow {
     //     bottom: 0
     // }
 
-    implicitWidth: Math.min(640, screen.width / 1.5)
+    implicitWidth: Math.min(640, screen.width / 1.5) + 32
     implicitHeight: Math.min(420, screen.height - 40)
     color: "transparent"
 
@@ -70,11 +71,31 @@ PanelWindow {
         //     }
         // }
 
+        InvertedCorner {
+            anchors {
+                left: parent.left
+                bottom: parent.bottom
+            }
+            rotation: 90
+        }
+        InvertedCorner {
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+            }
+            rotation: 180
+        }
+
         Rectangle {
             id: panel
-            anchors.fill: parent
-            radius: 16
+            // anchors.fill: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            implicitWidth: parent.width - 32
+            implicitHeight: parent.height
             color: "#0fffffff"
+            topRightRadius: 16
+            topLeftRadius: 16
+            layer.enabled: true
             clip: true
 
             ColumnLayout {
@@ -82,44 +103,31 @@ PanelWindow {
                 anchors.margins: 16
                 spacing: 16
 
-                RowLayout {
+                Rectangle {
                     Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignTop
-                    spacing: 16
-
-                    ColumnLayout {
-                        spacing: 0
-
-                        Text {
-                            text: ClockService.time
-                            font.family: "Inter"
-                            font.pixelSize: 42
-                            font.weight: Font.Black
-                            color: "#ffffff"
-                            lineHeight: 0.9
-                        }
-                        Text {
-                            text: ClockService.date
-                            font.family: "Inter"
-                            font.pixelSize: 12
-                            font.weight: Font.Medium
-                            color: "#f1f1f1"
-                            lineHeight: 1.5
-                        }
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
+                    implicitHeight: 32
+                    // Layout.alignment: Qt.AlignTop
+                    color: "#0fffffff"
+                    radius: 16
 
                     RowLayout {
-                        spacing: 8
+                        anchors.fill: parent
+                        Layout.leftMargin: 16
+                        Layout.rightMargin: 16
+                        spacing: 16
 
-                        BarButton {
-                            icon: "󰒓"
+                        Text {
+                            text: ""
+                            font.pixelSize: 16
+                            font.weight: Font.Black
+                            color: "#ffffff"
+                            // lineHeight: 0.9
                         }
-                        BarButton {
-                            icon: "󰐥"
+                        TextField {
+                            font.family: "Inter"
+                            font.pixelSize: 16
+                            font.weight: Font.Medium
+                            color: "#f1f1f1"
                         }
                     }
                 }
