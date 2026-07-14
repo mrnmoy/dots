@@ -5,7 +5,7 @@ import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Hyprland
 // import qs.services
-import "../../services"
+// import "../../services"
 import "../../components"
 import "../launcher"
 
@@ -64,14 +64,8 @@ PanelWindow {
         spacing: root.gapIn
 
         Network {}
-        Text {
-            text: ClockService.time
-            font.family: "Inter"
-            font.pixelSize: 16
-            font.weight: Font.Black
-            color: "#ffffff"
-            lineHeight: 0.9
-        }
+        SystemUsage {}
+        Clock {}
         BarButton {
             icon: "󰒓"
             onClicked: root.controlcenterWindow.visible = !root.controlcenterWindow.visible

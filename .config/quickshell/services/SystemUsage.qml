@@ -12,6 +12,7 @@ Singleton {
     property real cpuUsage: 0
     property real memUsage: memTotal > 0 ? memUsed / memTotal : 0
     property real diskUsage: diskTotal > 0 ? diskUsed / diskTotal : 0
+    property real cpuTemp: 0
 
     property real memUsed: 0
     property real memTotal: 0
