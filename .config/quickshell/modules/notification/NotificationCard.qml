@@ -7,13 +7,13 @@ Rectangle {
     id: root
 
     required property var modelData
+    required property int index
 
     signal dismiss
 
     implicitWidth: parent.width
     implicitHeight: 100
     radius: 16
-    // color: "#01000000"
     color: modelData.urgency === NotificationUrgency.Critical ? "#0fff0000" : "#0fffffff"
     // border.width: 2
     // border.color: modelData.urgency === NotificationUrgency.Critical ? "#ff0000" : "#0fffffff"

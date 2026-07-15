@@ -10,4 +10,8 @@ Singleton {
             maxResults: 5,
             favourites: ["Alacritty", "Zen Browser", "thunar",]
         })
+
+    readonly property var onScreenNotification: ({
+            maxVisible: 3
+        })
 }

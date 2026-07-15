@@ -9,12 +9,18 @@ Singleton {
     id: root
 
     property bool centerOpen: false
-    readonly property ListModel onScreenNotifications: ListModel {}
-    readonly property ObjectModel trackedNotifications: server.trackedNotifications
+
+    readonly property ListModel onScreenNotificationsModel: ListModel {}
+    // readonly property list<Notification> onScreenNotifications: onScreenNotificationsModel
+    readonly property list<Notification> trackedNotifications: server.trackedNotifications.values
+
+    // ListModel {
+    //     id: onScreenNotificationsModel
+    // }
 
     function dismiss(index: int): void {
-        const id = onScreenNotifications.get(index).id;
-        onScreenNotifications.remove(index);
+        const id = onScreenNotificationsModel.get(index).id;
+        onScreenNotificationsModel.remove(index);
         console.log("dismiss notification", index, id);
         server.trackedNotifications.values.find(n => n.id === id)?.dismiss();
     }
@@ -41,14 +47,14 @@ Singleton {
         bodyImagesSupported: true
 
         onNotification: n => {
-            console.log(JSON.stringify(n));
+            // console.log(JSON.stringify(n));
             // TODO inline reply support, launch app onclick and expire
             n.tracked = true;
             // n.time = Date.now();
             n.time = new Date();
             // n.time = Qt.formatDateTime(new Date(), "HH:mm");
             if (!root.centerOpen) {
-                onScreenNotifications.insert(0, {
+                root.onScreenNotificationsModel.insert(0, {
                     id: n.id,
                     summary: n.summary,
                     body: n.body,
@@ -67,7 +73,7 @@ Singleton {
     //     onPressed: {
     //         root.centerOpen = !root.centerOpen;
     //         if (root.centerOpen)
-    //             root.onScreenNotifications.clear();
+    //             root.onScreenNotificationsModel.clear();
     //     }
     // }
 }
