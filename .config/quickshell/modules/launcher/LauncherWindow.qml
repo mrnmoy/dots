@@ -26,7 +26,6 @@ PanelWindow {
     property string query: ""
     property int selectedIndex: 0
     readonly property list<DesktopEntry> apps: DesktopEntries.applications.values ?? []
-    onSelectedIndexChanged: console.log("selectedIndex", selectedIndex)
 
     readonly property list<DesktopEntry> favouriteApps: {
         const favourites = Config.launcher.favourites ?? [];
@@ -57,8 +56,10 @@ PanelWindow {
         Keys.onEscapePressed: root.visible = false
         Keys.onDownPressed: root.selectedIndex = Math.min(root.selectedIndex + 1, root.visibleEntries.length - 1)
         Keys.onUpPressed: root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
-        // Keys.onEnterPressed: root.visibleEntries[root.selectedIndex].execute()
-        Keys.onEnterPressed: console.log("req to launch ", root.visibleEntries[root.selectedIndex].name)
+        Keys.onReturnPressed: {
+            root.visible = false;
+            root.visibleEntries[root.selectedIndex].execute();
+        }
 
         HoverHandler {
             id: hoverHandler
@@ -96,7 +97,7 @@ PanelWindow {
             maskEnabled: true
             maskSource: mask
 
-            layer.smooth: true
+            // layer.smooth: true
 
             maskThresholdMin: 0.5
             maskSpreadAtMin: 1.0
@@ -106,7 +107,7 @@ PanelWindow {
             id: background
             anchors.fill: parent
             visible: false
-            smooth: true
+            // smooth: true
             color: "#01000000"
         }
 
@@ -209,21 +210,31 @@ PanelWindow {
                 }
             }
 
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 8
+
+                Text {
+                    text: root.query.trim().length ? "Best matches" : "Favourites"
+                    font.pixelSize: 12
+                    font.weight: Font.DemiBold
+                    color: "#ffffff"
+                }
+            }
+
             Flickable {
                 id: list
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                // Layout.preferredHeight: Math.min(320, content.implicitHeight + 16)
-                // Layout.alignment: Qt.AlignTop
                 clip: true
-                // contentWidth: width
-                // contentHeight: content.implicitHeight
+                contentWidth: width
+                contentHeight: content.implicitHeight
 
                 // maximumFlickVelocity: 3000
                 // flickDeceleration: 1500
                 boundsBehavior: Flickable.StopAtBounds
-                // boundsMovement: Flickable.FollowBoundsBehavior
                 // boundsBehavior: Flickable.DragAndOvershootBounds
+                // boundsMovement: Flickable.FollowBoundsBehavior
 
                 // rebound: Transition {
                 //     NumberAnimation {
@@ -235,7 +246,6 @@ PanelWindow {
 
                 Column {
                     id: content
-                    // implicitWidth: parent.width
                     spacing: 8
 
                     Repeater {
@@ -244,22 +254,17 @@ PanelWindow {
                         Rectangle {
                             id: card
 
-                            required property var modelData
+                            required property DesktopEntry modelData
                             required property int index
 
                             width: list.width
                             height: 60
                             radius: 20
-                            color: "#0fffffff"
-
-                            // HoverHandler {
-                            //     id: hovered
-                            // }
+                            color: root.selectedIndex === index ? "#0fffffff" : "transparent"
 
                             RowLayout {
                                 anchors.fill: parent
                                 anchors.leftMargin: 8
-                                // anchors.margins: 16
                                 spacing: 8
 
                                 Rectangle {
@@ -268,9 +273,32 @@ PanelWindow {
                                     radius: 20
                                     color: "#0fffffff"
 
+                                    Image {
+                                        id: appIcon
+                                        anchors.centerIn: parent
+                                        width: 20
+                                        height: 20
+                                        fillMode: Image.PreserveAspectFit
+
+                                        property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
+                                        property int sourceIndex: 0
+
+                                        source: iconSources[sourceIndex]
+                                        asynchronous: true
+                                        onStatusChanged: {
+                                            if (status === Image.Error) {
+                                                if (sourceIndex < iconSources.length - 1)
+                                                    sourceIndex = sourceIndex + 1;
+                                                else
+                                                    visible = false;
+                                            }
+                                        }
+                                    }
+
                                     Text {
                                         anchors.centerIn: parent
-                                        text: card.modelData.glyph ?? card.modelData.name.slice(0, 1).toUpperCase()
+                                        visible: !appIcon.visible
+                                        text: card.modelData.name.slice(0, 1).toUpperCase()
                                         font.family: "Inter"
                                         font.pixelSize: 20
                                         font.weight: Font.DemiBold
