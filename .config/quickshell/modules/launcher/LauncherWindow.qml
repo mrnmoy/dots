@@ -25,19 +25,24 @@ PanelWindow {
 
     property string query: ""
     property int selectedIndex: 0
+    readonly property list<DesktopEntry> apps: DesktopEntries.applications.values ?? []
+    onSelectedIndexChanged: console.log("selectedIndex", selectedIndex)
 
-    readonly property var favouriteApps: {
+    readonly property list<DesktopEntry> favouriteApps: {
         const favourites = Config.launcher.favourites ?? [];
-        const apps = DesktopEntries.applications.values ?? [];
         return favourites.map(id => apps.find(entry => entry.id === id || entry.name === id));
     }
-    readonly property var visibleEntries: {
+    readonly property list<DesktopEntry> visibleEntries: {
         const q = query.trim();
 
-        if (!q.length && favouriteApps.length > 0)
+        if (q.length !== 0) {
+            return apps.filter(entry => entry.name.startsWith(q) || entry.name.includes(q) || entry.genericName.includes(q) || entry.execString.includes(q));
+        }
+
+        if (favouriteApps.length > 0)
             return favouriteApps.slice(0, Config.launcher.maxResults);
 
-        return DesktopEntries.applications.values ?? [];
+        return apps;
     }
 
     FocusScope {
@@ -47,12 +52,13 @@ PanelWindow {
         transformOrigin: Item.Bottom
         scale: visible ? 1.0 : 0.5
         opacity: visible ? 1.0 : 0.0
-
         focus: true
+
         Keys.onEscapePressed: root.visible = false
         Keys.onDownPressed: root.selectedIndex = Math.min(root.selectedIndex + 1, root.visibleEntries.length - 1)
         Keys.onUpPressed: root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
-        Keys.onEnterPressed: root.visibleEntries[root.selectedIndex].execute()
+        // Keys.onEnterPressed: root.visibleEntries[root.selectedIndex].execute()
+        Keys.onEnterPressed: console.log("req to launch ", root.visibleEntries[root.selectedIndex].name)
 
         HoverHandler {
             id: hoverHandler
@@ -175,56 +181,60 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
+                Layout.alignment: Qt.AlignTop
                 implicitHeight: 40
                 color: "#0fffffff"
                 radius: 20
 
-                // RowLayout {
-                //     anchors.fill: parent
-                //     Layout.leftMargin: 16
-                //     Layout.rightMargin: 16
-                //     spacing: 16
-                //
-                //     Text {
-                //         text: "󰣇"
-                //         font.pixelSize: 20
-                //         font.weight: Font.Black
-                //         color: "#ffffff"
-                //         Layout.leftMargin: 16
-                //     }
-                //     // TextField {
-                //     //     font.family: "Inter"
-                //     //     font.pixelSize: 16
-                //     //     font.weight: Font.Medium
-                //     //     color: "#f1f1f1"
-                //     // }
-                // }
-                SearchBar {}
+                RowLayout {
+                    anchors.fill: parent
+                    Layout.leftMargin: 16
+                    Layout.rightMargin: 16
+                    spacing: 16
+
+                    Text {
+                        text: "󰣇"
+                        font.pixelSize: 20
+                        font.weight: Font.Black
+                        color: "#ffffff"
+                        Layout.leftMargin: 16
+                    }
+                    TextFieldBase {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        font.pixelSize: 20
+                        placeholderText: "Search"
+                        onTextChanged: root.query = text
+                    }
+                }
             }
 
             Flickable {
+                id: list
                 Layout.fillWidth: true
-                Layout.preferredHeight: Math.min(320, list.implicitHeight + 16)
+                Layout.fillHeight: true
+                // Layout.preferredHeight: Math.min(320, content.implicitHeight + 16)
+                // Layout.alignment: Qt.AlignTop
                 clip: true
-                contentWidth: width
-                contentHeight: list.implicitHeight
+                // contentWidth: width
+                // contentHeight: content.implicitHeight
 
-                maximumFlickVelocity: 3000
-                flickDeceleration: 1500
+                // maximumFlickVelocity: 3000
+                // flickDeceleration: 1500
                 boundsBehavior: Flickable.StopAtBounds
+                // boundsMovement: Flickable.FollowBoundsBehavior
                 // boundsBehavior: Flickable.DragAndOvershootBounds
-                boundsMovement: Flickable.FollowBoundsBehavior
 
-                rebound: Transition {
-                    NumberAnimation {
-                        properties: "x,y"
-                        duration: 150
-                        easing.bezierCurve: [0.85, 0, 0.15, 1]
-                    }
-                }
+                // rebound: Transition {
+                //     NumberAnimation {
+                //         properties: "x,y"
+                //         duration: 150
+                //         easing.bezierCurve: [0.85, 0, 0.15, 1]
+                //     }
+                // }
 
                 Column {
-                    id: list
+                    id: content
                     // implicitWidth: parent.width
                     spacing: 8
 
@@ -237,18 +247,19 @@ PanelWindow {
                             required property var modelData
                             required property int index
 
-                            width: parent.width
+                            width: list.width
                             height: 60
                             radius: 20
                             color: "#0fffffff"
 
-                            HoverHandler {
-                                id: hovered
-                            }
+                            // HoverHandler {
+                            //     id: hovered
+                            // }
 
                             RowLayout {
                                 anchors.fill: parent
-                                anchors.margins: 16
+                                anchors.leftMargin: 8
+                                // anchors.margins: 16
                                 spacing: 8
 
                                 Rectangle {

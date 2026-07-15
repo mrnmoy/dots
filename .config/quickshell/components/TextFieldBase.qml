@@ -4,7 +4,7 @@ import QtQuick.Templates
 TextField {
     id: root
 
-    color: "#0fffffff"
+    color: "#ffffff"
     placeholderText: "#08ffffff"
     selectionColor: "#0000ff"
     selectedTextColor: "#000000"
@@ -24,7 +24,7 @@ TextField {
         implicitWidth: 1.5
         implicitHeight: root.cursorRectangle.height
 
-        color: "#ff0000"
+        color: "#ffffff"
         radius: 4
 
         property bool disableBlink

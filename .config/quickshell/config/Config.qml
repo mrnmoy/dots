@@ -8,6 +8,6 @@ Singleton {
 
     readonly property var launcher: ({
             maxResults: 5,
-            favourites: ["Alacritty", "zen-browser", "thunar",]
+            favourites: ["Alacritty", "Zen Browser", "thunar",]
         })
 }
