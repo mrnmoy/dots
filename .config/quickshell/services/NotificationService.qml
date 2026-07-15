@@ -11,21 +11,30 @@ Singleton {
     property bool centerOpen: false
 
     readonly property ListModel onScreenNotificationsModel: ListModel {}
+    readonly property ListModel trackedNotificationsModel: ListModel {}
     // readonly property list<Notification> onScreenNotifications: onScreenNotificationsModel
-    readonly property list<Notification> trackedNotifications: server.trackedNotifications.values
+    // readonly property list<Notification> trackedNotifications: server.trackedNotifications.values
 
-    // ListModel {
-    //     id: onScreenNotificationsModel
+    // function dismiss(index: int): void {
+    //     const id = onScreenNotificationsModel.get(index).id;
+    //     onScreenNotificationsModel.remove(index);
+    //     console.log("dismiss notification", index, id);
+    //     server.trackedNotifications.values.find(n => n.id === id)?.dismiss();
     // }
-
-    function dismiss(index: int): void {
-        const id = onScreenNotificationsModel.get(index).id;
-        onScreenNotificationsModel.remove(index);
-        console.log("dismiss notification", index, id);
+    function dismiss(id: int): void {
+        // const id = onScreenNotificationsModel.get(index).id;
+        // onScreenNotificationsModel.remove(index);
+        console.log("dismiss notification id: ", id);
+        onScreenNotificationsModel;
         server.trackedNotifications.values.find(n => n.id === id)?.dismiss();
     }
     function dismissAll(): void {
-        server.trackedNotifications.values.map(n => n.dismiss());
+        console.log("dismiss all");
+        trackedNotificationsModel.clear();
+        onScreenNotificationsModel.clear();
+        server.trackedNotifications.values.map(n => n.dismiss()); // BUG Only dismisses first one
+        console.log("after dismiss all: ", JSON.stringify(server.trackedNotifications.values));
+
         // console.log(server.trackedNotifications.values[0].summary);
         // console.log(server.trackedNotifications.values[0].dismiss());
         // for (let i = 0; i < server.trackedNotifications.values.length; i++) {
@@ -53,15 +62,19 @@ Singleton {
             // n.time = Date.now();
             n.time = new Date();
             // n.time = Qt.formatDateTime(new Date(), "HH:mm");
+            root.trackedNotificationsModel.insert(0, n);
+            console.log(JSON.stringify(root.trackedNotificationsModel.get(0)));
             if (!root.centerOpen) {
-                root.onScreenNotificationsModel.insert(0, {
-                    id: n.id,
-                    summary: n.summary,
-                    body: n.body,
-                    appName: n.appName,
-                    urgency: n.urgency,
-                    time: n.time
-                });
+                root.onScreenNotificationsModel.insert(0, n);
+                // root.onScreenNotificationsModel.insert(0, {
+                //     id: n.id,
+                //     summary: n.summary,
+                //     body: n.body,
+                //     appName: n.appName,
+                //     appIcon: n.appIcon,
+                //     urgency: n.urgency,
+                //     time: n.time
+                // });
             }
         }
     }

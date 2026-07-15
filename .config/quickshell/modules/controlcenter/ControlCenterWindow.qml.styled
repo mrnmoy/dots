@@ -204,13 +204,11 @@ PanelWindow {
                 Layout.fillHeight: true
                 contentWidth: parent.width
                 contentHeight: content.height
-                flickableDirection: Flickable.VerticalFlick
                 clip: true
-
-                // Rectangle {
-                //     anchors.fill: parent
-                //     color: "#0fffffff"
-                // }
+                Rectangle {
+                    anchors.fill: parent
+                    color: "#0fffffff"
+                }
 
                 // boundsBehavior: Flickable.StopAtBounds
                 // maximumFlickVelocity: 3000
@@ -284,7 +282,7 @@ PanelWindow {
 
                         BarButton {
                             icon: "󰎟"
-                            onClicked: NotificationService.dismissAll()
+                            onClicked: console.log("clear all")
                         }
                     }
 
@@ -292,17 +290,15 @@ PanelWindow {
                         id: notificationsContainer
                         Layout.fillWidth: true
                         spacing: 8
+                        Rectangle {
+                            anchors.fill: parent
+                            color: "#1fffffff"
+                        }
 
                         Repeater {
-                            model: NotificationService.trackedNotificationsModel
-                            // model: NotificationService.trackedNotifications
+                            model: NotificationService.trackedNotifications
 
-                            NotificationCard {
-                                onDismiss: {
-                                    NotificationService.trackedNotificationsModel.remove(index);
-                                    NotificationService.dismiss(modelData.id);
-                                }
-                            }
+                            NotificationCard {}
                         }
                     }
                 }

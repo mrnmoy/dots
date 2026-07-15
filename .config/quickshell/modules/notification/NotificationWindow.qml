@@ -23,14 +23,12 @@ PanelWindow {
     // right: 8
     // }
 
+    visible: NotificationService.onScreenNotificationsModel.count > 0
     implicitWidth: 360
-    // implicitWidth: content.width + 40
-    // implicitHeight: Math.min(320, screen.height - 40)
     implicitHeight: content.height + 52
     color: "transparent"
 
     screen: Quickshell.screens[0]
-    WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     // readonly property list<Notification> visibleNotifications: (NotificationService.onScreenNotifications)?.slice(0, Config.onScreenNotification.maxVisible) || []
     // onVisibleNotificationsChanged: console.log("visibleNotifications", JSON.stringify(visibleNotifications))
@@ -72,7 +70,6 @@ PanelWindow {
             startY: 0
 
             PathArc {
-                // direction: PathArc.Counterclockwise
                 radiusX: 20
                 radiusY: 20
                 x: 20
@@ -94,7 +91,6 @@ PanelWindow {
                 y: mask.height - 20
             }
             PathArc {
-                direction: PathArc.Clockwise
                 radiusX: 20
                 radiusY: 20
                 x: mask.width
@@ -125,23 +121,12 @@ PanelWindow {
             top: parent.top
             left: parent.left
             right: parent.right
-        }
-        onHeightChanged: console.log("content height ", height)
-        // width: background.width
-        // topPadding: 16
-        // leftPadding: 32
-        // rightPadding: 16
-        // bottomPadding: 16
-        // anchors.fill: background
-        anchors.topMargin: 16
-        anchors.rightMargin: 16
-        anchors.leftMargin: 36
-        anchors.bottomMargin: 16
 
-        // Rectangle {
-        //     anchors.fill: parent
-        //     color: "#5fff0000"
-        // }
+            topMargin: 16
+            rightMargin: 16
+            leftMargin: 36
+            bottomMargin: 16
+        }
 
         // move: Transition {
         //     NumberAnimation {
@@ -157,17 +142,39 @@ PanelWindow {
             // model: (NotificationService.onScreenNotificationsModel).slice(0, 3)
             model: NotificationService.onScreenNotificationsModel
 
-            Rectangle {
-                required property var modelData
-                required property int index
+            // Rectangle {
+            //     id: card
+            //
+            //     required property var modelData
+            //     required property int index
+            //
+            //     implicitWidth: parent.width
+            //     implicitHeight: 100
+            //     clip: true
+            //     radius: 16
+            //     color: modelData.urgency === NotificationUrgency.Critical ? "#0fff0000" : "#0fffffff"
+            //
+            //     Timer {
+            //         running: true
+            //         interval: 5000
+            //         onTriggered: NotificationService.onScreenNotificationsModel.remove(card.index)
+            //     }
+            // }
 
-                implicitWidth: parent.width
-                implicitHeight: 100
-                clip: true
-                radius: 16
-                color: modelData.urgency === NotificationUrgency.Critical ? "#0fff0000" : "#0fffffff"
+            NotificationCard {
+                id: card
+
+                Timer {
+                    running: true
+                    interval: 5000
+                    onTriggered: NotificationService.onScreenNotificationsModel.remove(card.index)
+                }
+
+                onDismiss: {
+                    NotificationService.onScreenNotificationsModel.remove(index);
+                    NotificationService.dismiss(modelData.id);
+                }
             }
-            // NotificationCard {}
         }
     }
 }

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell.Services.Notifications
 import "../../components"
+import "../../services"
 
 Rectangle {
     id: root
@@ -15,49 +16,64 @@ Rectangle {
     implicitHeight: 100
     radius: 16
     color: modelData.urgency === NotificationUrgency.Critical ? "#0fff0000" : "#0fffffff"
-    // border.width: 2
-    // border.color: modelData.urgency === NotificationUrgency.Critical ? "#ff0000" : "#0fffffff"
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        onClicked: dismiss()
+    }
 
     ColumnLayout {
         id: content
         anchors.fill: parent
         anchors.margins: 8
-        spacing: 4
+        spacing: 8
 
         RowLayout {
+            implicitHeight: 20
             Layout.fillWidth: true
-            implicitHeight: 16
-
-            Image {
-                id: appIcon
-                visible: root.modelData.image !== "" || source.toString() !== ""
-                source: root.modelData.appIcon || ""
-
-                Layout.preferredWidth: 16
-                Layout.preferredHeight: 16
-                // Layout.alignment: Qt.AlignTop
-                fillMode: Image.PreserveAspectFit
-            }
+            Layout.alignment: Qt.AlignTop
+            spacing: 0
 
             Rectangle {
-                visible: !appIcon.visible
-                radius: 99
+                radius: 20
                 color: "#0fffffff"
-                implicitWidth: 24
-                implicitHeight: 24
+                implicitWidth: 32
+                implicitHeight: 32
+                Layout.rightMargin: 8
+
+                Image {
+                    id: appIcon
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectFit
+
+                    property int sourceIndex: 0
+                    property var iconSources: [`/usr/share/pixmaps/${root.modelData.appIcon}`, `/usr/share/icons/hicolor/scalable/apps/${root.modelData.appIcon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${root.modelData.appIcon}`]
+
+                    source: iconSources[sourceIndex]
+                    asynchronous: true
+                    onStatusChanged: {
+                        if (status === Image.Error) {
+                            if (root.modelData.appIcon !== "" && sourceIndex < iconSources.length - 1)
+                                sourceIndex = sourceIndex + 1;
+                            else
+                                visible = false;
+                        }
+                    }
+                }
 
                 Text {
+                    visible: !appIcon.visible
                     text: "󰂚"
                     anchors.centerIn: parent
-
                     color: "#ffffff"
-                    font.pixelSize: 16
+                    font.pixelSize: 20
                 }
             }
 
             ColumnLayout {
                 Layout.fillWidth: true
-                implicitHeight: 24
+                // Layout.alignment: Qt.AlignVCenter
                 spacing: 0
 
                 Text {
@@ -69,11 +85,8 @@ Rectangle {
 
                 Text {
                     id: time
-                    visible: text !== ""
-                    // text: root.modelData.time
                     text: formatTime(root.modelData.time)
 
-                    // Layout.alignment: Qt.AlignRight
                     color: "#ffffff"
                     font.pixelSize: 10
 
@@ -90,46 +103,29 @@ Rectangle {
                 }
             }
 
-            BarButton {
-                icon: ""
-                onClicked: dismiss()
-            }
+            // BarButton {
+            //     icon: ""
+            //     onClicked: dismiss()
+            // }
         }
 
         RowLayout {
+            Layout.fillWidth: true
             spacing: 8
-
-            Image {
-                visible: source.toString() !== ""
-                source: root.modelData.image || root.modelData.appIcon || ""
-
-                Layout.preferredWidth: 36
-                Layout.preferredHeight: 36
-                Layout.alignment: Qt.AlignTop
-                fillMode: Image.PreserveAspectFit
-            }
 
             ColumnLayout {
                 Layout.fillWidth: true
-                Layout.fillHeight: true
                 spacing: 2
 
-                RowLayout {
+                Text {
+                    text: root.modelData.summary
+
                     Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    spacing: 6
-
-                    Text {
-                        text: root.modelData.summary
-
-                        Layout.fillWidth: true
-                        color: "orange"
-                        // font.family: Config.fontFamily
-                        // font.pixelSize: Config.fontSize
-                        font.pixelSize: 16
-                        font.bold: true
-                        elide: Text.ElideRight
-                    }
+                    color: "orange"
+                    font.family: "Inter"
+                    font.pixelSize: 16
+                    font.bold: true
+                    elide: Text.ElideRight
                 }
 
                 Text {
@@ -142,6 +138,17 @@ Rectangle {
                     // font.pixelSize: Config.fontSize - 1
                     font.pixelSize: 14
                     wrapMode: Text.WordWrap
+                }
+
+                Image {
+                    visible: source.toString() !== ""
+                    source: root.modelData.image || ""
+
+                    Layout.fillWidth: true
+                    // Layout.preferredWidth: 36
+                    // Layout.preferredHeight: 36
+                    // Layout.alignment: Qt.AlignTop
+                    fillMode: Image.PreserveAspectFit
                 }
             }
         }

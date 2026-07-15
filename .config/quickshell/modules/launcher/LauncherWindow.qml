@@ -20,8 +20,8 @@ PanelWindow {
     implicitHeight: Math.min(640, screen.height - 40)
 
     screen: Quickshell.screens[0]
-    WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
     exclusionMode: ExclusionMode.Ignore
+    WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     property string query: ""
     property int selectedIndex: 0
@@ -174,10 +174,13 @@ PanelWindow {
         }
 
         ColumnLayout {
-            anchors.fill: background
-            anchors.topMargin: 16
-            anchors.leftMargin: 32
-            anchors.rightMargin: 32
+            anchors {
+                fill: background
+
+                topMargin: 16
+                leftMargin: 32
+                rightMargin: 32
+            }
             spacing: 16
 
             Rectangle {
@@ -280,8 +283,8 @@ PanelWindow {
                                         height: 20
                                         fillMode: Image.PreserveAspectFit
 
-                                        property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
                                         property int sourceIndex: 0
+                                        property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
 
                                         source: iconSources[sourceIndex]
                                         asynchronous: true
