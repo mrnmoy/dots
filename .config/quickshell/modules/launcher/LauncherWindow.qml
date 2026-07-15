@@ -4,6 +4,9 @@ import QtQuick.Effects
 import QtQuick.Shapes
 import Quickshell
 import Quickshell.Wayland
+// import qs.config
+import "../../config"
+import "../../components"
 
 PanelWindow {
     id: root
@@ -20,6 +23,23 @@ PanelWindow {
     WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
     exclusionMode: ExclusionMode.Ignore
 
+    property string query: ""
+    property int selectedIndex: 0
+
+    readonly property var favouriteApps: {
+        const favourites = Config.launcher.favourites ?? [];
+        const apps = DesktopEntries.applications.values ?? [];
+        return favourites.map(id => apps.find(entry => entry.id === id || entry.name === id));
+    }
+    readonly property var visibleEntries: {
+        const q = query.trim();
+
+        if (!q.length && favouriteApps.length > 0)
+            return favouriteApps.slice(0, Config.launcher.maxResults);
+
+        return DesktopEntries.applications.values ?? [];
+    }
+
     FocusScope {
         id: panelContent
         anchors.fill: parent
@@ -30,6 +50,9 @@ PanelWindow {
 
         focus: true
         Keys.onEscapePressed: root.visible = false
+        Keys.onDownPressed: root.selectedIndex = Math.min(root.selectedIndex + 1, root.visibleEntries.length - 1)
+        Keys.onUpPressed: root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
+        Keys.onEnterPressed: root.visibleEntries[root.selectedIndex].execute()
 
         HoverHandler {
             id: hoverHandler
@@ -156,37 +179,40 @@ PanelWindow {
                 color: "#0fffffff"
                 radius: 20
 
-                RowLayout {
-                    anchors.fill: parent
-                    Layout.leftMargin: 16
-                    Layout.rightMargin: 16
-                    spacing: 16
-
-                    Text {
-                        text: "󰣇"
-                        font.pixelSize: 20
-                        font.weight: Font.Black
-                        color: "#ffffff"
-                        Layout.leftMargin: 16
-                    }
-                    // TextField {
-                    //     font.family: "Inter"
-                    //     font.pixelSize: 16
-                    //     font.weight: Font.Medium
-                    //     color: "#f1f1f1"
-                    // }
-                }
+                // RowLayout {
+                //     anchors.fill: parent
+                //     Layout.leftMargin: 16
+                //     Layout.rightMargin: 16
+                //     spacing: 16
+                //
+                //     Text {
+                //         text: "󰣇"
+                //         font.pixelSize: 20
+                //         font.weight: Font.Black
+                //         color: "#ffffff"
+                //         Layout.leftMargin: 16
+                //     }
+                //     // TextField {
+                //     //     font.family: "Inter"
+                //     //     font.pixelSize: 16
+                //     //     font.weight: Font.Medium
+                //     //     color: "#f1f1f1"
+                //     // }
+                // }
+                SearchBar {}
             }
 
             Flickable {
                 Layout.fillWidth: true
-                Layout.fillHeight: true
+                Layout.preferredHeight: Math.min(320, list.implicitHeight + 16)
                 clip: true
-                // contentHeight: content.height
+                contentWidth: width
+                contentHeight: list.implicitHeight
 
                 maximumFlickVelocity: 3000
                 flickDeceleration: 1500
-                boundsBehavior: Flickable.DragAndOvershootBounds
+                boundsBehavior: Flickable.StopAtBounds
+                // boundsBehavior: Flickable.DragAndOvershootBounds
                 boundsMovement: Flickable.FollowBoundsBehavior
 
                 rebound: Transition {
@@ -197,19 +223,95 @@ PanelWindow {
                     }
                 }
 
-                ColumnLayout {
-                    Layout.fillWidth: true
-                    spacing: 0
+                Column {
+                    id: list
+                    // implicitWidth: parent.width
+                    spacing: 8
 
-                    // Sliders
+                    Repeater {
+                        model: root.visibleEntries
+
+                        Rectangle {
+                            id: card
+
+                            required property var modelData
+                            required property int index
+
+                            width: parent.width
+                            height: 60
+                            radius: 20
+                            color: "#0fffffff"
+
+                            HoverHandler {
+                                id: hovered
+                            }
+
+                            RowLayout {
+                                anchors.fill: parent
+                                anchors.margins: 16
+                                spacing: 8
+
+                                Rectangle {
+                                    Layout.preferredWidth: 40
+                                    Layout.preferredHeight: 40
+                                    radius: 20
+                                    color: "#0fffffff"
+
+                                    Text {
+                                        anchors.centerIn: parent
+                                        text: card.modelData.glyph ?? card.modelData.name.slice(0, 1).toUpperCase()
+                                        font.family: "Inter"
+                                        font.pixelSize: 20
+                                        font.weight: Font.DemiBold
+                                        color: "#ffffff"
+                                    }
+                                }
+
+                                ColumnLayout {
+                                    Layout.fillWidth: true
+                                    spacing: 2
+
+                                    Text {
+                                        Layout.fillWidth: true
+                                        text: card.modelData.name ?? "Unknown"
+                                        font.family: "Inter"
+                                        font.pixelSize: 16
+                                        font.weight: Font.Medium
+                                        color: "#ffffff"
+                                        elide: Text.ElideRight
+                                    }
+
+                                    Text {
+                                        Layout.fillWidth: true
+                                        text: card.modelData.comment || card.modelData.genericName || card.modelData.execString || "Launch"
+                                        font.family: "Inter"
+                                        font.pixelSize: 12
+                                        color: "#ffffff"
+                                        elide: Text.ElideRight
+                                    }
+                                }
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onEntered: root.selectedIndex = card.index
+                                onClicked: card.modelData.execute()
+                            }
+                        }
+                    }
                 }
+            }
 
-                // ListView {
-                //     clip: true
-                //     spacing: 8
-                //     model: NotificationService.trackedNotifications ?? []
-                //     delegate: NotificationCard {}
-                // }
+            Text {
+                Layout.fillWidth: true
+                visible: root.visibleEntries === 0
+                text: "No application found"
+                horizontalAlignment: Text.AlignHCenter
+                font.family: "Inter"
+                font.pixelSize: 12
+                color: "#ffffff"
             }
         }
     }
