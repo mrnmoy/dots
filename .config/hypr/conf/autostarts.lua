@@ -1,6 +1,6 @@
 hl.on("hyprland.start", function()
     hl.exec_cmd("keyd")
-    hl.exec_cmd("hyprpaper & hypridle & hyprsunset & waybar")
+    hl.exec_cmd("hyprpaper & hypridle & hyprsunset & quickshell")
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
     hl.exec_cmd("hyprpm reload -n")
     hl.exec_cmd("iwd & iwgtk -i")
