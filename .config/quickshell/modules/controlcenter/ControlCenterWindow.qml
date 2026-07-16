@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import Quickshell.Services.Notifications
+import Quickshell.Services.Mpris
 import "../../components"
 import "../../services"
 import "../notification"
@@ -210,11 +211,6 @@ PanelWindow {
                 flickableDirection: Flickable.VerticalFlick
                 clip: true
 
-                // Rectangle {
-                //     anchors.fill: parent
-                //     color: "#0fffffff"
-                // }
-
                 // boundsBehavior: Flickable.StopAtBounds
                 // maximumFlickVelocity: 3000
                 // flickDeceleration: 1500
@@ -237,8 +233,8 @@ PanelWindow {
                     GridLayout {
                         Layout.fillWidth: true
                         columns: 2
-                        rowSpacing: 12
-                        columnSpacing: 12
+                        rowSpacing: 8
+                        columnSpacing: 8
 
                         Rectangle {
                             Layout.fillWidth: true
@@ -304,6 +300,35 @@ PanelWindow {
                         }
                     }
 
+                    Flickable {
+                        id: playersList
+                        visible: Mpris.players.values.length > 0
+                        Layout.fillWidth: true
+                        implicitHeight: 100
+                        contentWidth: playersContent.width
+                        contentHeight: playersContent.height
+                        flickableDirection: Flickable.HorizontalFlick
+                        clip: true
+
+                        Row {
+                            id: playersContent
+                            spacing: 8
+
+                            Repeater {
+                                model: Mpris.players
+
+                                // Rectangle {
+                                //     width: playersList.width
+                                //     height: 100
+                                //     color: "#0fffffff"
+                                // }
+                                MediaPlayerCard {
+                                    width: playersList.width
+                                }
+                            }
+                        }
+                    }
+
                     ColumnLayout {
                         id: notificationsContainer
                         Layout.fillWidth: true
@@ -342,5 +367,8 @@ PanelWindow {
                 }
             }
         }
+    }
+    Component.onCompleted: {
+        console.info("players", JSON.stringify(Mpris.players.values));
     }
 }
