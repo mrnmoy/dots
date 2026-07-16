@@ -9,6 +9,8 @@ import Quickshell.Services.Notifications
 import "../../components"
 import "../../services"
 import "../notification"
+// import "../../controls"
+import qs.controls
 
 PanelWindow {
     id: root
@@ -265,33 +267,51 @@ PanelWindow {
 
                     ColumnLayout {
                         Layout.fillWidth: true
-                        spacing: 0
+                        spacing: 8
 
                         // Sliders
-                    }
-
-                    RowLayout {
-                        Layout.fillWidth: true
-                        spacing: 0
-
-                        Text {
+                        Slider {
                             Layout.fillWidth: true
-                            text: "Notifications"
-                            font.pixelSize: 12
-                            font.weight: Font.DemiBold
-                            color: "#ffffff"
-                        }
+                            icon: "󰕾"
 
-                        BarButton {
-                            icon: "󰎟"
-                            onClicked: NotificationService.dismissAll()
+                            onMoved: console.log("volume changed", value)
                         }
+                        Slider {
+                            Layout.fillWidth: true
+                            icon: "󰃠"
+
+                            onMoved: console.log("brightness changed", value)
+                        }
+                        // TextField {
+                        //     Layout.fillWidth: true
+                        //     font.pixelSize: 20
+                        //     placeholderText: "Search"
+                        //     onTextChanged: console.log("text ", text)
+                        // }
                     }
 
-                    Column {
+                    ColumnLayout {
                         id: notificationsContainer
                         Layout.fillWidth: true
                         spacing: 8
+
+                        RowLayout {
+                            Layout.fillWidth: true
+                            spacing: 0
+
+                            Text {
+                                Layout.fillWidth: true
+                                text: "Notifications"
+                                font.pixelSize: 12
+                                font.weight: Font.DemiBold
+                                color: "#ffffff"
+                            }
+
+                            BarButton {
+                                icon: "󰎟"
+                                onClicked: NotificationService.dismissAll()
+                            }
+                        }
 
                         Repeater {
                             model: NotificationService.trackedNotificationsModel

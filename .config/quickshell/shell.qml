@@ -21,10 +21,10 @@ ShellRoot {
         id: controlcenterWindow
         visible: false
     }
-    // LauncherWindow {
-    //     id: launcherWindow
-    //     visible: false
-    // }
+    LauncherWindow {
+        id: launcherWindow
+        visible: false
+    }
     HelpWindow {
         id: helpWindow
         visible: false
@@ -36,7 +36,7 @@ ShellRoot {
         description: "Application Launcher"
 
         onPressed: {
-            // launcherWindow.visible = !launcherWindow.visible;
+            launcherWindow.visible = !launcherWindow.visible;
         }
     }
 

@@ -5,8 +5,10 @@ import QtQuick.Shapes
 import Quickshell
 import Quickshell.Wayland
 // import qs.config
+// import qs.controls
 import "../../config"
 import "../../components"
+import "../../controls"
 
 PanelWindow {
     id: root
@@ -203,7 +205,7 @@ PanelWindow {
                         color: "#ffffff"
                         Layout.leftMargin: 16
                     }
-                    TextFieldBase {
+                    TextField {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
                         font.pixelSize: 20

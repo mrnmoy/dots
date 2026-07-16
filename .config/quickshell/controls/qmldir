@@ -1,0 +1,3 @@
+module qs.controls
+Slider Slider.qml
+TextField TextField.qml

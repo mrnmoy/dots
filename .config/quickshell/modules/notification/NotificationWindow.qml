@@ -137,29 +137,7 @@ PanelWindow {
         // }
 
         Repeater {
-            // model: root.visibleNotifications
-            // model: NotificationService.onScreenNotifications
-            // model: (NotificationService.onScreenNotificationsModel).slice(0, 3)
             model: NotificationService.onScreenNotificationsModel
-
-            // Rectangle {
-            //     id: card
-            //
-            //     required property var modelData
-            //     required property int index
-            //
-            //     implicitWidth: parent.width
-            //     implicitHeight: 100
-            //     clip: true
-            //     radius: 16
-            //     color: modelData.urgency === NotificationUrgency.Critical ? "#0fff0000" : "#0fffffff"
-            //
-            //     Timer {
-            //         running: true
-            //         interval: 5000
-            //         onTriggered: NotificationService.onScreenNotificationsModel.remove(card.index)
-            //     }
-            // }
 
             NotificationCard {
                 id: card
