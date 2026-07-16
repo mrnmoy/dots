@@ -29,8 +29,8 @@ Slider {
         id: hndl
         x: root.leftPadding + root.visualPosition * (root.availableWidth - width)
         y: root.topPadding + root.availableHeight / 2 - (height / 2)
-        width: 36
-        height: 36
+        width: bg.height
+        height: width
         radius: width / 2
         color: root.handleColor
 

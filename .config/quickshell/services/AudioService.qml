@@ -20,12 +20,11 @@ Singleton {
         objects: [root.sink, root.source]
     }
 
-    onSinkVolumeChanged: console.info("sink vol changed ", sinkVolume)
-    onSourceVolumeChanged: console.info("source vol changed ", sourceVolume)
+    // onSinkVolumeChanged: console.info("sink vol changed ", sinkVolume)
+    // onSourceVolumeChanged: console.info("source vol changed ", sourceVolume)
 
     function setSinkVolume(value: real): void {
         sink.audio.volume = value;
-        console.info(value);
     }
     function setSourceVolume(value: real): void {
         source.audio.volume = value;

@@ -1,4 +1,7 @@
 module qs.controls
+
+Button Button.qml
+IconButton IconButton.qml
 Slider Slider.qml
 TextField TextField.qml
 TextFieldBase TextFieldBase.qml

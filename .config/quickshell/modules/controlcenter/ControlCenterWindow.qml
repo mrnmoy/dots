@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls as QC
 import QtQuick.Effects
 import QtQuick.Shapes
 import Quickshell
@@ -300,34 +301,50 @@ PanelWindow {
                         }
                     }
 
-                    Flickable {
-                        id: playersList
-                        visible: Mpris.players.values.length > 0
+                    Item {
                         Layout.fillWidth: true
                         implicitHeight: 100
-                        contentWidth: playersContent.width
-                        contentHeight: playersContent.height
-                        flickableDirection: Flickable.HorizontalFlick
-                        clip: true
 
-                        Row {
-                            id: playersContent
+                        QC.SwipeView {
+                            id: playersList
+                            visible: Mpris.players.values.length > 0
+                            anchors.fill: parent
                             spacing: 8
+                            // clip: true
 
                             Repeater {
                                 model: Mpris.players
 
-                                // Rectangle {
-                                //     width: playersList.width
-                                //     height: 100
-                                //     color: "#0fffffff"
-                                // }
                                 MediaPlayerCard {
                                     width: playersList.width
                                 }
                             }
                         }
                     }
+                    // Flickable {
+                    //     id: playersList
+                    //     visible: Mpris.players.values.length > 0
+                    //     Layout.fillWidth: true
+                    //     implicitHeight: 100
+                    //     contentWidth: playersContent.width
+                    //     contentHeight: playersContent.height
+                    //     flickableDirection: Flickable.HorizontalFlick
+                    //     clip: true
+                    //     // boundsBehavior: Flickable.StopAtBounds
+                    //
+                    //     Row {
+                    //         id: playersContent
+                    //         spacing: 8
+                    //
+                    //         Repeater {
+                    //             model: Mpris.players
+                    //
+                    //             MediaPlayerCard {
+                    //                 width: playersList.width
+                    //             }
+                    //         }
+                    //     }
+                    // }
 
                     ColumnLayout {
                         id: notificationsContainer
@@ -367,8 +384,5 @@ PanelWindow {
                 }
             }
         }
-    }
-    Component.onCompleted: {
-        console.info("players", JSON.stringify(Mpris.players.values));
     }
 }

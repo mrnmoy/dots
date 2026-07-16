@@ -1,8 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Effects
 import Quickshell.Services.Notifications
-import "../../components"
-import "../../services"
 
 Rectangle {
     id: root
@@ -35,15 +34,50 @@ Rectangle {
             Layout.alignment: Qt.AlignTop
             spacing: 0
 
-            Rectangle {
-                radius: 20
-                color: "#0fffffff"
+            // Rectangle {
+            //     radius: 20
+            //     color: "#0fffffff"
+            //     implicitWidth: 32
+            //     implicitHeight: 32
+            //     Layout.rightMargin: 8
+            //
+            //     Image {
+            //         id: appIcon
+            //         anchors.fill: parent
+            //         fillMode: Image.PreserveAspectFit
+            //
+            //         property int sourceIndex: 0
+            //         property var iconSources: [`/usr/share/pixmaps/${root.modelData.appIcon}`, `/usr/share/icons/hicolor/scalable/apps/${root.modelData.appIcon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${root.modelData.appIcon}`]
+            //
+            //         source: iconSources[sourceIndex]
+            //         asynchronous: true
+            //         onStatusChanged: {
+            //             if (status === Image.Error) {
+            //                 if (root.modelData.appIcon !== "" && sourceIndex < iconSources.length - 1)
+            //                     sourceIndex = sourceIndex + 1;
+            //                 else
+            //                     visible = false;
+            //             }
+            //         }
+            //     }
+            //
+            //     Text {
+            //         visible: !appIcon.visible
+            //         text: "󰂚"
+            //         anchors.centerIn: parent
+            //         color: "#ffffff"
+            //         font.pixelSize: 20
+            //     }
+            // }
+
+            Item {
                 implicitWidth: 32
                 implicitHeight: 32
                 Layout.rightMargin: 8
 
                 Image {
-                    id: appIcon
+                    id: artSource
+                    visible: false
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
 
@@ -62,12 +96,37 @@ Rectangle {
                     }
                 }
 
-                Text {
-                    visible: !appIcon.visible
-                    text: "󰂚"
-                    anchors.centerIn: parent
-                    color: "#ffffff"
-                    font.pixelSize: 20
+                Rectangle {
+                    id: artMask
+                    anchors.fill: parent
+                    radius: 20
+                    visible: false
+                    layer.enabled: true
+                }
+
+                MultiEffect {
+                    id: art
+                    visible: artSource.status === Image.Ready
+                    anchors.fill: parent
+                    source: artSource
+                    maskSource: artMask
+                    maskEnabled: true
+                    maskThresholdMin: 0.5
+                    maskSpreadAtMin: 1.0
+                }
+
+                Rectangle {
+                    anchors.fill: parent
+                    visible: !art.visible
+                    radius: 20
+                    color: "#0fffffff"
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "󰂚"
+                        color: "#ffffff"
+                        font.pixelSize: 20
+                    }
                 }
             }
 
