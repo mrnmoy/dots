@@ -42,6 +42,7 @@ PanelWindow {
             icon: "󰣇"
             onClicked: root.launcherWindow.visible = !root.launcherWindow.visible
         }
+        SystemTray {}
     }
 
     // Center

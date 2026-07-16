@@ -22,7 +22,7 @@ PanelWindow {
     implicitHeight: Math.min(640, screen.height - 40)
 
     screen: Quickshell.screens[0]
-    exclusionMode: ExclusionMode.Ignore
+    exclusionMode: ExclusionMode.Normal
     WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     property string query: ""
@@ -121,7 +121,8 @@ PanelWindow {
             visible: false
             layer.enabled: true
 
-            preferredRendererType: Shape.CurveRenderer
+            // preferredRendererType: Shape.CurveRenderer
+            // preferredRendererType: Shape.SoftwareRenderer
 
             ShapePath {
                 strokeColor: "transparent"
@@ -206,6 +207,7 @@ PanelWindow {
                         Layout.leftMargin: 16
                     }
                     TextFieldBase {
+                        focus: true
                         Layout.fillWidth: true
                         Layout.fillHeight: true
                         font.pixelSize: 20
@@ -252,6 +254,7 @@ PanelWindow {
                 Column {
                     id: content
                     spacing: 8
+                    bottomPadding: 16
 
                     Repeater {
                         model: root.visibleEntries
@@ -269,20 +272,16 @@ PanelWindow {
 
                             RowLayout {
                                 anchors.fill: parent
-                                anchors.leftMargin: 8
-                                spacing: 8
+                                spacing: 0
 
-                                Rectangle {
-                                    Layout.preferredWidth: 40
-                                    Layout.preferredHeight: 40
-                                    radius: 20
-                                    color: "#0fffffff"
+                                Item {
+                                    Layout.fillHeight: true
+                                    implicitWidth: height
+                                    Layout.margins: 8
 
                                     Image {
                                         id: appIcon
-                                        anchors.centerIn: parent
-                                        width: 20
-                                        height: 20
+                                        anchors.fill: parent
                                         fillMode: Image.PreserveAspectFit
 
                                         property int sourceIndex: 0
@@ -300,14 +299,20 @@ PanelWindow {
                                         }
                                     }
 
-                                    Text {
-                                        anchors.centerIn: parent
+                                    Rectangle {
+                                        radius: 20
+                                        color: "#0fffffff"
+                                        anchors.fill: parent
                                         visible: !appIcon.visible
-                                        text: card.modelData.name.slice(0, 1).toUpperCase()
-                                        font.family: "Inter"
-                                        font.pixelSize: 20
-                                        font.weight: Font.DemiBold
-                                        color: "#ffffff"
+
+                                        Text {
+                                            anchors.centerIn: parent
+                                            text: card.modelData.name.slice(0, 1).toUpperCase()
+                                            font.family: "Inter"
+                                            font.pixelSize: 20
+                                            font.weight: Font.DemiBold
+                                            color: "#ffffff"
+                                        }
                                     }
                                 }
 

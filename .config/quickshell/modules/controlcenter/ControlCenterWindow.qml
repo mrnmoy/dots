@@ -25,7 +25,7 @@ PanelWindow {
     implicitHeight: Math.min(860, screen.height - 40)
 
     screen: Quickshell.screens[0]
-    exclusionMode: ExclusionMode.Ignore
+    exclusionMode: ExclusionMode.Normal
     WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
     // SystemUsage.active: active
 
@@ -285,16 +285,22 @@ PanelWindow {
                             Layout.fillWidth: true
                             icon: "󰕾"
 
-                            value: SoundService.sinkVolume
-                            onMoved: SoundService.setSinkVolume(value)
+                            from: 0
+                            to: 1
+                            stepSize: 0.01
+                            value: AudioService.sinkVolume
+                            onMoved: AudioService.setSinkVolume(value)
                         }
                         // Source volume slider
                         Slider {
                             Layout.fillWidth: true
                             icon: ""
 
-                            value: SoundService.sourceVolume
-                            onMoved: SoundService.setSourceVolume(value)
+                            from: 0
+                            to: 1
+                            stepSize: 0.01
+                            value: AudioService.sourceVolume
+                            onMoved: AudioService.setSourceVolume(value)
                         }
                     }
 

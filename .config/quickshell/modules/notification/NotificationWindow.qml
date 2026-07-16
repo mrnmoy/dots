@@ -18,10 +18,6 @@ PanelWindow {
         top: true
         right: true
     }
-    // margins {
-    // top: 8
-    // right: 8
-    // }
 
     visible: NotificationService.onScreenNotificationsModel.count > 0
     implicitWidth: 360
@@ -29,9 +25,6 @@ PanelWindow {
     color: "transparent"
 
     screen: Quickshell.screens[0]
-
-    // readonly property list<Notification> visibleNotifications: (NotificationService.onScreenNotifications)?.slice(0, Config.onScreenNotification.maxVisible) || []
-    // onVisibleNotificationsChanged: console.log("visibleNotifications", JSON.stringify(visibleNotifications))
 
     MultiEffect {
         source: background

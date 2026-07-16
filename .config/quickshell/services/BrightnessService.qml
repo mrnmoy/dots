@@ -11,7 +11,7 @@ Singleton {
     readonly property bool hasBacklight: _backlightDevice !== ""
 
     function getBrightness(): int { // brightness in percent
-        console.log("getBrightness()", 50);
+        // console.log("getBrightness()", 50);
         return 50;
     }
     function setBrightness(value: int): void { // brightness in percent

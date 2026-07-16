@@ -63,7 +63,6 @@ Singleton {
             n.time = new Date();
             // n.time = Qt.formatDateTime(new Date(), "HH:mm");
             root.trackedNotificationsModel.insert(0, n);
-            console.log(JSON.stringify(root.trackedNotificationsModel.get(0)));
             if (!root.centerOpen) {
                 root.onScreenNotificationsModel.insert(0, n);
                 // root.onScreenNotificationsModel.insert(0, {

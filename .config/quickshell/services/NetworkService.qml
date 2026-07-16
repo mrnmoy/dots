@@ -10,8 +10,6 @@ import Quickshell.Hyprland
 Singleton {
     id: root
 
-    property bool centerOpen: false
-
     property string interfaceName: "enp0s20u1"
 
     readonly property real downBytesSec: rxBytes
@@ -77,15 +75,6 @@ Singleton {
             // } else if (root.downBytesSec < 1024000000000) {
             //     console.log("DownGB", (root.downBytesSec / 1024000000.0).toFixed(1));
             // }
-        }
-    }
-
-    GlobalShortcut {
-        name: "network_stats"
-        description: "Network Statistics"
-
-        onPressed: {
-            root.centerOpen = !root.centerOpen;
         }
     }
 }

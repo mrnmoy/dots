@@ -42,4 +42,6 @@ RowLayout {
             return (bytes / 1024000000.0).toFixed(1) + "G/s";
         }
     }
+
+    Component.onCompleted: {}
 }
