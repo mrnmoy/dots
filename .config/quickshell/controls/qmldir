@@ -1,3 +1,5 @@
 module qs.controls
 Slider Slider.qml
 TextField TextField.qml
+TextFieldBase TextFieldBase.qml
+CircularProgressBar CircularProgressBar.qml

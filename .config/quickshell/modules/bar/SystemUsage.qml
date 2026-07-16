@@ -1,7 +1,9 @@
 import QtQuick
 import QtQuick.Layouts
-import qs.components
-import qs.services
+// import qs.services
+// import qs.controls
+import "../../services"
+import "../../controls"
 
 // import "../../components"
 

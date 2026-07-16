@@ -9,8 +9,9 @@ import Quickshell.Services.Notifications
 import "../../components"
 import "../../services"
 import "../notification"
-// import "../../controls"
-import qs.controls
+import "../../controls"
+
+// import qs.controls
 
 PanelWindow {
     id: root
@@ -269,25 +270,32 @@ PanelWindow {
                         Layout.fillWidth: true
                         spacing: 8
 
-                        // Sliders
+                        // Brightness slider
+                        Slider {
+                            visible: BrightnessService.hasBacklight
+                            Layout.fillWidth: true
+                            icon: "󰃠"
+
+                            value: BrightnessService.getBrightness()
+                            onMoved: BrightnessService.setBrightness(value)
+                        }
+
+                        // Sink volume slider
                         Slider {
                             Layout.fillWidth: true
                             icon: "󰕾"
 
-                            onMoved: console.log("volume changed", value)
+                            value: SoundService.sinkVolume
+                            onMoved: SoundService.setSinkVolume(value)
                         }
+                        // Source volume slider
                         Slider {
                             Layout.fillWidth: true
-                            icon: "󰃠"
+                            icon: ""
 
-                            onMoved: console.log("brightness changed", value)
+                            value: SoundService.sourceVolume
+                            onMoved: SoundService.setSourceVolume(value)
                         }
-                        // TextField {
-                        //     Layout.fillWidth: true
-                        //     font.pixelSize: 20
-                        //     placeholderText: "Search"
-                        //     onTextChanged: console.log("text ", text)
-                        // }
                     }
 
                     ColumnLayout {

@@ -205,7 +205,7 @@ PanelWindow {
                         color: "#ffffff"
                         Layout.leftMargin: 16
                     }
-                    TextField {
+                    TextFieldBase {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
                         font.pixelSize: 20

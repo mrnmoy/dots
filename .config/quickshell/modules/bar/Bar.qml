@@ -7,6 +7,7 @@ import Quickshell.Hyprland
 // import qs.services
 // import "../../services"
 import "../../components"
+import "../../controls"
 import "../launcher"
 
 PanelWindow {
