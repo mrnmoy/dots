@@ -15,6 +15,11 @@ Rectangle {
     radius: 20
     color: "#0fffffff"
 
+    FrameAnimation {
+        running: root.modelData.playbackState == MprisPlaybackState.Playing
+        onTriggered: root.modelData.positionChanged()
+    }
+
     RowLayout {
         id: content
         anchors.fill: parent
@@ -24,6 +29,14 @@ Rectangle {
         Item {
             Layout.fillHeight: true
             implicitWidth: height
+
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: if (root.modelData.canRaise)
+                    root.modelData.raise()
+            }
 
             Image {
                 id: artSource
@@ -140,8 +153,9 @@ Rectangle {
                 stepSize: 1
 
                 value: root.modelData.position
-                onMoved: if (root.modelData.canSeek)
-                    root.modelData.position = value
+                onMoved: if (root.modelData.canSeek) {
+                    root.modelData.position = value;
+                }
 
                 // Text {
                 //     text: root.modelData.position
