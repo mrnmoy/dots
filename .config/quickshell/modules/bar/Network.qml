@@ -7,26 +7,78 @@ import Quickshell.Wayland
 import Quickshell.Hyprland
 import "../../services"
 import "../../components"
+import "../../controls"
 
 RowLayout {
     id: root
 
-    Text {
-        text: " " + formatBytes(NetworkService.downBytesSec)
-        font.family: "Inter"
-        font.pixelSize: 16
-        font.weight: Font.Black
-        color: "#ffffff"
-        lineHeight: 0.9
+    ColumnLayout {
+        Layout.fillHeight: true
+        spacing: 2
+
+        Slider {
+            implicitHeight: 12
+            implicitWidth: 100
+            enabled: false
+
+            to: 1
+            stepSize: 0.01
+            value: NetworkService.upBytesSec / 1048576
+
+            Text {
+                anchors.centerIn: parent
+                text: " " + formatBytes(NetworkService.upBytesSec)
+                color: "#ffffff"
+                font.pixelSize: 8
+                font.weight: Font.DemiBold
+                elide: Text.ElideRight
+            }
+        }
+
+        Slider {
+            implicitHeight: 12
+            implicitWidth: 100
+            enabled: false
+
+            to: 1
+            stepSize: 0.01
+            value: NetworkService.downBytesSec / 1048576
+
+            Item {
+                implicitWidth: Math.min(parent.width, downText.implicitWidth) - 8
+                implicitHeight: parent.implicitHeight
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Text {
+                    id: downText
+                    width: parent.width
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: " " + formatBytes(NetworkService.downBytesSec)
+                    color: "#ffffff"
+                    font.pixelSize: 8
+                    font.weight: Font.DemiBold
+                    elide: Text.ElideRight
+                }
+            }
+        }
     }
-    Text {
-        text: " " + formatBytes(NetworkService.upBytesSec)
-        font.family: "Inter"
-        font.pixelSize: 16
-        font.weight: Font.Black
-        color: "#ffffff"
-        lineHeight: 0.9
-    }
+
+    // Text {
+    //     text: " " + formatBytes(NetworkService.downBytesSec)
+    //     font.family: "Inter"
+    //     font.pixelSize: 16
+    //     font.weight: Font.Black
+    //     color: "#ffffff"
+    //     lineHeight: 0.9
+    // }
+    // Text {
+    //     text: " " + formatBytes(NetworkService.upBytesSec)
+    //     font.family: "Inter"
+    //     font.pixelSize: 16
+    //     font.weight: Font.Black
+    //     color: "#ffffff"
+    //     lineHeight: 0.9
+    // }
 
     function formatBytes(bytes: int): string {
         // const gb = bytes / (1024 ** 3);
@@ -42,6 +94,4 @@ RowLayout {
             return (bytes / 1024000000.0).toFixed(1) + "G/s";
         }
     }
-
-    Component.onCompleted: {}
 }

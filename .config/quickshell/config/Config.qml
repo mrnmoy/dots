@@ -14,4 +14,8 @@ Singleton {
     readonly property var onScreenNotification: ({
             maxVisible: 3
         })
+
+    readonly property var appearence: ({
+            animationDuration: 150
+        })
 }

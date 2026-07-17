@@ -1,4 +1,6 @@
 import QtQuick
+// import qs.config as Config
+import "../config"
 
 Item {
     id: root
@@ -64,7 +66,7 @@ Item {
 
         Behavior on degree {
             NumberAnimation {
-                duration: 150
+                duration: Config.appearence.animationDuration || 500
             }
         }
     }

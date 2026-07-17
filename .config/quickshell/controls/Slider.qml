@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import "../config"
 
 Slider {
     id: root
@@ -13,26 +14,34 @@ Slider {
     value: 0
     stepSize: 1
     snapMode: Slider.NoSnap
-    // snapMode: Slider.SnapOnRelease
+
+    implicitWidth: 200
+    implicitHeight: 36
 
     background: Rectangle {
         id: bg
-        x: root.leftPadding
-        y: root.topPadding + root.availableHeight / 2 - height / 2
-        implicitWidth: 200
-        implicitHeight: 36
+        // x: root.leftPadding
+        // y: root.topPadding + root.availableHeight / 2 - height / 2
+        // implicitWidth: 200
+        // implicitHeight: 36
+        // anchors.fill: parent
+        implicitWidth: parent.width
+        implicitHeight: parent.height
         radius: 20
         color: root.bgColor
     }
 
     handle: Rectangle {
         id: hndl
-        x: root.leftPadding + root.visualPosition * (root.availableWidth - width)
-        y: root.topPadding + root.availableHeight / 2 - (height / 2)
-        width: bg.height
-        height: width
+        // x: root.leftPadding + root.visualPosition * (root.availableWidth - width)
+        // y: root.topPadding + root.availableHeight / 2 - (height / 2)
+        x: root.vertical ? (root.availableWidth - width) : root.visualPosition * (root.availableWidth - width)
+        y: root.vertical ? root.visualPosition * (root.availableHeight - height) : (root.availableHeight - height) / 2
+        implicitWidth: root.vertical ? bg.width : bg.height
+        implicitHeight: width
         radius: width / 2
-        color: "transparent"
+        // color: "transparent"
+        color: "red"
 
         Text {
             anchors.centerIn: parent
@@ -45,10 +54,20 @@ Slider {
 
     Rectangle {
         z: -1
-        anchors.left: bg.left
-        anchors.right: hndl.right
-        height: bg.height
-        color: !root.enabled ? Qt.alpha(root.handleColor, 0.5) : root.handleColor
+        height: root.horizontal && bg.height
+        width: root.vertical && bg.width
+        anchors.left: root.horizontal && bg.left
+        anchors.right: root.horizontal && hndl.right
+        anchors.top: root.vertical && hndl.top
+        anchors.bottom: root.vertical && bg.bottom
+        // color: !root.enabled ? Qt.alpha(root.handleColor, 0.5) : root.handleColor
+        color: root.handleColor
         radius: 20
+
+        Behavior on width {
+            NumberAnimation {
+                duration: Config.appearence.animationDuration || 500
+            }
+        }
     }
 }
