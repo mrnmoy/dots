@@ -241,8 +241,8 @@ PanelWindow {
                 from: 0
                 to: 1
                 stepSize: 0.01
-                value: AudioService.sinkVolume
-                onMoved: AudioService.setSinkVolume(value)
+                value: AudioService.sink.audio.volume
+                onMoved: AudioService.sink.audio.volume = value
             }
             // Slider {
             //     orientation: Qt.Vertical
@@ -253,8 +253,8 @@ PanelWindow {
             //     from: 0
             //     to: 1
             //     stepSize: 0.01
-            //     value: AudioService.sourceVolume
-            //     onMoved: AudioService.setSourceVolume(value)
+            // value: AudioService.source.audio.volume
+            // onMoved: AudioService.source.audio.volume = value
             // }
         }
     }
