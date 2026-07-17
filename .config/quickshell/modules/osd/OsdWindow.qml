@@ -213,9 +213,8 @@ PanelWindow {
         }
 
         ColumnLayout { // TODO Controls for individual audio channels
-            // implicitWidth: 40
-            Layout.fillHeight: true
             Layout.preferredWidth: 40
+            Layout.fillHeight: true
             spacing: 8
 
             Rectangle {

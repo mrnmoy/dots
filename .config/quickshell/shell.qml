@@ -57,6 +57,7 @@ ShellRoot {
 
         onPressed: {
             root.launcher = !root.launcher;
+            console.log("launcher triggered");
         }
     }
     GlobalShortcut {
