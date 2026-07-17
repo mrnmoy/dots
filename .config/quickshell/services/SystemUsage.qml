@@ -119,7 +119,7 @@ Singleton {
                 // console.log("detectGpuProcess ", data);
                 // console.log("mesa ", parts[0]);
 
-                console.log("mesa ", text.trim().split(/\s+/)[3]);
+                // console.log("mesa ", text.trim().split(/\s+/)[3]);
             }
         }
     }

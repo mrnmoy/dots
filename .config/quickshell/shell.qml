@@ -1,3 +1,4 @@
+import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 import "./modules/bar"
@@ -14,73 +15,72 @@ import "./services"
 ShellRoot {
     id: root
 
+    property bool osd
+    property bool launcher
+    property bool controlcenter
+    property bool help
+
+    // Binding {
+    //     target: ShellState
+    //     property: "shellRoot"
+    //     value: root
+    // }
+
     Bar {
         controlcenterWindow: controlcenterWindow
         launcherWindow: launcherWindow
     }
 
-    // Notification {}
-    ControlCenterWindow {
-        id: controlcenterWindow
-        visible: false
-
-        GlobalShortcut {
-            name: "controlcenter"
-            description: "Controls Center"
-
-            onPressed: {
-                controlcenterWindow.visible = !controlcenterWindow.visible;
-                // root.centerOpen = !root.centerOpen;
-                // if (root.centerOpen)
-                //     root.onScreenNotifications.clear();
-            }
-        }
-    }
     LauncherWindow {
         id: launcherWindow
-        // visible: ShellState.launcher
-        visible: false
-
-        GlobalShortcut {
-            name: "launcher"
-            description: "Application Launcher"
-
-            onPressed: {
-                // ScreenState.launcher = !ScreenState.launcher;
-                launcherWindow.visible = !launcherWindow.visible;
-            }
-        }
+        visible: root.launcher
+    }
+    ControlCenterWindow {
+        id: controlcenterWindow
+        visible: root.controlcenter
     }
     NotificationWindow {}
-    Shortcuts {}
 
     OsdWindow {
         id: osdWindow
-        visible: false
-
-        GlobalShortcut {
-            name: "osd"
-            description: "Toggle OSD"
-
-            onPressed: {
-                // ShellState.osd = !osdWindow.visible;
-                osdWindow.visible = !osdWindow.visible;
-            }
-        }
+        visible: root.osd
     }
     HelpWindow {
         id: helpWindow
-        visible: false
-
-        // GlobalShortcut {
-        //     name: "help"
-        //     description: "Keybinds help"
-        //
-        //     onPressed: {
-        //         // helpWindow.visible = !helpWindow.visible;
-        //     }
-        // }
+        visible: root.help
     }
 
-    // Item {}
+    // Shortcuts {}
+    GlobalShortcut {
+        name: "launcher"
+        description: "Toggle application launcher"
+
+        onPressed: {
+            root.launcher = !root.launcher;
+        }
+    }
+    GlobalShortcut {
+        name: "controlcenter"
+        description: "Toggle control center"
+
+        onPressed: {
+            root.controlcenter = !root.controlcenter;
+        }
+    }
+    GlobalShortcut {
+        name: "osd"
+        description: "Toggle osd"
+
+        onPressed: {
+            root.osd = !root.osd;
+        }
+    }
+    GlobalShortcut {
+        name: "help"
+        description: "Toggle keybinds help"
+
+        onPressed: {
+            root.help = !root.help;
+        }
+    }
 }

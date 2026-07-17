@@ -53,12 +53,12 @@ Slider {
 
     Rectangle {
         z: -1
-        height: root.horizontal && bg.height
-        width: root.vertical && bg.width
-        anchors.left: root.horizontal && bg.left
-        anchors.right: root.horizontal && hndl.right
-        anchors.top: root.vertical && hndl.top
-        anchors.bottom: root.vertical && bg.bottom
+        height: root.horizontal ? bg.height : undefined
+        width: root.vertical ? bg.width : undefined
+        anchors.left: root.horizontal ? bg.left : undefined
+        anchors.right: root.horizontal ? hndl.right : undefined
+        anchors.top: root.vertical ? hndl.top : undefined
+        anchors.bottom: root.vertical ? bg.bottom : undefined
         // color: !root.enabled ? Qt.alpha(root.handleColor, 0.5) : root.handleColor
         color: root.handleColor
         radius: 20

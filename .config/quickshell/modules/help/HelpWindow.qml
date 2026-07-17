@@ -10,7 +10,7 @@ PanelWindow {
     id: root
 
     // anchors.top: true
-    anchors.right: true
+    // anchors.right: true
     // anchors.bottom: true
     exclusionMode: ExclusionMode.Normal
     // exclusionMode: ExclusionMode.Ignore
