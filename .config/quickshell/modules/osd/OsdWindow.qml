@@ -5,6 +5,7 @@ import QtQuick.Shapes
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Services.Mpris
+import Quickshell.Services.Pipewire
 import "../../components"
 import "../../services"
 import "../../controls"
@@ -19,7 +20,7 @@ PanelWindow {
     color: "transparent"
     // implicitWidth: 360
     implicitWidth: content.width + content.anchors.leftMargin + content.anchors.rightMargin
-    implicitHeight: Math.min(860, screen.height - (content.anchors.topMargin + content.anchors.bottomMargin)) + content.anchors.topMargin + content.anchors.bottomMargin
+    implicitHeight: Math.min(460, screen.height - (content.anchors.topMargin + content.anchors.bottomMargin)) + content.anchors.topMargin + content.anchors.bottomMargin
 
     screen: Quickshell.screens[0]
     exclusionMode: ExclusionMode.Normal
@@ -140,22 +141,78 @@ PanelWindow {
             bottomMargin: 36
         }
 
-        // Flickable {
-        //     implicitWidth: background.width
-        //     Layout.fillHeight: true
-        //     contentWidth: parent.width
-        //     contentHeight: content.height
-        //     flickableDirection: Flickable.VerticalFlick
-        //     clip: true
-        //
-        //     ColumnLayout {
-        //         id: content
-        //         implicitWidth: parent.width
-        //         spacing: 8
-        //     }
-        // }
+        Flickable {
+            implicitWidth: Math.min(applicationsContent.width, 320)
+            Layout.fillHeight: true
+            contentWidth: applicationsContent.width
+            contentHeight: parent.height
+            flickableDirection: Flickable.HorizontalFlick
+            clip: true
 
-        ColumnLayout {
+            Row {
+                id: applicationsContent
+                // implicitWidth: parent.width
+                spacing: 8
+
+                Repeater {
+                    model: AudioService.applications
+
+                    ColumnLayout {
+                        id: card
+                        implicitWidth: 40
+                        implicitHeight: content.height
+                        spacing: 8
+
+                        required property PwNode modelData
+
+                        Rectangle {
+                            color: "#0fffffff"
+                            implicitWidth: parent.width
+                            implicitHeight: width
+                            radius: 20
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: card.modelData.name.slice(0, 1).toUpperCase()
+                                font.family: "Inter"
+                                font.pixelSize: 20
+                                font.weight: Font.DemiBold
+                                color: "#ffffff"
+                            }
+                        }
+
+                        Slider {
+                            visible: card.modelData.isSink
+                            orientation: Qt.Vertical
+                            implicitWidth: parent.width
+                            Layout.fillHeight: true
+                            icon: "󰕾"
+
+                            from: 0
+                            to: 1
+                            stepSize: 0.01
+                            value: card.modelData.audio.volume
+                            onMoved: card.modelData.audio.volume = value
+                        }
+                        Slider {
+                            visible: !card.modelData.isSink
+                            orientation: Qt.Vertical
+                            Layout.fillHeight: true
+                            implicitWidth: parent.width
+                            icon: ""
+
+                            from: 0
+                            to: 1
+                            stepSize: 0.01
+                            value: card.modelData.audio.volume
+                            onMoved: card.modelData.audio.volume = value
+                        }
+                    }
+                }
+            }
+        }
+
+        ColumnLayout { // TODO Controls for individual audio channels
             // implicitWidth: 40
             Layout.fillHeight: true
             Layout.preferredWidth: 40
@@ -187,18 +244,18 @@ PanelWindow {
                 value: AudioService.sinkVolume
                 onMoved: AudioService.setSinkVolume(value)
             }
-            Slider {
-                orientation: Qt.Vertical
-                Layout.fillHeight: true
-                implicitWidth: parent.width
-                icon: ""
-
-                from: 0
-                to: 1
-                stepSize: 0.01
-                value: AudioService.sourceVolume
-                onMoved: AudioService.setSourceVolume(value)
-            }
+            // Slider {
+            //     orientation: Qt.Vertical
+            //     Layout.fillHeight: true
+            //     implicitWidth: parent.width
+            //     icon: ""
+            //
+            //     from: 0
+            //     to: 1
+            //     stepSize: 0.01
+            //     value: AudioService.sourceVolume
+            //     onMoved: AudioService.setSourceVolume(value)
+            // }
         }
     }
 }
