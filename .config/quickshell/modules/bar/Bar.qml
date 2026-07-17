@@ -54,6 +54,8 @@ PanelWindow {
             rightMargin: root.gapOut
         }
         spacing: root.gapIn
+
+        Mpris {}
     }
 
     // Right

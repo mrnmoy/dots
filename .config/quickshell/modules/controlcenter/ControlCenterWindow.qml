@@ -304,6 +304,7 @@ PanelWindow {
                     Item {
                         Layout.fillWidth: true
                         implicitHeight: 100
+                        visible: Mpris.players.values.length > 0
 
                         QC.SwipeView {
                             id: playersList

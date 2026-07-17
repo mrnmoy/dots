@@ -16,11 +16,13 @@ Rectangle {
     color: "#0fffffff"
 
     FrameAnimation {
-        running: root.modelData.playbackState == MprisPlaybackState.Playing
+        running: root.modelData.isPlaying
+        // running: root.modelData.playbackState === MprisPlaybackState.Playing
         onTriggered: root.modelData.positionChanged()
     }
     // Timer {
-    //     running: root.modelData.playbackState == MprisPlaybackState.Playing
+    // running: root.modelData.isPlaying
+    // running: root.modelData.playbackState == MprisPlaybackState.Playing
     //     interval: 1000
     //     repeat: true
     //     onTriggered: root.modelData.positionChanged()

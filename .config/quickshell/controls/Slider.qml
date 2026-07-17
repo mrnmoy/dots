@@ -32,7 +32,7 @@ Slider {
         width: bg.height
         height: width
         radius: width / 2
-        color: root.handleColor
+        color: "transparent"
 
         Text {
             anchors.centerIn: parent
@@ -48,7 +48,7 @@ Slider {
         anchors.left: bg.left
         anchors.right: hndl.right
         height: bg.height
-        color: root.handleColor
+        color: !root.enabled ? Qt.alpha(root.handleColor, 0.5) : root.handleColor
         radius: 20
     }
 }
