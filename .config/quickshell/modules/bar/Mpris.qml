@@ -8,7 +8,7 @@ Item {
     implicitWidth: Math.min(Quickshell.screens[0].width / 3, 320)
     implicitHeight: 20
 
-    readonly property MprisPlayer player: Mpris.players.values.find(plyr => plyr.isPlaying === true) || null
+    property MprisPlayer player: Mpris.players.values[0] || null
 
     Component {
         id: sliderComp

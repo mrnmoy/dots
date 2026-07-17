@@ -32,6 +32,7 @@ RowLayout {
                 font.pixelSize: 8
                 font.weight: Font.DemiBold
                 elide: Text.ElideRight
+                lineHeight: 0
             }
         }
 
@@ -45,19 +46,19 @@ RowLayout {
             value: NetworkService.downBytesSec / 1048576
 
             Item {
-                implicitWidth: Math.min(parent.width, downText.implicitWidth) - 8
-                implicitHeight: parent.implicitHeight
-                anchors.horizontalCenter: parent.horizontalCenter
+                implicitWidth: Math.min(parent.width - 8, downText.implicitWidth)
+                implicitHeight: downText.height
+                anchors.centerIn: parent
 
                 Text {
                     id: downText
                     width: parent.width
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: " " + formatBytes(NetworkService.downBytesSec)
+                    text: "  " + formatBytes(NetworkService.downBytesSec) + " "
                     color: "#ffffff"
                     font.pixelSize: 8
                     font.weight: Font.DemiBold
                     elide: Text.ElideRight
+                    lineHeight: 0
                 }
             }
         }
