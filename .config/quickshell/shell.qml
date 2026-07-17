@@ -56,14 +56,15 @@ ShellRoot {
 
     OsdWindow {
         id: osdWindow
-        visible: true
+        visible: ShellState.osd
 
         GlobalShortcut {
             name: "osd"
             description: "Toggle OSD"
 
             onPressed: {
-                osdWindow.visible = !osdWindow.visible;
+                ShellState.osd = !osdWindow.visible;
+                // osdWindow.visible = !osdWindow.visible;
             }
         }
     }

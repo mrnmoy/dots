@@ -40,8 +40,7 @@ Slider {
         implicitWidth: root.vertical ? bg.width : bg.height
         implicitHeight: width
         radius: width / 2
-        // color: "transparent"
-        color: "red"
+        color: "transparent"
 
         Text {
             anchors.centerIn: parent

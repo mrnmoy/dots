@@ -132,6 +132,7 @@ PanelWindow {
             // fill: background
             top: parent.top
             bottom: parent.bottom
+            left: parent.left
 
             topMargin: 36
             leftMargin: 16
@@ -181,8 +182,10 @@ PanelWindow {
                 icon: "󰕾"
 
                 from: 0
-                to: 100
-                value: 0
+                to: 1
+                stepSize: 0.01
+                value: AudioService.sinkVolume
+                onMoved: AudioService.setSinkVolume(value)
             }
             Slider {
                 orientation: Qt.Vertical
@@ -191,8 +194,10 @@ PanelWindow {
                 icon: ""
 
                 from: 0
-                to: 100
-                value: 100
+                to: 1
+                stepSize: 0.01
+                value: AudioService.sourceVolume
+                onMoved: AudioService.setSourceVolume(value)
             }
         }
     }

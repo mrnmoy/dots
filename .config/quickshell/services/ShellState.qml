@@ -1,9 +1,9 @@
 import Quickshell
 
 Singleton {
-    property bool osd
-    property bool launcher: false
+    property bool osd: false
+    property bool launcher
     property bool controlcenter
     property bool help
-    onLauncherChanged: console.log("launcher state changed to ", launcher.toString())
+    onOsdChanged: console.log("launcher state changed to ", osd.toString())
 }
