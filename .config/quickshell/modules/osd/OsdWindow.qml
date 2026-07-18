@@ -12,6 +12,7 @@ import "../../controls"
 
 PanelWindow {
     id: root
+    visible: ShellState.osd
 
     anchors {
         right: true
@@ -40,7 +41,8 @@ PanelWindow {
         running: root.visible
         interval: 2000
         onTriggered: if (!hoverHandler.hovered)
-            root.visible = false
+            ShellState.osd = false
+        // root.visible = false
     }
 
     MultiEffect {

@@ -1,14 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Io
-import Quickshell.Wayland
-import Quickshell.Hyprland
-// import qs.services
-// import "../../services"
 import "../../components"
-import "../../controls"
-import "../launcher"
+import "../../services"
 
 PanelWindow {
     id: root
@@ -25,9 +19,6 @@ PanelWindow {
     readonly property int gapIn: 8
     readonly property int gapOut: 4
 
-    required property var launcherWindow
-    required property var controlcenterWindow
-
     // Left
     RowLayout {
         anchors {
@@ -40,7 +31,7 @@ PanelWindow {
         // AppMenuButton {}
         BarButton {
             icon: "󰣇"
-            onClicked: root.launcherWindow.visible = !root.launcherWindow.visible
+            onClicked: ShellState.launcher = !ShellState.launcher
         }
         SystemTray {}
     }
@@ -72,7 +63,7 @@ PanelWindow {
         Clock {}
         BarButton {
             icon: "󰒓"
-            onClicked: root.controlcenterWindow.visible = !root.controlcenterWindow.visible
+            onClicked: ShellState.controlcenter = !ShellState.controlcenter
         }
     }
 }

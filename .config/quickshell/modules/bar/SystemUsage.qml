@@ -1,35 +1,31 @@
 import QtQuick
 import QtQuick.Layouts
-// import qs.services
-// import qs.controls
 import "../../services"
 import "../../controls"
-
-// import "../../components"
 
 RowLayout {
     CircularProgressBar {
         size: 28
         lineWidth: 3
         icon: ""
-        value: SystemUsage.cpuUsage
+        value: SystemUsageService.cpuUsage
     }
     CircularProgressBar {
         size: 28
         lineWidth: 3
         icon: ""
-        value: SystemUsage.memUsage
+        value: SystemUsageService.memUsage
     }
     CircularProgressBar {
         size: 28
         lineWidth: 3
         icon: "󰋊"
-        value: SystemUsage.diskUsage
+        value: SystemUsageService.diskUsage
     }
     CircularProgressBar {
         size: 28
         lineWidth: 3
         icon: "󰔄"
-        value: SystemUsage.cpuTemp / 100
+        value: SystemUsageService.cpuTemp / 100
     }
 }

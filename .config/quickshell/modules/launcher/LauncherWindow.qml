@@ -4,14 +4,13 @@ import QtQuick.Effects
 import QtQuick.Shapes
 import Quickshell
 import Quickshell.Wayland
-// import qs.config
-// import qs.controls
 import "../../config"
-import "../../components"
 import "../../controls"
+import "../../services"
 
 PanelWindow {
     id: root
+    visible: ShellState.launcher
 
     anchors {
         bottom: true
@@ -23,7 +22,8 @@ PanelWindow {
 
     screen: Quickshell.screens[0]
     exclusionMode: ExclusionMode.Normal
-    WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+    // WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
     property string query: ""
     property int selectedIndex: 0
@@ -46,6 +46,11 @@ PanelWindow {
         return apps;
     }
 
+    function close(): void {
+        root.query = "";
+        ShellState.launcher = false;
+    }
+
     FocusScope {
         id: panelContent
         anchors.fill: parent
@@ -55,12 +60,12 @@ PanelWindow {
         opacity: visible ? 1.0 : 0.0
         focus: true
 
-        Keys.onEscapePressed: root.visible = false
+        Keys.onEscapePressed: root.close()
         Keys.onDownPressed: root.selectedIndex = Math.min(root.selectedIndex + 1, root.visibleEntries.length - 1)
         Keys.onUpPressed: root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
         Keys.onReturnPressed: {
-            root.visible = false;
             root.visibleEntries[root.selectedIndex].execute();
+            root.close();
         }
 
         HoverHandler {
@@ -77,7 +82,8 @@ PanelWindow {
             id: closeTimer
             interval: 500
             onTriggered: if (!hoverHandler.hovered)
-                root.visible = false
+                root.close()
+            // root.visible = false
         }
 
         // Behavior on scale {
@@ -212,6 +218,7 @@ PanelWindow {
                         Layout.fillHeight: true
                         font.pixelSize: 20
                         placeholderText: "Search"
+                        text: root.query
                         onTextChanged: root.query = text
                     }
                 }

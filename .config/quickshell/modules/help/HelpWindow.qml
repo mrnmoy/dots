@@ -8,6 +8,7 @@ import "../../services"
 
 PanelWindow {
     id: root
+    visible: ShellState.help
 
     // anchors.top: true
     // anchors.right: true

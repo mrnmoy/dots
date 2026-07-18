@@ -11,10 +11,9 @@ import "../../services"
 import "../notification"
 import "../../controls"
 
-// import qs.controls
-
 PanelWindow {
     id: root
+    visible: ShellState.controlcenter
 
     anchors {
         right: true
@@ -38,7 +37,7 @@ PanelWindow {
         opacity: visible ? 1.0 : 0.0
 
         focus: true
-        Keys.onEscapePressed: root.visible = false
+        Keys.onEscapePressed: ShellState.controlcenter = false
 
         HoverHandler {
             id: hoverHandler
@@ -54,7 +53,7 @@ PanelWindow {
             id: closeTimer
             interval: 500
             onTriggered: if (!hoverHandler.hovered)
-                root.visible = false
+                ShellState.controlcenter = false
         }
 
         // Behavior on scale {

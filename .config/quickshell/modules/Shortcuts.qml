@@ -6,45 +6,48 @@ Scope {
     id: root
 
     GlobalShortcut {
+        name: "launcher"
+        description: "Toggle application launcher"
+
+        onPressed: {
+            ShellState.launcher = !ShellState.launcher;
+        }
+    }
+
+    GlobalShortcut {
+        name: "controlcenter"
+        description: "Toggle control center"
+
+        onPressed: {
+            ShellState.controlcenter = !ShellState.controlcenter;
+        }
+    }
+
+    GlobalShortcut {
+        name: "osd"
+        description: "Toggle osd"
+
+        onPressed: {
+            ShellState.osd = !ShellState.osd;
+        }
+    }
+
+    GlobalShortcut {
+        name: "help"
+        description: "Toggle keybinds help"
+
+        onPressed: {
+            ShellState.help = !ShellState.help;
+        }
+    }
+
+    GlobalShortcut {
         name: "showcase"
         description: "Toggle launcher, osd, controlcenter"
 
         onPressed: {
             console.log("showcase triggered");
             ShellState.launcher = ShellState.osd = ShellState.controlcenter = !(ShellState.launcher || ShellState.osd || ShellState.controlcenter);
-        }
-    }
-
-    GlobalShortcut {
-        name: "launcher"
-        description: "Toggle Application Launcher"
-
-        onPressed: {
-            ShellState.launcher = !ShellState.launcher;
-            console.log("launcher triggered ");
-            // launcherWindow.visible = !launcherWindow.visible;
-        }
-    }
-
-    GlobalShortcut {
-        name: "controlcenter"
-        description: "Controls Center"
-
-        onPressed: {
-            // controlcenterWindow.visible = !controlcenterWindow.visible;
-
-            // root.centerOpen = !root.centerOpen;
-            // if (root.centerOpen)
-            //     root.onScreenNotifications.clear();
-        }
-    }
-
-    GlobalShortcut {
-        name: "help"
-        description: "Keybinds help"
-
-        onPressed: {
-            // helpWindow.visible = !helpWindow.visible;
         }
     }
 }
