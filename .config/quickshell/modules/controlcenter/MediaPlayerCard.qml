@@ -15,18 +15,16 @@ Rectangle {
     radius: 20
     color: "#0fffffff"
 
-    FrameAnimation {
-        running: root.modelData.isPlaying
-        // running: root.modelData.playbackState === MprisPlaybackState.Playing
-        onTriggered: root.modelData.positionChanged()
-    }
-    // Timer {
-    // running: root.modelData.isPlaying
-    // running: root.modelData.playbackState == MprisPlaybackState.Playing
-    //     interval: 1000
-    //     repeat: true
+    // FrameAnimation {
+    //     running: root.modelData.isPlaying
     //     onTriggered: root.modelData.positionChanged()
     // }
+    Timer {
+        running: root.modelData.isPlaying
+        interval: root.modelData.length / 100
+        repeat: true
+        onTriggered: root.modelData.positionChanged()
+    }
 
     RowLayout {
         id: content

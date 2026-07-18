@@ -28,18 +28,16 @@ Item {
                 // player.positionChanged();
             }
 
-            FrameAnimation {
-                // running: root.player.isPlaying
-                running: root.player.playbackState === MprisPlaybackState.Playing
-                onTriggered: root.player.positionChanged()
-            }
-            // Timer {
+            // FrameAnimation {
             //     running: root.player.isPlaying
-            //     // running: root.player.playbackState == MprisPlaybackState.Playing
-            //     interval: root.player.length / 100
-            //     repeat: true
             //     onTriggered: root.player.positionChanged()
             // }
+            Timer {
+                running: root.player.isPlaying
+                interval: root.player.length / 100
+                repeat: true
+                onTriggered: root.player.positionChanged()
+            }
 
             Item {
                 implicitWidth: Math.min(parent.width, title.implicitWidth) - 16

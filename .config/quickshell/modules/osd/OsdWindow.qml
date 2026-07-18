@@ -10,7 +10,7 @@ import "../../controls"
 PanelWindow {
     id: root
 
-    property bool active: ShellState.osd
+    readonly property bool active: ShellState.osd
 
     anchors {
         right: true

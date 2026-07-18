@@ -11,7 +11,7 @@ import "../../services"
 PanelWindow {
     id: root
 
-    property bool active: ShellState.launcher
+    readonly property bool active: ShellState.launcher
 
     anchors {
         bottom: true
@@ -55,300 +55,305 @@ PanelWindow {
         ShellState.launcher = false;
     }
 
-    Keys.onEscapePressed: root.close()
-    Keys.onDownPressed: root.selectedIndex = Math.min(root.selectedIndex + 1, root.visibleEntries.length - 1)
-    Keys.onUpPressed: root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
-    Keys.onReturnPressed: {
-        root.visibleEntries[root.selectedIndex].execute();
-        root.close();
-    }
-
-    HoverHandler {
-        id: hoverHandler
-        onHoveredChanged: {
-            if (hovered)
-                closeTimer.stop();
-            else if (root.visible)
-                closeTimer.restart();
-        }
-    }
-
-    Timer {
-        id: closeTimer
-        interval: 500
-        onTriggered: if (!hoverHandler.hovered)
-            root.close()
-    }
-
-    MultiEffect {
-        source: background
-        anchors.fill: background
-        maskEnabled: true
-        maskSource: mask
-
-        // layer.smooth: true
-
-        maskThresholdMin: 0.5
-        maskSpreadAtMin: 1.0
-    }
-
-    Rectangle {
-        id: background
+    FocusScope {
         anchors.fill: parent
-        visible: false
-        // smooth: true
-        color: "#01000000"
-    }
+        focus: true
 
-    Shape {
-        id: mask
-        anchors.fill: background
-        antialiasing: true
+        Keys.onEscapePressed: root.close()
+        Keys.onDownPressed: root.selectedIndex = Math.min(root.selectedIndex + 1, root.visibleEntries.length - 1)
+        Keys.onUpPressed: root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
+        Keys.onReturnPressed: {
+            root.visibleEntries[root.selectedIndex].execute();
+            root.close();
+        }
 
-        visible: false
-        layer.enabled: true
-
-        // preferredRendererType: Shape.CurveRenderer
-        // preferredRendererType: Shape.SoftwareRenderer
-
-        ShapePath {
-            strokeColor: "transparent"
-
-            startX: 0
-            startY: mask.height
-
-            PathArc {
-                direction: PathArc.Counterclockwise
-                radiusX: 20
-                radiusY: 20
-                x: 20
-                y: mask.height - 20
-            }
-            PathLine {
-                x: 20
-                y: 20
-            }
-            PathArc {
-                radiusX: 20
-                radiusY: 20
-                x: 40
-                y: 0
-            }
-            PathLine {
-                x: mask.width - 40
-                y: 0
-            }
-            PathArc {
-                direction: PathArc.Clockwise
-                radiusX: 20
-                radiusY: 20
-                x: mask.width - 20
-                y: 20
-            }
-            PathLine {
-                x: mask.width - 20
-                y: mask.height - 20
-            }
-            PathArc {
-                direction: PathArc.Counterclockwise
-                radiusX: 20
-                radiusY: 20
-                x: mask.width
-                y: mask.height
-            }
-            PathLine {
-                x: 0
-                y: mask.height
+        HoverHandler {
+            id: hoverHandler
+            onHoveredChanged: {
+                if (hovered)
+                    closeTimer.stop();
+                else if (root.visible)
+                    closeTimer.restart();
             }
         }
-    }
 
-    ColumnLayout {
-        anchors {
-            fill: background
-
-            topMargin: 16
-            leftMargin: 32
-            rightMargin: 32
+        Timer {
+            id: closeTimer
+            interval: 500
+            onTriggered: if (!hoverHandler.hovered)
+                root.close()
         }
-        spacing: 16
+
+        MultiEffect {
+            source: background
+            anchors.fill: background
+            maskEnabled: true
+            maskSource: mask
+
+            // layer.smooth: true
+
+            maskThresholdMin: 0.5
+            maskSpreadAtMin: 1.0
+        }
 
         Rectangle {
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            implicitHeight: 40
-            color: "#0fffffff"
-            radius: 20
+            id: background
+            anchors.fill: parent
+            visible: false
+            // smooth: true
+            color: "#01000000"
+        }
+
+        Shape {
+            id: mask
+            anchors.fill: background
+            antialiasing: true
+
+            visible: false
+            layer.enabled: true
+
+            // preferredRendererType: Shape.CurveRenderer
+            // preferredRendererType: Shape.SoftwareRenderer
+
+            ShapePath {
+                strokeColor: "transparent"
+
+                startX: 0
+                startY: mask.height
+
+                PathArc {
+                    direction: PathArc.Counterclockwise
+                    radiusX: 20
+                    radiusY: 20
+                    x: 20
+                    y: mask.height - 20
+                }
+                PathLine {
+                    x: 20
+                    y: 20
+                }
+                PathArc {
+                    radiusX: 20
+                    radiusY: 20
+                    x: 40
+                    y: 0
+                }
+                PathLine {
+                    x: mask.width - 40
+                    y: 0
+                }
+                PathArc {
+                    direction: PathArc.Clockwise
+                    radiusX: 20
+                    radiusY: 20
+                    x: mask.width - 20
+                    y: 20
+                }
+                PathLine {
+                    x: mask.width - 20
+                    y: mask.height - 20
+                }
+                PathArc {
+                    direction: PathArc.Counterclockwise
+                    radiusX: 20
+                    radiusY: 20
+                    x: mask.width
+                    y: mask.height
+                }
+                PathLine {
+                    x: 0
+                    y: mask.height
+                }
+            }
+        }
+
+        ColumnLayout {
+            anchors {
+                fill: background
+
+                topMargin: 16
+                leftMargin: 32
+                rightMargin: 32
+            }
+            spacing: 16
+
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignTop
+                implicitHeight: 40
+                color: "#0fffffff"
+                radius: 20
+
+                RowLayout {
+                    anchors.fill: parent
+                    Layout.leftMargin: 16
+                    Layout.rightMargin: 16
+                    spacing: 16
+
+                    Text {
+                        text: "󰣇"
+                        font.pixelSize: 20
+                        font.weight: Font.Black
+                        color: "#ffffff"
+                        Layout.leftMargin: 16
+                    }
+                    TextFieldBase {
+                        focus: true
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        font.pixelSize: 20
+                        placeholderText: "Search"
+                        text: root.query
+                        onTextChanged: root.query = text
+                    }
+                }
+            }
 
             RowLayout {
-                anchors.fill: parent
-                Layout.leftMargin: 16
-                Layout.rightMargin: 16
-                spacing: 16
+                Layout.fillWidth: true
+                spacing: 8
 
                 Text {
-                    text: "󰣇"
-                    font.pixelSize: 20
-                    font.weight: Font.Black
+                    text: root.query.trim().length ? "Best matches" : "Favourites"
+                    font.pixelSize: 12
+                    font.weight: Font.DemiBold
                     color: "#ffffff"
-                    Layout.leftMargin: 16
-                }
-                TextFieldBase {
-                    focus: true
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    font.pixelSize: 20
-                    placeholderText: "Search"
-                    text: root.query
-                    onTextChanged: root.query = text
                 }
             }
-        }
 
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 8
+            Flickable {
+                id: list
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                clip: true
+                contentWidth: width
+                contentHeight: content.implicitHeight
 
-            Text {
-                text: root.query.trim().length ? "Best matches" : "Favourites"
-                font.pixelSize: 12
-                font.weight: Font.DemiBold
-                color: "#ffffff"
-            }
-        }
+                // maximumFlickVelocity: 3000
+                // flickDeceleration: 1500
+                boundsBehavior: Flickable.StopAtBounds
+                // boundsBehavior: Flickable.DragAndOvershootBounds
+                // boundsMovement: Flickable.FollowBoundsBehavior
 
-        Flickable {
-            id: list
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            clip: true
-            contentWidth: width
-            contentHeight: content.implicitHeight
+                // rebound: Transition {
+                //     NumberAnimation {
+                //         properties: "x,y"
+                //         duration: 150
+                //         easing.bezierCurve: [0.85, 0, 0.15, 1]
+                //     }
+                // }
 
-            // maximumFlickVelocity: 3000
-            // flickDeceleration: 1500
-            boundsBehavior: Flickable.StopAtBounds
-            // boundsBehavior: Flickable.DragAndOvershootBounds
-            // boundsMovement: Flickable.FollowBoundsBehavior
+                Column {
+                    id: content
+                    spacing: 8
+                    bottomPadding: 16
 
-            // rebound: Transition {
-            //     NumberAnimation {
-            //         properties: "x,y"
-            //         duration: 150
-            //         easing.bezierCurve: [0.85, 0, 0.15, 1]
-            //     }
-            // }
+                    Repeater {
+                        model: root.visibleEntries
 
-            Column {
-                id: content
-                spacing: 8
-                bottomPadding: 16
+                        Rectangle {
+                            id: card
 
-                Repeater {
-                    model: root.visibleEntries
+                            required property DesktopEntry modelData
+                            required property int index
 
-                    Rectangle {
-                        id: card
+                            width: list.width
+                            height: 60
+                            radius: 20
+                            color: root.selectedIndex === index ? "#0fffffff" : "transparent"
 
-                        required property DesktopEntry modelData
-                        required property int index
+                            RowLayout {
+                                anchors.fill: parent
+                                spacing: 0
 
-                        width: list.width
-                        height: 60
-                        radius: 20
-                        color: root.selectedIndex === index ? "#0fffffff" : "transparent"
+                                Item {
+                                    Layout.fillHeight: true
+                                    implicitWidth: height
+                                    Layout.margins: 8
 
-                        RowLayout {
-                            anchors.fill: parent
-                            spacing: 0
+                                    Image {
+                                        id: appIcon
+                                        anchors.fill: parent
+                                        fillMode: Image.PreserveAspectFit
 
-                            Item {
-                                Layout.fillHeight: true
-                                implicitWidth: height
-                                Layout.margins: 8
+                                        property int sourceIndex: 0
+                                        property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
 
-                                Image {
-                                    id: appIcon
-                                    anchors.fill: parent
-                                    fillMode: Image.PreserveAspectFit
+                                        source: iconSources[sourceIndex]
+                                        asynchronous: true
+                                        onStatusChanged: {
+                                            if (status === Image.Error) {
+                                                if (sourceIndex < iconSources.length - 1)
+                                                    sourceIndex = sourceIndex + 1;
+                                                else
+                                                    visible = false;
+                                            }
+                                        }
+                                    }
 
-                                    property int sourceIndex: 0
-                                    property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
+                                    Rectangle {
+                                        radius: 20
+                                        color: "#0fffffff"
+                                        anchors.fill: parent
+                                        visible: !appIcon.visible
 
-                                    source: iconSources[sourceIndex]
-                                    asynchronous: true
-                                    onStatusChanged: {
-                                        if (status === Image.Error) {
-                                            if (sourceIndex < iconSources.length - 1)
-                                                sourceIndex = sourceIndex + 1;
-                                            else
-                                                visible = false;
+                                        Text {
+                                            anchors.centerIn: parent
+                                            text: card.modelData.name.slice(0, 1).toUpperCase()
+                                            font.family: "Inter"
+                                            font.pixelSize: 20
+                                            font.weight: Font.DemiBold
+                                            color: "#ffffff"
                                         }
                                     }
                                 }
 
-                                Rectangle {
-                                    radius: 20
-                                    color: "#0fffffff"
-                                    anchors.fill: parent
-                                    visible: !appIcon.visible
+                                ColumnLayout {
+                                    Layout.fillWidth: true
+                                    spacing: 2
 
                                     Text {
-                                        anchors.centerIn: parent
-                                        text: card.modelData.name.slice(0, 1).toUpperCase()
+                                        Layout.fillWidth: true
+                                        text: card.modelData.name ?? "Unknown"
                                         font.family: "Inter"
-                                        font.pixelSize: 20
-                                        font.weight: Font.DemiBold
+                                        font.pixelSize: 16
+                                        font.weight: Font.Medium
                                         color: "#ffffff"
+                                        elide: Text.ElideRight
+                                    }
+
+                                    Text {
+                                        Layout.fillWidth: true
+                                        text: card.modelData.comment || card.modelData.genericName || card.modelData.execString || "Launch"
+                                        font.family: "Inter"
+                                        font.pixelSize: 12
+                                        color: "#ffffff"
+                                        elide: Text.ElideRight
                                     }
                                 }
                             }
 
-                            ColumnLayout {
-                                Layout.fillWidth: true
-                                spacing: 2
-
-                                Text {
-                                    Layout.fillWidth: true
-                                    text: card.modelData.name ?? "Unknown"
-                                    font.family: "Inter"
-                                    font.pixelSize: 16
-                                    font.weight: Font.Medium
-                                    color: "#ffffff"
-                                    elide: Text.ElideRight
-                                }
-
-                                Text {
-                                    Layout.fillWidth: true
-                                    text: card.modelData.comment || card.modelData.genericName || card.modelData.execString || "Launch"
-                                    font.family: "Inter"
-                                    font.pixelSize: 12
-                                    color: "#ffffff"
-                                    elide: Text.ElideRight
-                                }
+                            MouseArea {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onEntered: root.selectedIndex = card.index
+                                onClicked: card.modelData.execute()
                             }
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onEntered: root.selectedIndex = card.index
-                            onClicked: card.modelData.execute()
                         }
                     }
                 }
             }
-        }
 
-        Text {
-            Layout.fillWidth: true
-            visible: root.visibleEntries === 0
-            text: "No application found"
-            horizontalAlignment: Text.AlignHCenter
-            font.family: "Inter"
-            font.pixelSize: 12
-            color: "#ffffff"
+            Text {
+                Layout.fillWidth: true
+                visible: root.visibleEntries === 0
+                text: "No application found"
+                horizontalAlignment: Text.AlignHCenter
+                font.family: "Inter"
+                font.pixelSize: 12
+                color: "#ffffff"
+            }
         }
     }
 }
