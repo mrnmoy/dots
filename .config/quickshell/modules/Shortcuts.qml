@@ -19,6 +19,8 @@ Scope {
         description: "Toggle control center"
 
         onPressed: {
+            if (ShellState.osd)
+                ShellState.osd = false;
             ShellState.controlcenter = !ShellState.controlcenter;
         }
     }
@@ -28,7 +30,8 @@ Scope {
         description: "Toggle osd"
 
         onPressed: {
-            ShellState.osd = !ShellState.osd;
+            if (!ShellState.controlcenter)
+                ShellState.osd = !ShellState.osd;
         }
     }
 
