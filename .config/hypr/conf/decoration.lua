@@ -22,10 +22,10 @@ hl.config({
             input_methods_ignorealpha = 0.0
         },
         shadow = {
-            enabled = true,
+            enabled = false,
             range = 4,
             render_power = 2,
-            color = "#ff9933",
+            color = "#E3701B",
             color_inactive = "#00000000",
         }
     },

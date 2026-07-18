@@ -3,23 +3,24 @@ import QtQuick.Layouts
 import QtQuick.Effects
 import QtQuick.Shapes
 import Quickshell
-import Quickshell.Wayland
-import Quickshell.Services.Mpris
 import Quickshell.Services.Pipewire
-import "../../components"
 import "../../services"
 import "../../controls"
 
 PanelWindow {
     id: root
-    visible: ShellState.osd
+
+    property bool active: ShellState.osd
 
     anchors {
         right: true
     }
 
+    margins {
+        right: active ? 0 : -width
+    }
+
     color: "transparent"
-    // implicitWidth: 360
     implicitWidth: content.width + content.anchors.leftMargin + content.anchors.rightMargin
     implicitHeight: Math.min(460, screen.height - (content.anchors.topMargin + content.anchors.bottomMargin)) + content.anchors.topMargin + content.anchors.bottomMargin
 
@@ -42,7 +43,6 @@ PanelWindow {
         interval: 2000
         onTriggered: if (!hoverHandler.hovered)
             ShellState.osd = false
-        // root.visible = false
     }
 
     MultiEffect {
@@ -132,7 +132,6 @@ PanelWindow {
         spacing: 8
 
         anchors {
-            // fill: background
             top: parent.top
             bottom: parent.bottom
             left: parent.left
