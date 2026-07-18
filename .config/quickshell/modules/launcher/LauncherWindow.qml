@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Effects
 import QtQuick.Shapes
 import Quickshell
+import Quickshell.Hyprland
 import Quickshell.Wayland
 import "../../config"
 import "../../controls"
@@ -12,6 +13,11 @@ PanelWindow {
     id: root
 
     readonly property bool active: ShellState.launcher
+
+    HyprlandFocusGrab {
+        active: root.active
+        windows: [root]
+    }
 
     anchors {
         bottom: true
@@ -27,7 +33,7 @@ PanelWindow {
 
     screen: Quickshell.screens[0]
     exclusionMode: ExclusionMode.Normal
-    WlrLayershell.keyboardFocus: active ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+    // WlrLayershell.keyboardFocus: active ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     property string query: ""
     property int selectedIndex: 0
@@ -51,9 +57,17 @@ PanelWindow {
     }
 
     function close(): void {
-        root.query = "";
         ShellState.launcher = false;
+        root.selectedIndex = 0;
+        root.query = "";
     }
+
+    // Loader {
+    //     active: root.margins.bottom !== -root.height
+    //     focus: true
+    //     anchors.fill: parent
+    //     sourceComponent: LauncherContent {}
+    // }
 
     FocusScope {
         anchors.fill: parent

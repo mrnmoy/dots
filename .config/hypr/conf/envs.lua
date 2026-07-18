@@ -1,5 +1,6 @@
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("HYPRCURSOR_THEME", "catppuccin-mocha-lavender-cursors")
 hl.env("GDK_SCALE", "1")
 hl.env("MOZ_ENABLE_WAYLANAD", "1")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
