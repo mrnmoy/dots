@@ -16,7 +16,7 @@ RowLayout {
         Layout.fillHeight: true
         spacing: 2
 
-        Slider {
+        HorizontalSlider {
             implicitHeight: 12
             implicitWidth: 100
             enabled: false
@@ -36,7 +36,7 @@ RowLayout {
             }
         }
 
-        Slider {
+        HorizontalSlider {
             implicitHeight: 12
             implicitWidth: 100
             enabled: false

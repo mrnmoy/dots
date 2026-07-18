@@ -7,7 +7,8 @@ Slider {
 
     property string icon: ""
     property color bgColor: "#0fffffff"
-    property color handleColor: "#ff9933"
+    // property color handleColor: "#ff9933"
+    property color handleColor: "#E3701B"
 
     from: 0
     to: 100
@@ -20,11 +21,6 @@ Slider {
 
     background: Rectangle {
         id: bg
-        // x: root.leftPadding
-        // y: root.topPadding + root.availableHeight / 2 - height / 2
-        // implicitWidth: 200
-        // implicitHeight: 36
-        // anchors.fill: parent
         implicitWidth: parent.width
         implicitHeight: parent.height
         radius: 20
@@ -33,11 +29,9 @@ Slider {
 
     handle: Rectangle {
         id: hndl
-        // x: root.leftPadding + root.visualPosition * (root.availableWidth - width)
-        // y: root.topPadding + root.availableHeight / 2 - (height / 2)
-        x: root.vertical ? (root.availableWidth - width) : root.visualPosition * (root.availableWidth - width)
-        y: root.vertical ? root.visualPosition * (root.availableHeight - height) : (root.availableHeight - height) / 2
-        implicitWidth: root.vertical ? bg.width : bg.height
+        x: root.visualPosition * (root.availableWidth - width)
+        y: (root.availableHeight - height) / 2
+        implicitWidth: bg.height
         implicitHeight: width
         radius: width / 2
         color: "transparent"
@@ -53,13 +47,9 @@ Slider {
 
     Rectangle {
         z: -1
-        width: root.vertical ? bg.width : undefined
-        height: root.horizontal ? bg.height : undefined
-        anchors.left: root.horizontal ? bg.left : undefined
-        anchors.right: root.horizontal ? hndl.right : undefined
-        anchors.top: root.vertical ? hndl.top : undefined
-        anchors.bottom: root.vertical ? bg.bottom : undefined
-        // color: !root.enabled ? Qt.alpha(root.handleColor, 0.5) : root.handleColor
+        height: bg.height
+        anchors.left: bg.left
+        anchors.right: hndl.right
         color: root.handleColor
         radius: 20
 

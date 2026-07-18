@@ -11,7 +11,8 @@ import "./modules"
 ShellRoot {
     id: root
 
-    BarWindow {}
+    // BarWindow {}
+    Bar {}
 
     LauncherWindow {}
     ControlCenterWindow {}

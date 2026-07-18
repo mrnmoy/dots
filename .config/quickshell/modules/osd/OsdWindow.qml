@@ -233,7 +233,7 @@ PanelWindow {
                 }
             }
 
-            Slider {
+            VerticalSlider {
                 orientation: Qt.Vertical
                 implicitWidth: parent.width
                 Layout.fillHeight: true
@@ -244,6 +244,7 @@ PanelWindow {
                 stepSize: 0.01
                 value: AudioService.sink.audio.volume
                 onMoved: AudioService.sink.audio.volume = value
+                onValueChanged: closeTimer.restart()
             }
             // Slider {
             //     orientation: Qt.Vertical

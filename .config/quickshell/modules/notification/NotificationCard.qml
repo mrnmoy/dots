@@ -13,7 +13,7 @@ Rectangle {
 
     implicitWidth: parent.width
     implicitHeight: 100
-    radius: 16
+    radius: 20
     color: modelData.urgency === NotificationUrgency.Critical ? "#0fff0000" : "#0fffffff"
 
     MouseArea {
@@ -180,7 +180,7 @@ Rectangle {
                     text: root.modelData.summary
 
                     Layout.fillWidth: true
-                    color: "orange"
+                    color: "#E3701B"
                     font.family: "Inter"
                     font.pixelSize: 16
                     font.bold: true
@@ -196,7 +196,8 @@ Rectangle {
                     // font.family: Config.fontFamily
                     // font.pixelSize: Config.fontSize - 1
                     font.pixelSize: 14
-                    wrapMode: Text.WordWrap
+                    // wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
                 }
 
                 Image {

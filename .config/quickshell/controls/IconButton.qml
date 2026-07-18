@@ -8,7 +8,7 @@ Rectangle {
     property int size: 16
     property string desc: ""
     property color iconColor: "#ffffff"
-    property color hoveredIconColor: "#ff9933"
+    property color hoveredIconColor: "#E3701B"
     readonly property bool hovered: mouseArea.containsMouse
 
     signal clicked

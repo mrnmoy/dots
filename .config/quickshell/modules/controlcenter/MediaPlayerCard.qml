@@ -149,12 +149,12 @@ Rectangle {
                 }
             }
 
-            Slider {
+            HorizontalSlider {
                 visible: root.modelData.positionSupported
                 implicitHeight: 12
                 Layout.fillWidth: true
                 Layout.topMargin: 4
-                opacity: !root.modelData.canSeek ? 0.5 : 1
+                enabled: root.modelData.canSeek
 
                 from: 0
                 to: root.modelData.length

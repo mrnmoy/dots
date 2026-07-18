@@ -60,7 +60,7 @@ Item {
 
             ctx.beginPath();
             ctx.arc(x, y, radius, startAngle, progressAngle);
-            ctx.strokeStyle = "#ff9933";
+            ctx.strokeStyle = "#E3701B";
             ctx.stroke();
         }
 

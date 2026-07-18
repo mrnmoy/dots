@@ -6,6 +6,7 @@ import QtQuick.Shapes
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Services.Mpris
+import Quickshell.Services.UPower
 import "../../components"
 import "../../services"
 import "../notification"
@@ -234,29 +235,49 @@ PanelWindow {
                         rowSpacing: 8
                         columnSpacing: 8
 
-                        Rectangle {
-                            Layout.fillWidth: true
-                            implicitHeight: 60
-                            color: "#0fffffff"
-                            radius: 20
+                        QuickActionButton {
+                            icon: ""
+                            label: "Wifi"
                         }
-                        Rectangle {
-                            Layout.fillWidth: true
-                            implicitHeight: 60
-                            color: "#0fffffff"
-                            radius: 20
+
+                        QuickActionButton {
+                            icon: "󰂯"
+                            label: "Bluetooth"
                         }
-                        Rectangle {
-                            Layout.fillWidth: true
-                            implicitHeight: 60
-                            color: "#0fffffff"
-                            radius: 20
+
+                        QuickActionButton {
+                            icon: ""
+                            label: "Power"
+                            desc: UPower.profile === PowerProfile.PowerSaver ? "PowerSaver" : UPower.profile === PowerProfile.Balanced ? "Balanced" : "Performance"
+                            onClicked: {
+                                if (UPower.hasPerformanceProfile) {
+                                    switch (UPower.profile) {
+                                    case PowerProfile.Balanced:
+                                        UPower.profile = PowerProfile.Performance;
+                                        break;
+                                    case PowerProfile.Performance:
+                                        UPower.profile = PowerProfile.PowerSaver;
+                                        break;
+                                    default:
+                                        UPower.profile = PowerProfile.Balanced;
+                                        break;
+                                    }
+                                } else {
+                                    switch (UPower.profile) {
+                                    case PowerProfile.Balanced:
+                                        UPower.profile = PowerProfile.PowerSaver;
+                                        break;
+                                    default:
+                                        UPower.profile = PowerProfile.Balanced;
+                                        break;
+                                    }
+                                }
+                            }
                         }
-                        Rectangle {
-                            Layout.fillWidth: true
-                            implicitHeight: 60
-                            color: "#0fffffff"
-                            radius: 20
+
+                        QuickActionButton {
+                            icon: "󰂯"
+                            label: "Bluetooth"
                         }
                     }
 
@@ -265,7 +286,7 @@ PanelWindow {
                         spacing: 8
 
                         // Brightness slider
-                        Slider {
+                        HorizontalSlider {
                             visible: BrightnessService.hasBacklight
                             Layout.fillWidth: true
                             icon: "󰃠"
@@ -275,7 +296,7 @@ PanelWindow {
                         }
 
                         // Sink volume slider
-                        Slider {
+                        HorizontalSlider {
                             Layout.fillWidth: true
                             icon: "󰕾"
 
@@ -286,7 +307,7 @@ PanelWindow {
                             onMoved: AudioService.sink.audio.volume = value
                         }
                         // Source volume slider
-                        Slider {
+                        HorizontalSlider {
                             Layout.fillWidth: true
                             icon: ""
 

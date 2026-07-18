@@ -13,7 +13,7 @@ Item {
     Component {
         id: sliderComp
 
-        Slider {
+        HorizontalSlider {
             id: slider
             enabled: root.player.canSeek
 

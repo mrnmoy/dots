@@ -22,8 +22,7 @@ PanelWindow {
 
     screen: Quickshell.screens[0]
     exclusionMode: ExclusionMode.Normal
-    // WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
-    WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
+    WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     property string query: ""
     property int selectedIndex: 0
