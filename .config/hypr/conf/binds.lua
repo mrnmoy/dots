@@ -24,6 +24,7 @@ hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("flameshot gui"))
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.global("quickshell:showcase"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.global("quickshell:launcher"))
 hl.bind(mainMod .. " + M", hl.dsp.global("quickshell:controlcenter"))
+hl.bind(mainMod .. " + N", hl.dsp.global("quickshell:clipboard"))
 hl.bind(mainMod .. " + O", hl.dsp.global("quickshell:osd"))
 hl.bind(mainMod .. " + slash", hl.dsp.global("quickshell:help"))
 

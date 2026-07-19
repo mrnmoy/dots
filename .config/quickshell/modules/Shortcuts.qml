@@ -10,6 +10,8 @@ Scope {
         description: "Toggle application launcher"
 
         onPressed: {
+            if (ShellState.clipboard)
+                ShellState.clipboard = false;
             ShellState.launcher = !ShellState.launcher;
         }
     }
@@ -22,6 +24,17 @@ Scope {
             if (ShellState.osd)
                 ShellState.osd = false;
             ShellState.controlcenter = !ShellState.controlcenter;
+        }
+    }
+
+    GlobalShortcut {
+        name: "clipboard"
+        description: "Toggle clipboard"
+
+        onPressed: {
+            if (ShellState.launcher)
+                ShellState.launcher = false;
+            ShellState.clipboard = !ShellState.clipboard;
         }
     }
 

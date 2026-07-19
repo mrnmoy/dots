@@ -4,15 +4,13 @@ import QtQuick.Effects
 import QtQuick.Shapes
 import Quickshell
 import Quickshell.Hyprland
-import Quickshell.Wayland
-import "../../config"
 import "../../controls"
 import "../../services"
 
 PanelWindow {
     id: root
 
-    readonly property bool active: ShellState.launcher
+    readonly property bool active: ShellState.clipboard
 
     HyprlandFocusGrab {
         active: root.active
@@ -33,41 +31,32 @@ PanelWindow {
 
     screen: Quickshell.screens[0]
     exclusionMode: ExclusionMode.Normal
-    // WlrLayershell.keyboardFocus: active ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     property string query: ""
     property int selectedIndex: 0
-    readonly property list<DesktopEntry> apps: DesktopEntries.applications.values ?? []
 
-    readonly property list<DesktopEntry> favouriteApps: {
-        const favourites = Config.launcher.favourites ?? [];
-        return favourites.map(id => apps.find(entry => entry.id === id || entry.name === id));
-    }
-    readonly property list<DesktopEntry> visibleEntries: {
+    readonly property list<string> visibleEntries: {
         const q = query.trim();
 
-        if (q.length !== 0) {
-            return apps.filter(entry => entry.name.startsWith(q) || entry.name.includes(q) || entry.genericName.includes(q) || entry.execString.includes(q));
-        }
+        // if (q.length !== 0) {
+        //     return apps.filter(entry => entry.name.startsWith(q) || entry.name.includes(q) || entry.genericName.includes(q) || entry.execString.includes(q));
+        // }
+        //
+        // if (favouriteApps.length > 0)
+        //     return favouriteApps.slice(0, Config.launcher.maxResults);
 
-        if (favouriteApps.length > 0)
-            return favouriteApps.slice(0, Config.launcher.maxResults);
+        return ClipboardService.entries;
+    }
 
-        return apps;
+    function copy(): void {
+        Quickshell.execDetached(["/bin/sh", "-c", `wl-copy ${root.visibleEntries[root.selectedIndex].split("\t")[1]}`]);
     }
 
     function close(): void {
-        ShellState.launcher = false;
+        ShellState.clipboard = false;
         root.selectedIndex = 0;
         root.query = "";
     }
-
-    // Loader {
-    //     active: root.margins.bottom !== -root.height
-    //     focus: true
-    //     anchors.fill: parent
-    //     sourceComponent: LauncherContent {}
-    // }
 
     FocusScope {
         anchors.fill: parent
@@ -77,7 +66,7 @@ PanelWindow {
         Keys.onDownPressed: root.selectedIndex = Math.min(root.selectedIndex + 1, root.visibleEntries.length - 1)
         Keys.onUpPressed: root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
         Keys.onReturnPressed: {
-            root.visibleEntries[root.selectedIndex].execute();
+            root.copy();
             root.close();
         }
 
@@ -126,8 +115,7 @@ PanelWindow {
             visible: false
             layer.enabled: true
 
-            // preferredRendererType: Shape.CurveRenderer
-            // preferredRendererType: Shape.SoftwareRenderer
+            preferredRendererType: Shape.CurveRenderer
 
             ShapePath {
                 strokeColor: "transparent"
@@ -205,7 +193,7 @@ PanelWindow {
                     spacing: 16
 
                     Text {
-                        text: "󰣇"
+                        text: "📋"
                         font.pixelSize: 20
                         font.weight: Font.Black
                         color: "#ffffff"
@@ -228,7 +216,7 @@ PanelWindow {
                 spacing: 8
 
                 Text {
-                    text: root.query.trim().length ? "Best matches" : "Favourites"
+                    text: root.query.trim().length ? "Best matches" : "Recent"
                     font.pixelSize: 12
                     font.weight: Font.DemiBold
                     color: "#ffffff"
@@ -243,19 +231,7 @@ PanelWindow {
                 contentWidth: width
                 contentHeight: content.implicitHeight
 
-                // maximumFlickVelocity: 3000
-                // flickDeceleration: 1500
                 boundsBehavior: Flickable.StopAtBounds
-                // boundsBehavior: Flickable.DragAndOvershootBounds
-                // boundsMovement: Flickable.FollowBoundsBehavior
-
-                // rebound: Transition {
-                //     NumberAnimation {
-                //         properties: "x,y"
-                //         duration: 150
-                //         easing.bezierCurve: [0.85, 0, 0.15, 1]
-                //     }
-                // }
 
                 Column {
                     id: content
@@ -268,7 +244,7 @@ PanelWindow {
                         Rectangle {
                             id: card
 
-                            required property DesktopEntry modelData
+                            required property string modelData
                             required property int index
 
                             width: list.width
@@ -285,35 +261,14 @@ PanelWindow {
                                     implicitWidth: height
                                     Layout.margins: 8
 
-                                    Image {
-                                        id: appIcon
-                                        anchors.fill: parent
-                                        fillMode: Image.PreserveAspectFit
-
-                                        property int sourceIndex: 0
-                                        property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
-
-                                        source: iconSources[sourceIndex]
-                                        asynchronous: true
-                                        onStatusChanged: {
-                                            if (status === Image.Error) {
-                                                if (sourceIndex < iconSources.length - 1)
-                                                    sourceIndex = sourceIndex + 1;
-                                                else
-                                                    visible = false;
-                                            }
-                                        }
-                                    }
-
                                     Rectangle {
                                         radius: 20
                                         color: "#0fffffff"
                                         anchors.fill: parent
-                                        visible: !appIcon.visible
 
                                         Text {
                                             anchors.centerIn: parent
-                                            text: card.modelData.name.slice(0, 1).toUpperCase()
+                                            text: "󰦨"
                                             font.family: "Inter"
                                             font.pixelSize: 20
                                             font.weight: Font.DemiBold
@@ -328,19 +283,10 @@ PanelWindow {
 
                                     Text {
                                         Layout.fillWidth: true
-                                        text: card.modelData.name ?? "Unknown"
+                                        text: card.modelData.split("\t")[1]
                                         font.family: "Inter"
                                         font.pixelSize: 16
                                         font.weight: Font.Medium
-                                        color: "#ffffff"
-                                        elide: Text.ElideRight
-                                    }
-
-                                    Text {
-                                        Layout.fillWidth: true
-                                        text: card.modelData.comment || card.modelData.genericName || card.modelData.execString || "Launch"
-                                        font.family: "Inter"
-                                        font.pixelSize: 12
                                         color: "#ffffff"
                                         elide: Text.ElideRight
                                     }
@@ -353,7 +299,7 @@ PanelWindow {
                                 cursorShape: Qt.PointingHandCursor
                                 onEntered: root.selectedIndex = card.index
                                 onClicked: {
-                                    card.modelData.execute();
+                                    root.copy();
                                     root.close();
                                 }
                             }
@@ -365,7 +311,7 @@ PanelWindow {
             Text {
                 Layout.fillWidth: true
                 visible: root.visibleEntries === 0
-                text: "No application found"
+                text: "No result found"
                 horizontalAlignment: Text.AlignHCenter
                 font.family: "Inter"
                 font.pixelSize: 12

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
 import Quickshell.Services.Notifications
+import "../../config"
 
 Rectangle {
     id: root
@@ -16,11 +17,31 @@ Rectangle {
     radius: 20
     color: modelData.urgency === NotificationUrgency.Critical ? "#0fff0000" : "#0fffffff"
 
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        onClicked: dismiss()
+    Behavior on x {
+        NumberAnimation {
+            duration: Config.appearence.animationDuration || 500
+        }
     }
+
+    DragHandler {
+        id: dragHandle
+        target: root
+        yAxis.enabled: false
+        cursorShape: active ? Qt.ClosedHandCursor : Qt.PointingHandCursor
+        onGrabChanged: (transition, point) => {
+            if (transition == PointerDevice.UngrabExclusive) {
+                if (root.x > root.width / 2)
+                    dismiss();
+                else
+                    root.x = 0;
+            }
+        }
+    }
+    // MouseArea {
+    //     id: mouseArea
+    //     anchors.fill: parent
+    //     onClicked: dismiss()
+    // }
 
     ColumnLayout {
         id: content

@@ -1,13 +1,11 @@
 import QtQuick
 import QtQuick.Controls
-import "../config"
 
 Slider {
     id: root
 
     property string icon: ""
     property color bgColor: "#0fffffff"
-    // property color handleColor: "#ff9933"
     property color handleColor: "#E3701B"
 
     from: 0
@@ -52,11 +50,5 @@ Slider {
         anchors.right: hndl.right
         color: root.handleColor
         radius: 20
-
-        Behavior on width {
-            NumberAnimation {
-                duration: Config.appearence.animationDuration || 500
-            }
-        }
     }
 }

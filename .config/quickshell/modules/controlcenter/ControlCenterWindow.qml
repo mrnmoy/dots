@@ -5,17 +5,24 @@ import QtQuick.Effects
 import QtQuick.Shapes
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Hyprland
 import Quickshell.Services.Mpris
 import Quickshell.Services.UPower
 import "../../components"
 import "../../services"
 import "../notification"
 import "../../controls"
+import "../../config"
 
 PanelWindow {
     id: root
 
     readonly property bool active: ShellState.controlcenter
+
+    HyprlandFocusGrab {
+        active: root.active
+        windows: [root]
+    }
 
     anchors {
         right: true
@@ -31,7 +38,7 @@ PanelWindow {
 
     screen: Quickshell.screens[0]
     exclusionMode: ExclusionMode.Normal
-    WlrLayershell.keyboardFocus: active ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+    // WlrLayershell.keyboardFocus: active ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     FocusScope {
         anchors.fill: parent
@@ -39,12 +46,15 @@ PanelWindow {
 
         Keys.onEscapePressed: ShellState.controlcenter = false
 
-        HoverHandler {
-            id: hoverHandler
-            onHoveredChanged: {
-                if (hovered)
-                    closeTimer.stop();
-                else if (root.active)
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: {
+                closeTimer.stop();
+            }
+            onExited: {
+                if (root.active && !mouseArea.containsPress)
                     closeTimer.restart();
             }
         }
@@ -52,22 +62,8 @@ PanelWindow {
         Timer {
             id: closeTimer
             interval: 500
-            onTriggered: if (!hoverHandler.hovered)
-                ShellState.controlcenter = false
+            onTriggered: ShellState.controlcenter = false
         }
-
-        // Behavior on scale {
-        //     NumberAnimation {
-        //         duration: 550
-        //         easing.bezierCurve: [0.85, 0, 0.15, 1]
-        //     }
-        // }
-        // Behavior on opacity {
-        //     NumberAnimation {
-        //         duration: 550
-        //         easing.bezierCurve: [0.85, 0, 0.15, 1]
-        //     }
-        // }
 
         MultiEffect {
             source: background
@@ -304,6 +300,12 @@ PanelWindow {
                             stepSize: 0.01
                             value: AudioService.sink.audio.volume
                             onMoved: AudioService.sink.audio.volume = value
+
+                            Behavior on value {
+                                NumberAnimation {
+                                    duration: Config.appearence.animationDuration || 500
+                                }
+                            }
                         }
                         // Source volume slider
                         HorizontalSlider {
@@ -315,6 +317,12 @@ PanelWindow {
                             stepSize: 0.01
                             value: AudioService.source.audio.volume
                             onMoved: AudioService.source.audio.volume = value
+
+                            Behavior on value {
+                                NumberAnimation {
+                                    duration: Config.appearence.animationDuration || 500
+                                }
+                            }
                         }
                     }
 

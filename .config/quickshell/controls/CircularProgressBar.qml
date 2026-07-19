@@ -32,6 +32,11 @@ Item {
         antialiasing: true
 
         property real degree: 0
+        property real radius: root.size / 2 - root.lineWidth
+        property real startAngle: (Math.PI / 180) * 270
+        property real fullAngle: (Math.PI / 180) * (270 + 360)
+        property real progressAngle: (Math.PI / 180) * (270 + degree)
+        property real center: root.size / 2
 
         onDegreeChanged: {
             requestPaint();
@@ -40,26 +45,18 @@ Item {
         onPaint: {
             var ctx = getContext("2d");
 
-            var x = root.width / 2;
-            var y = root.height / 2;
-
-            var radius = root.size / 2 - root.lineWidth;
-            var startAngle = (Math.PI / 180) * 270;
-            var fullAngle = (Math.PI / 180) * (270 + 360);
-            var progressAngle = (Math.PI / 180) * (270 + degree);
-
             ctx.reset();
 
             ctx.lineCap = 'round';
             ctx.lineWidth = root.lineWidth;
 
             ctx.beginPath();
-            ctx.arc(x, y, radius, startAngle, fullAngle);
+            ctx.arc(center, center, radius, startAngle, fullAngle);
             ctx.strokeStyle = "#0fffffff";
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.arc(x, y, radius, startAngle, progressAngle);
+            ctx.arc(center, center, radius, startAngle, progressAngle);
             ctx.strokeStyle = "#E3701B";
             ctx.stroke();
         }
