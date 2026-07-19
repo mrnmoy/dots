@@ -36,7 +36,7 @@ PanelWindow {
     // WlrLayershell.keyboardFocus: active ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     property string query: ""
-    property int selectedIndex: 0
+    // property int selectedIndex: 0
     readonly property list<DesktopEntry> apps: DesktopEntries.applications.values ?? []
 
     readonly property list<DesktopEntry> favouriteApps: {
@@ -56,9 +56,14 @@ PanelWindow {
         return apps;
     }
 
+    function launch(): void {
+        list.currentItem.modelData.execute();
+        close();
+    }
+
     function close(): void {
         ShellState.launcher = false;
-        root.selectedIndex = 0;
+        // root.selectedIndex = 0;
         root.query = "";
     }
 
@@ -74,11 +79,14 @@ PanelWindow {
         focus: true
 
         Keys.onEscapePressed: root.close()
-        Keys.onDownPressed: root.selectedIndex = Math.min(root.selectedIndex + 1, root.visibleEntries.length - 1)
-        Keys.onUpPressed: root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
+        // Keys.onDownPressed: root.selectedIndex = Math.min(root.selectedIndex + 1, root.visibleEntries.length - 1)
+        // Keys.onUpPressed: root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
+        Keys.onDownPressed: list.incrementCurrentIndex()
+        Keys.onUpPressed: list.decrementCurrentIndex()
         Keys.onReturnPressed: {
-            root.visibleEntries[root.selectedIndex].execute();
-            root.close();
+            root.launch();
+            // root.visibleEntries[root.selectedIndex].execute();
+            // root.close();
         }
 
         HoverHandler {
@@ -126,8 +134,7 @@ PanelWindow {
             visible: false
             layer.enabled: true
 
-            // preferredRendererType: Shape.CurveRenderer
-            // preferredRendererType: Shape.SoftwareRenderer
+            preferredRendererType: Shape.CurveRenderer
 
             ShapePath {
                 strokeColor: "transparent"
@@ -188,6 +195,7 @@ PanelWindow {
                 topMargin: 16
                 leftMargin: 32
                 rightMargin: 32
+                bottomMargin: 8
             }
             spacing: 16
 
@@ -235,132 +243,228 @@ PanelWindow {
                 }
             }
 
-            Flickable {
+            ListView {
                 id: list
+                model: root.visibleEntries
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 clip: true
-                contentWidth: width
-                contentHeight: content.implicitHeight
 
-                // maximumFlickVelocity: 3000
-                // flickDeceleration: 1500
-                boundsBehavior: Flickable.StopAtBounds
-                // boundsBehavior: Flickable.DragAndOvershootBounds
-                // boundsMovement: Flickable.FollowBoundsBehavior
+                delegate: Rectangle {
+                    id: card
 
-                // rebound: Transition {
-                //     NumberAnimation {
-                //         properties: "x,y"
-                //         duration: 150
-                //         easing.bezierCurve: [0.85, 0, 0.15, 1]
-                //     }
-                // }
+                    required property DesktopEntry modelData
+                    required property int index
 
-                Column {
-                    id: content
-                    spacing: 8
-                    bottomPadding: 16
+                    width: list.width
+                    height: 60
+                    radius: 20
+                    color: list.currentIndex === index ? "#0fffffff" : "transparent"
 
-                    Repeater {
-                        model: root.visibleEntries
+                    RowLayout {
+                        anchors.fill: parent
+                        spacing: 0
 
-                        Rectangle {
-                            id: card
+                        Item {
+                            Layout.fillHeight: true
+                            implicitWidth: height
+                            Layout.margins: 8
 
-                            required property DesktopEntry modelData
-                            required property int index
-
-                            width: list.width
-                            height: 60
-                            radius: 20
-                            color: root.selectedIndex === index ? "#0fffffff" : "transparent"
-
-                            RowLayout {
+                            Image {
+                                id: appIcon
                                 anchors.fill: parent
-                                spacing: 0
+                                fillMode: Image.PreserveAspectFit
 
-                                Item {
-                                    Layout.fillHeight: true
-                                    implicitWidth: height
-                                    Layout.margins: 8
+                                property int sourceIndex: 0
+                                property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
 
-                                    Image {
-                                        id: appIcon
-                                        anchors.fill: parent
-                                        fillMode: Image.PreserveAspectFit
-
-                                        property int sourceIndex: 0
-                                        property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
-
-                                        source: iconSources[sourceIndex]
-                                        asynchronous: true
-                                        onStatusChanged: {
-                                            if (status === Image.Error) {
-                                                if (sourceIndex < iconSources.length - 1)
-                                                    sourceIndex = sourceIndex + 1;
-                                                else
-                                                    visible = false;
-                                            }
-                                        }
-                                    }
-
-                                    Rectangle {
-                                        radius: 20
-                                        color: "#0fffffff"
-                                        anchors.fill: parent
-                                        visible: !appIcon.visible
-
-                                        Text {
-                                            anchors.centerIn: parent
-                                            text: card.modelData.name.slice(0, 1).toUpperCase()
-                                            font.family: "Inter"
-                                            font.pixelSize: 20
-                                            font.weight: Font.DemiBold
-                                            color: "#ffffff"
-                                        }
-                                    }
-                                }
-
-                                ColumnLayout {
-                                    Layout.fillWidth: true
-                                    spacing: 2
-
-                                    Text {
-                                        Layout.fillWidth: true
-                                        text: card.modelData.name ?? "Unknown"
-                                        font.family: "Inter"
-                                        font.pixelSize: 16
-                                        font.weight: Font.Medium
-                                        color: "#ffffff"
-                                        elide: Text.ElideRight
-                                    }
-
-                                    Text {
-                                        Layout.fillWidth: true
-                                        text: card.modelData.comment || card.modelData.genericName || card.modelData.execString || "Launch"
-                                        font.family: "Inter"
-                                        font.pixelSize: 12
-                                        color: "#ffffff"
-                                        elide: Text.ElideRight
+                                source: iconSources[sourceIndex]
+                                asynchronous: true
+                                onStatusChanged: {
+                                    if (status === Image.Error) {
+                                        if (sourceIndex < iconSources.length - 1)
+                                            sourceIndex = sourceIndex + 1;
+                                        else
+                                            visible = false;
                                     }
                                 }
                             }
 
-                            MouseArea {
+                            Rectangle {
+                                radius: 20
+                                color: "#0fffffff"
                                 anchors.fill: parent
-                                hoverEnabled: true
-                                cursorShape: Qt.PointingHandCursor
-                                onEntered: root.selectedIndex = card.index
-                                onClicked: {
-                                    card.modelData.execute();
-                                    root.close();
+                                visible: !appIcon.visible
+
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: card.modelData.name.slice(0, 1).toUpperCase()
+                                    font.family: "Inter"
+                                    font.pixelSize: 20
+                                    font.weight: Font.DemiBold
+                                    color: "#ffffff"
                                 }
                             }
                         }
+
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+
+                            Text {
+                                Layout.fillWidth: true
+                                text: card.modelData.name ?? "Unknown"
+                                font.family: "Inter"
+                                font.pixelSize: 16
+                                font.weight: Font.Medium
+                                color: "#ffffff"
+                                elide: Text.ElideRight
+                            }
+
+                            Text {
+                                Layout.fillWidth: true
+                                text: card.modelData.comment || card.modelData.genericName || card.modelData.execString || "Launch"
+                                font.family: "Inter"
+                                font.pixelSize: 12
+                                color: "#ffffff"
+                                elide: Text.ElideRight
+                            }
+                        }
                     }
+
+                    TapHandler {
+                        cursorShape: Qt.PointingHandCursor
+                        onTapped: {
+                            root.launch();
+                        }
+                    }
+                    //                 MouseArea {
+                    //                     anchors.fill: parent
+                    //                     hoverEnabled: true
+                    //                     cursorShape: Qt.PointingHandCursor
+                    //                     onEntered: root.selectedIndex = card.index
+                    //                     onClicked: {
+                    //                         card.modelData.execute();
+                    //                         root.close();
+                    //                     }
+                    //                 }
                 }
             }
+
+            // Flickable {
+            //     id: list
+            //     Layout.fillWidth: true
+            //     Layout.fillHeight: true
+            //     clip: true
+            //     contentWidth: width
+            //     contentHeight: content.implicitHeight
+            //
+            //     boundsBehavior: Flickable.StopAtBounds
+            //
+            //     Column {
+            //         id: content
+            //         spacing: 8
+            //         bottomPadding: 16
+            //
+            //         Repeater {
+            //             model: root.visibleEntries
+            //
+            //             Rectangle {
+            //                 id: card
+            //
+            //                 required property DesktopEntry modelData
+            //                 required property int index
+            //
+            //                 width: list.width
+            //                 height: 60
+            //                 radius: 20
+            //                 color: root.selectedIndex === index ? "#0fffffff" : "transparent"
+            //
+            //                 RowLayout {
+            //                     anchors.fill: parent
+            //                     spacing: 0
+            //
+            //                     Item {
+            //                         Layout.fillHeight: true
+            //                         implicitWidth: height
+            //                         Layout.margins: 8
+            //
+            //                         Image {
+            //                             id: appIcon
+            //                             anchors.fill: parent
+            //                             fillMode: Image.PreserveAspectFit
+            //
+            //                             property int sourceIndex: 0
+            //                             property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
+            //
+            //                             source: iconSources[sourceIndex]
+            //                             asynchronous: true
+            //                             onStatusChanged: {
+            //                                 if (status === Image.Error) {
+            //                                     if (sourceIndex < iconSources.length - 1)
+            //                                         sourceIndex = sourceIndex + 1;
+            //                                     else
+            //                                         visible = false;
+            //                                 }
+            //                             }
+            //                         }
+            //
+            //                         Rectangle {
+            //                             radius: 20
+            //                             color: "#0fffffff"
+            //                             anchors.fill: parent
+            //                             visible: !appIcon.visible
+            //
+            //                             Text {
+            //                                 anchors.centerIn: parent
+            //                                 text: card.modelData.name.slice(0, 1).toUpperCase()
+            //                                 font.family: "Inter"
+            //                                 font.pixelSize: 20
+            //                                 font.weight: Font.DemiBold
+            //                                 color: "#ffffff"
+            //                             }
+            //                         }
+            //                     }
+            //
+            //                     ColumnLayout {
+            //                         Layout.fillWidth: true
+            //                         spacing: 2
+            //
+            //                         Text {
+            //                             Layout.fillWidth: true
+            //                             text: card.modelData.name ?? "Unknown"
+            //                             font.family: "Inter"
+            //                             font.pixelSize: 16
+            //                             font.weight: Font.Medium
+            //                             color: "#ffffff"
+            //                             elide: Text.ElideRight
+            //                         }
+            //
+            //                         Text {
+            //                             Layout.fillWidth: true
+            //                             text: card.modelData.comment || card.modelData.genericName || card.modelData.execString || "Launch"
+            //                             font.family: "Inter"
+            //                             font.pixelSize: 12
+            //                             color: "#ffffff"
+            //                             elide: Text.ElideRight
+            //                         }
+            //                     }
+            //                 }
+            //
+            //                 MouseArea {
+            //                     anchors.fill: parent
+            //                     hoverEnabled: true
+            //                     cursorShape: Qt.PointingHandCursor
+            //                     onEntered: root.selectedIndex = card.index
+            //                     onClicked: {
+            //                         card.modelData.execute();
+            //                         root.close();
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
 
             Text {
                 Layout.fillWidth: true

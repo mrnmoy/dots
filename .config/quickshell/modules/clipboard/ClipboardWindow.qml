@@ -33,7 +33,6 @@ PanelWindow {
     exclusionMode: ExclusionMode.Normal
 
     property string query: ""
-    property int selectedIndex: 0
 
     readonly property list<string> visibleEntries: {
         const q = query.trim();
@@ -49,13 +48,14 @@ PanelWindow {
     }
 
     function copy(): void {
-        Quickshell.execDetached(["/bin/sh", "-c", `wl-copy ${root.visibleEntries[root.selectedIndex].split("\t")[1]}`]);
+        Quickshell.execDetached(["/bin/sh", "-c", `wl-copy ${list.currentItem.modelData.split("\t")[1]}`]);
+        close();
     }
 
     function close(): void {
         ShellState.clipboard = false;
-        root.selectedIndex = 0;
         root.query = "";
+        list.currentIndex = 0;
     }
 
     FocusScope {
@@ -63,8 +63,8 @@ PanelWindow {
         focus: true
 
         Keys.onEscapePressed: root.close()
-        Keys.onDownPressed: root.selectedIndex = Math.min(root.selectedIndex + 1, root.visibleEntries.length - 1)
-        Keys.onUpPressed: root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
+        Keys.onDownPressed: list.incrementCurrentIndex()
+        Keys.onUpPressed: list.decrementCurrentIndex()
         Keys.onReturnPressed: {
             root.copy();
             root.close();
@@ -176,6 +176,7 @@ PanelWindow {
                 topMargin: 16
                 leftMargin: 32
                 rightMargin: 32
+                bottomMargin: 8
             }
             spacing: 16
 
@@ -223,90 +224,167 @@ PanelWindow {
                 }
             }
 
-            Flickable {
+            ListView {
                 id: list
+                model: root.visibleEntries
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 clip: true
-                contentWidth: width
-                contentHeight: content.implicitHeight
 
-                boundsBehavior: Flickable.StopAtBounds
+                delegate: Rectangle {
+                    id: card
 
-                Column {
-                    id: content
-                    spacing: 8
-                    bottomPadding: 16
+                    required property string modelData
+                    required property int index
 
-                    Repeater {
-                        model: root.visibleEntries
+                    width: list.width
+                    height: 60
+                    radius: 20
+                    color: list.currentIndex === index ? "#0fffffff" : "transparent"
 
-                        Rectangle {
-                            id: card
+                    RowLayout {
+                        anchors.fill: parent
+                        spacing: 0
 
-                            required property string modelData
-                            required property int index
+                        Item {
+                            Layout.fillHeight: true
+                            implicitWidth: height
+                            Layout.margins: 8
 
-                            width: list.width
-                            height: 60
-                            radius: 20
-                            color: root.selectedIndex === index ? "#0fffffff" : "transparent"
-
-                            RowLayout {
+                            Rectangle {
+                                radius: 20
+                                color: "#0fffffff"
                                 anchors.fill: parent
-                                spacing: 0
 
-                                Item {
-                                    Layout.fillHeight: true
-                                    implicitWidth: height
-                                    Layout.margins: 8
-
-                                    Rectangle {
-                                        radius: 20
-                                        color: "#0fffffff"
-                                        anchors.fill: parent
-
-                                        Text {
-                                            anchors.centerIn: parent
-                                            text: "󰦨"
-                                            font.family: "Inter"
-                                            font.pixelSize: 20
-                                            font.weight: Font.DemiBold
-                                            color: "#ffffff"
-                                        }
-                                    }
-                                }
-
-                                ColumnLayout {
-                                    Layout.fillWidth: true
-                                    spacing: 2
-
-                                    Text {
-                                        Layout.fillWidth: true
-                                        text: card.modelData.split("\t")[1]
-                                        font.family: "Inter"
-                                        font.pixelSize: 16
-                                        font.weight: Font.Medium
-                                        color: "#ffffff"
-                                        elide: Text.ElideRight
-                                    }
-                                }
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                cursorShape: Qt.PointingHandCursor
-                                onEntered: root.selectedIndex = card.index
-                                onClicked: {
-                                    root.copy();
-                                    root.close();
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: "󰦨"
+                                    font.family: "Inter"
+                                    font.pixelSize: 20
+                                    font.weight: Font.DemiBold
+                                    color: "#ffffff"
                                 }
                             }
                         }
+
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+
+                            Text {
+                                Layout.fillWidth: true
+                                text: card.modelData.split("\t")[1]
+                                font.family: "Inter"
+                                font.pixelSize: 16
+                                font.weight: Font.Medium
+                                color: "#ffffff"
+                                elide: Text.ElideRight
+                            }
+                        }
                     }
+
+                    TapHandler {
+                        cursorShape: Qt.PointingHandCursor
+                        onTapped: {
+                            root.copy();
+                        }
+                    }
+                    // MouseArea {
+                    //     anchors.fill: parent
+                    //     hoverEnabled: true
+                    //     cursorShape: Qt.PointingHandCursor
+                    //     onEntered: root.selectedIndex = card.index
+                    //     onClicked: {
+                    //         root.copy();
+                    //         root.close();
+                    //     }
+                    // }
                 }
             }
+            // Flickable {
+            //     id: list
+            //     Layout.fillWidth: true
+            //     Layout.fillHeight: true
+            //     clip: true
+            //     contentWidth: width
+            //     contentHeight: content.implicitHeight
+            //
+            //     boundsBehavior: Flickable.StopAtBounds
+            //
+            //     Column {
+            //         id: content
+            //         spacing: 8
+            //         bottomPadding: 16
+            //
+            //         Repeater {
+            //             model: root.visibleEntries
+            //
+            //             Rectangle {
+            //                 id: card
+            //
+            //                 required property string modelData
+            //                 required property int index
+            //
+            //                 width: list.width
+            //                 height: 60
+            //                 radius: 20
+            //                 color: root.selectedIndex === index ? "#0fffffff" : "transparent"
+            //
+            //                 RowLayout {
+            //                     anchors.fill: parent
+            //                     spacing: 0
+            //
+            //                     Item {
+            //                         Layout.fillHeight: true
+            //                         implicitWidth: height
+            //                         Layout.margins: 8
+            //
+            //                         Rectangle {
+            //                             radius: 20
+            //                             color: "#0fffffff"
+            //                             anchors.fill: parent
+            //
+            //                             Text {
+            //                                 anchors.centerIn: parent
+            //                                 text: "󰦨"
+            //                                 font.family: "Inter"
+            //                                 font.pixelSize: 20
+            //                                 font.weight: Font.DemiBold
+            //                                 color: "#ffffff"
+            //                             }
+            //                         }
+            //                     }
+            //
+            //                     ColumnLayout {
+            //                         Layout.fillWidth: true
+            //                         spacing: 2
+            //
+            //                         Text {
+            //                             Layout.fillWidth: true
+            //                             text: card.modelData.split("\t")[1]
+            //                             font.family: "Inter"
+            //                             font.pixelSize: 16
+            //                             font.weight: Font.Medium
+            //                             color: "#ffffff"
+            //                             elide: Text.ElideRight
+            //                         }
+            //                     }
+            //                 }
+            //
+            //                 MouseArea {
+            //                     anchors.fill: parent
+            //                     hoverEnabled: true
+            //                     cursorShape: Qt.PointingHandCursor
+            //                     onEntered: root.selectedIndex = card.index
+            //                     onClicked: {
+            //                         root.copy();
+            //                         root.close();
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
 
             Text {
                 Layout.fillWidth: true
