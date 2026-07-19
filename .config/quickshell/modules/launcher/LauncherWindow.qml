@@ -46,8 +46,8 @@ PanelWindow {
     readonly property list<DesktopEntry> visibleEntries: {
         const q = query.trim();
 
-        if (q.length !== 0) {
-            return apps.filter(entry => entry.name.startsWith(q) || entry.name.includes(q) || entry.genericName.includes(q) || entry.execString.includes(q));
+        if (q.length > 0) {
+            return apps.filter(entry => entry.name.toLowerCase().startsWith(q) || entry.name.toLowerCase().includes(q) || entry.genericName.toLowerCase().includes(q) || entry.execString.toLowerCase().includes(q));
         }
 
         if (favouriteApps.length > 0)

@@ -37,12 +37,9 @@ PanelWindow {
     readonly property list<string> visibleEntries: {
         const q = query.trim();
 
-        // if (q.length !== 0) {
-        //     return apps.filter(entry => entry.name.startsWith(q) || entry.name.includes(q) || entry.genericName.includes(q) || entry.execString.includes(q));
-        // }
-        //
-        // if (favouriteApps.length > 0)
-        //     return favouriteApps.slice(0, Config.launcher.maxResults);
+        if (q.length > 0) {
+            return ClipboardService.entries.filter(entry => entry.split("\t")[1].toLowerCase().includes(q));
+        }
 
         return ClipboardService.entries;
     }
