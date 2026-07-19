@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Services.Pipewire
 import "../../services"
 import "../../controls"
+import "../../config"
 
 PanelWindow {
     id: root
@@ -244,6 +245,12 @@ PanelWindow {
                 value: AudioService.sink.audio.volume
                 onMoved: AudioService.sink.audio.volume = value
                 onValueChanged: closeTimer.restart()
+
+                Behavior on value {
+                    NumberAnimation {
+                        duration: Config.appearence.animationDuration || 500
+                    }
+                }
             }
             // Slider {
             //     orientation: Qt.Vertical

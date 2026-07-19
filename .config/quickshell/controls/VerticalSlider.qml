@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Controls
-import "../config"
 
 Slider {
     id: root
@@ -21,8 +20,6 @@ Slider {
     background: Rectangle {
         id: bg
         anchors.fill: parent
-        // implicitWidth: parent.width
-        // implicitHeight: parent.height
         radius: 20
         color: root.bgColor
     }
@@ -43,15 +40,10 @@ Slider {
             color: "#ffffff"
             font.pixelSize: 24
         }
-
-        Behavior on y {
-            NumberAnimation {
-                duration: Config.appearence.animationDuration || 500
-            }
-        }
     }
 
     Rectangle {
+        id: indicator
         z: -1
         width: bg.width
         anchors.top: hndl.top

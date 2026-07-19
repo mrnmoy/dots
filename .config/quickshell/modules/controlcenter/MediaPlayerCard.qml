@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Effects
 import Quickshell.Services.Mpris
 import "../../controls"
+import "../../config"
 
 Rectangle {
     id: root
@@ -86,30 +87,6 @@ Rectangle {
             }
         }
 
-        // Rectangle {
-        //     Layout.fillHeight: true
-        //     implicitWidth: height
-        //     color: "#0fffffff"
-        //     radius: 20
-        //     clip: true
-        //
-        //     Image {
-        //         id: art
-        //         anchors.fill: parent
-        //         fillMode: Image.PreserveAspectCrop
-        //         source: root.modelData.trackArtUrl
-        //         visible: status === Image.Ready
-        //     }
-        //
-        //     Text {
-        //         anchors.centerIn: parent
-        //         visible: !art.visible
-        //         text: "󰝚"
-        //         color: "#ffffff"
-        //         font.pixelSize: 40
-        //     }
-        // }
-
         ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -161,6 +138,12 @@ Rectangle {
                 value: root.modelData.position
                 onMoved: if (root.modelData.canSeek) {
                     root.modelData.position = value;
+                }
+
+                Behavior on value {
+                    NumberAnimation {
+                        duration: Config.appearence.animationDuration || 500
+                    }
                 }
 
                 // Text {

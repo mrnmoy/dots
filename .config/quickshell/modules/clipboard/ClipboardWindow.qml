@@ -4,15 +4,13 @@ import QtQuick.Effects
 import QtQuick.Shapes
 import Quickshell
 import Quickshell.Hyprland
-import Quickshell.Wayland
-import "../../config"
 import "../../controls"
 import "../../services"
 
 PanelWindow {
     id: root
 
-    readonly property bool active: ShellState.launcher
+    readonly property bool active: ShellState.clipboard
 
     HyprlandFocusGrab {
         active: root.active
@@ -33,60 +31,43 @@ PanelWindow {
 
     screen: Quickshell.screens[0]
     exclusionMode: ExclusionMode.Normal
-    // WlrLayershell.keyboardFocus: active ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     property string query: ""
-    // property int selectedIndex: 0
-    readonly property list<DesktopEntry> apps: DesktopEntries.applications.values ?? []
 
-    readonly property list<DesktopEntry> favouriteApps: {
-        const favourites = Config.launcher.favourites ?? [];
-        return favourites.map(id => apps.find(entry => entry.id === id || entry.name === id));
-    }
-    readonly property list<DesktopEntry> visibleEntries: {
+    readonly property list<string> visibleEntries: {
         const q = query.trim();
 
-        if (q.length !== 0) {
-            return apps.filter(entry => entry.name.startsWith(q) || entry.name.includes(q) || entry.genericName.includes(q) || entry.execString.includes(q));
-        }
+        // if (q.length !== 0) {
+        //     return apps.filter(entry => entry.name.startsWith(q) || entry.name.includes(q) || entry.genericName.includes(q) || entry.execString.includes(q));
+        // }
+        //
+        // if (favouriteApps.length > 0)
+        //     return favouriteApps.slice(0, Config.launcher.maxResults);
 
-        if (favouriteApps.length > 0)
-            return favouriteApps.slice(0, Config.launcher.maxResults);
-
-        return apps;
+        return ClipboardService.entries;
     }
 
-    function launch(): void {
-        list.currentItem.modelData.execute();
+    function copy(): void {
+        Quickshell.execDetached(["/bin/sh", "-c", `wl-copy ${list.currentItem.modelData.split("\t")[1]}`]);
         close();
     }
 
     function close(): void {
-        ShellState.launcher = false;
-        // root.selectedIndex = 0;
+        ShellState.clipboard = false;
         root.query = "";
+        list.currentIndex = 0;
     }
-
-    // Loader {
-    //     active: root.margins.bottom !== -root.height
-    //     focus: true
-    //     anchors.fill: parent
-    //     sourceComponent: LauncherContent {}
-    // }
 
     FocusScope {
         anchors.fill: parent
         focus: true
 
         Keys.onEscapePressed: root.close()
-        // Keys.onDownPressed: root.selectedIndex = Math.min(root.selectedIndex + 1, root.visibleEntries.length - 1)
-        // Keys.onUpPressed: root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
         Keys.onDownPressed: list.incrementCurrentIndex()
         Keys.onUpPressed: list.decrementCurrentIndex()
         Keys.onReturnPressed: {
-            root.launch();
-            // root.visibleEntries[root.selectedIndex].execute();
-            // root.close();
+            root.copy();
+            root.close();
         }
 
         HoverHandler {
@@ -213,7 +194,7 @@ PanelWindow {
                     spacing: 16
 
                     Text {
-                        text: "󰣇"
+                        text: "📋"
                         font.pixelSize: 20
                         font.weight: Font.Black
                         color: "#ffffff"
@@ -236,7 +217,7 @@ PanelWindow {
                 spacing: 8
 
                 Text {
-                    text: root.query.trim().length ? "Best matches" : "Favourites"
+                    text: root.query.trim().length ? "Best matches" : "Recent"
                     font.pixelSize: 12
                     font.weight: Font.DemiBold
                     color: "#ffffff"
@@ -253,7 +234,7 @@ PanelWindow {
                 delegate: Rectangle {
                     id: card
 
-                    required property DesktopEntry modelData
+                    required property string modelData
                     required property int index
 
                     width: list.width
@@ -270,35 +251,14 @@ PanelWindow {
                             implicitWidth: height
                             Layout.margins: 8
 
-                            Image {
-                                id: appIcon
-                                anchors.fill: parent
-                                fillMode: Image.PreserveAspectFit
-
-                                property int sourceIndex: 0
-                                property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
-
-                                source: iconSources[sourceIndex]
-                                asynchronous: true
-                                onStatusChanged: {
-                                    if (status === Image.Error) {
-                                        if (sourceIndex < iconSources.length - 1)
-                                            sourceIndex = sourceIndex + 1;
-                                        else
-                                            visible = false;
-                                    }
-                                }
-                            }
-
                             Rectangle {
                                 radius: 20
                                 color: "#0fffffff"
                                 anchors.fill: parent
-                                visible: !appIcon.visible
 
                                 Text {
                                     anchors.centerIn: parent
-                                    text: card.modelData.name.slice(0, 1).toUpperCase()
+                                    text: "󰦨"
                                     font.family: "Inter"
                                     font.pixelSize: 20
                                     font.weight: Font.DemiBold
@@ -313,19 +273,10 @@ PanelWindow {
 
                             Text {
                                 Layout.fillWidth: true
-                                text: card.modelData.name ?? "Unknown"
+                                text: card.modelData.split("\t")[1]
                                 font.family: "Inter"
                                 font.pixelSize: 16
                                 font.weight: Font.Medium
-                                color: "#ffffff"
-                                elide: Text.ElideRight
-                            }
-
-                            Text {
-                                Layout.fillWidth: true
-                                text: card.modelData.comment || card.modelData.genericName || card.modelData.execString || "Launch"
-                                font.family: "Inter"
-                                font.pixelSize: 12
                                 color: "#ffffff"
                                 elide: Text.ElideRight
                             }
@@ -335,22 +286,21 @@ PanelWindow {
                     TapHandler {
                         cursorShape: Qt.PointingHandCursor
                         onTapped: {
-                            root.launch();
+                            root.copy();
                         }
                     }
-                    //                 MouseArea {
-                    //                     anchors.fill: parent
-                    //                     hoverEnabled: true
-                    //                     cursorShape: Qt.PointingHandCursor
-                    //                     onEntered: root.selectedIndex = card.index
-                    //                     onClicked: {
-                    //                         card.modelData.execute();
-                    //                         root.close();
-                    //                     }
-                    //                 }
+                    // MouseArea {
+                    //     anchors.fill: parent
+                    //     hoverEnabled: true
+                    //     cursorShape: Qt.PointingHandCursor
+                    //     onEntered: root.selectedIndex = card.index
+                    //     onClicked: {
+                    //         root.copy();
+                    //         root.close();
+                    //     }
+                    // }
                 }
             }
-
             // Flickable {
             //     id: list
             //     Layout.fillWidth: true
@@ -372,7 +322,7 @@ PanelWindow {
             //             Rectangle {
             //                 id: card
             //
-            //                 required property DesktopEntry modelData
+            //                 required property string modelData
             //                 required property int index
             //
             //                 width: list.width
@@ -389,35 +339,14 @@ PanelWindow {
             //                         implicitWidth: height
             //                         Layout.margins: 8
             //
-            //                         Image {
-            //                             id: appIcon
-            //                             anchors.fill: parent
-            //                             fillMode: Image.PreserveAspectFit
-            //
-            //                             property int sourceIndex: 0
-            //                             property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
-            //
-            //                             source: iconSources[sourceIndex]
-            //                             asynchronous: true
-            //                             onStatusChanged: {
-            //                                 if (status === Image.Error) {
-            //                                     if (sourceIndex < iconSources.length - 1)
-            //                                         sourceIndex = sourceIndex + 1;
-            //                                     else
-            //                                         visible = false;
-            //                                 }
-            //                             }
-            //                         }
-            //
             //                         Rectangle {
             //                             radius: 20
             //                             color: "#0fffffff"
             //                             anchors.fill: parent
-            //                             visible: !appIcon.visible
             //
             //                             Text {
             //                                 anchors.centerIn: parent
-            //                                 text: card.modelData.name.slice(0, 1).toUpperCase()
+            //                                 text: "󰦨"
             //                                 font.family: "Inter"
             //                                 font.pixelSize: 20
             //                                 font.weight: Font.DemiBold
@@ -432,19 +361,10 @@ PanelWindow {
             //
             //                         Text {
             //                             Layout.fillWidth: true
-            //                             text: card.modelData.name ?? "Unknown"
+            //                             text: card.modelData.split("\t")[1]
             //                             font.family: "Inter"
             //                             font.pixelSize: 16
             //                             font.weight: Font.Medium
-            //                             color: "#ffffff"
-            //                             elide: Text.ElideRight
-            //                         }
-            //
-            //                         Text {
-            //                             Layout.fillWidth: true
-            //                             text: card.modelData.comment || card.modelData.genericName || card.modelData.execString || "Launch"
-            //                             font.family: "Inter"
-            //                             font.pixelSize: 12
             //                             color: "#ffffff"
             //                             elide: Text.ElideRight
             //                         }
@@ -457,7 +377,7 @@ PanelWindow {
             //                     cursorShape: Qt.PointingHandCursor
             //                     onEntered: root.selectedIndex = card.index
             //                     onClicked: {
-            //                         card.modelData.execute();
+            //                         root.copy();
             //                         root.close();
             //                     }
             //                 }
@@ -469,7 +389,7 @@ PanelWindow {
             Text {
                 Layout.fillWidth: true
                 visible: root.visibleEntries === 0
-                text: "No application found"
+                text: "No result found"
                 horizontalAlignment: Text.AlignHCenter
                 font.family: "Inter"
                 font.pixelSize: 12

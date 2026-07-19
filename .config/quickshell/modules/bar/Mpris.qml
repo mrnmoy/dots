@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Services.Mpris
 import "../../controls"
+import "../../config"
 
 Item {
     id: root
@@ -25,7 +26,12 @@ Item {
             stepSize: 1
             onMoved: if (root.player.canSeek) {
                 root.player.position = value;
-                // player.positionChanged();
+            }
+
+            Behavior on value {
+                NumberAnimation {
+                    duration: Config.appearence.animationDuration || 500
+                }
             }
 
             // FrameAnimation {
