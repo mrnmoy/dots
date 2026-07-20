@@ -222,7 +222,7 @@ PanelWindow {
 
             ColumnLayout {
                 Layout.fillWidth: true
-                Layout.fillHeight: true
+                // Layout.fillHeight: true
 
                 Text {
                     Layout.alignment: Qt.AlignTop | Qt.AlignRight
@@ -252,8 +252,49 @@ PanelWindow {
                     Layout.fillWidth: true
                 }
 
+                Item {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+
+                    IconButton {
+                        // Layout.alignment: Qt.AlignTop | Qt.AlignRight
+                        anchors.top: parent.top
+                        anchors.right: parent.right
+                        icon: MprisService.lyricsEnabled ? "󰨖" : "󰨗"
+                        onClicked: MprisService.lyricsEnabled = !MprisService.lyricsEnabled
+                    }
+
+                    ListView {
+                        id: lyricsList
+                        visible: MprisService.lyricsEnabled
+                        model: MprisService.lyrics
+                        // Layout.fillWidth: true
+                        // Layout.fillHeight: true
+                        anchors.fill: parent
+                        clip: true
+                        highlightRangeMode: ListView.StrictlyEnforceRange
+                        preferredHighlightBegin: height / 2 - currentItem.height / 2
+                        preferredHighlightEnd: height / 2 + currentItem.height / 2
+                        // Rectangle {
+                        //     anchors.fill: parent
+                        //     color: "#0fffffff"
+                        // }
+
+                        delegate: Text {
+                            required property var modelData
+                            required property int index
+                            readonly property int currentIndex: lyricsList.currentIndex
+
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: modelData.text
+                            color: "#ffffff"
+                            font.pixelSize: index === currentIndex ? 20 : (index === currentIndex + 1 || index === currentIndex - 1) ? 18 : (index === currentIndex + 2 || index === currentIndex - 2) ? 16 : (index === currentIndex + 3 || index === currentIndex - 3) ? 14 : 12
+                        }
+                    }
+                }
+
                 HorizontalSlider {
-                    id: position
+                    id: progress
                     visible: root.player.positionSupported
                     implicitHeight: 12
                     Layout.fillWidth: true
@@ -279,7 +320,7 @@ PanelWindow {
                 RowLayout {
                     Text {
                         Layout.fillWidth: true
-                        text: `${parseInt(position.value / 60)}:${parseInt(position.value % 60)}`
+                        text: `${parseInt(progress.value / 60)}:${parseInt(progress.value % 60)}`
                         color: "#ffffff"
                         font.pixelSize: 10
                         font.weight: Font.Medium
@@ -294,7 +335,7 @@ PanelWindow {
                 }
 
                 RowLayout {
-                    Layout.alignment: Qt.AlignHCenter
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 
                     IconButton {
                         icon: root.player.shuffle ? "󰒝" : "󰒞"
@@ -310,6 +351,7 @@ PanelWindow {
                         icon: root.player.playbackState === MprisPlaybackState.Playing ? "" : ""
                         enabled: root.player.canTogglePlaying
                         onClicked: root.player.togglePlaying()
+                        size: 32
                     }
                     IconButton {
                         icon: "󰒭"

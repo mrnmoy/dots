@@ -1,11 +1,11 @@
 import QtQuick
-import QtQuick.Layouts
+import "../config"
 
 Rectangle {
     id: root
 
     required property string icon
-    property int size: 16
+    property int size: 24
     property string desc: ""
     property color iconColor: "#ffffff"
     property color hoveredIconColor: "#E3701B"
@@ -13,11 +13,12 @@ Rectangle {
 
     signal clicked
 
-    implicitWidth: size + 16
+    implicitWidth: size + 8
     implicitHeight: implicitWidth
     radius: size
 
     color: "transparent"
+    // color: "#0fffffff"
 
     MouseArea {
         id: mouseArea
@@ -28,15 +29,16 @@ Rectangle {
     }
 
     Text {
-        visible: root.icon !== ""
+        anchors.centerIn: parent
+        visible: text !== ""
         text: root.icon
-        font.pixelSize: 24
+        font.pixelSize: root.size
         color: (root.enabled && root.hovered) ? root.hoveredIconColor : root.iconColor
         opacity: !root.enabled ? 0.5 : 1
 
         Behavior on color {
             ColorAnimation {
-                duration: 200
+                duration: Config.appearence.animationDuration || 150
             }
         }
     }

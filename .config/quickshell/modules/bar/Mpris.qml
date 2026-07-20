@@ -46,7 +46,7 @@ Item {
             }
 
             Item {
-                implicitWidth: Math.min(parent.width, title.implicitWidth) - 16
+                implicitWidth: Math.min(parent.width - 16, title.implicitWidth)
                 implicitHeight: parent.height
                 anchors.horizontalCenter: parent.horizontalCenter
 
