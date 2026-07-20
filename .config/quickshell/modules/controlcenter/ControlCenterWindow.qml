@@ -46,18 +46,27 @@ PanelWindow {
 
         Keys.onEscapePressed: ShellState.controlcenter = false
 
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-            onEntered: {
-                closeTimer.stop();
-            }
-            onExited: {
-                if (root.active && !mouseArea.containsPress)
-                    closeTimer.restart();
+        HoverHandler {
+            onHoveredChanged: {
+                if (hovered) {
+                    closeTimer.stop();
+                } else {
+                    if (root.active)
+                        closeTimer.restart();
+                }
             }
         }
+        // MouseArea {
+        //     anchors.fill: background
+        //     hoverEnabled: true
+        //     onEntered: {
+        //         closeTimer.stop();
+        //     }
+        //     onExited: {
+        //         if (root.active && !containsPress)
+        //             closeTimer.restart();
+        //     }
+        // }
 
         Timer {
             id: closeTimer
@@ -198,9 +207,10 @@ PanelWindow {
             }
 
             Flickable {
-                implicitWidth: background.width
+                // implicitWidth: background.width
+                Layout.fillWidth: true
                 Layout.fillHeight: true
-                contentWidth: parent.width
+                contentWidth: width
                 contentHeight: content.height
                 flickableDirection: Flickable.VerticalFlick
                 clip: true
@@ -221,7 +231,7 @@ PanelWindow {
 
                 ColumnLayout {
                     id: content
-                    implicitWidth: parent.width
+                    anchors.fill: parent
                     spacing: 8
 
                     GridLayout {
@@ -271,8 +281,8 @@ PanelWindow {
                         }
 
                         QuickActionButton {
-                            icon: "󰂯"
-                            label: "Bluetooth"
+                            icon: "󰂛"
+                            label: "DND"
                         }
                     }
 

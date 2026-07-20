@@ -17,11 +17,11 @@ Rectangle {
     radius: 20
     color: modelData.urgency === NotificationUrgency.Critical ? "#0fff0000" : "#0fffffff"
 
-    Behavior on x {
-        NumberAnimation {
-            duration: Config.appearence.animationDuration || 500
-        }
-    }
+    // Behavior on x {
+    //     NumberAnimation {
+    //         duration: Config.appearence.animationDuration || 500
+    //     }
+    // }
 
     DragHandler {
         id: dragHandle
@@ -31,7 +31,7 @@ Rectangle {
         onGrabChanged: (transition, point) => {
             if (transition == PointerDevice.UngrabExclusive) {
                 if (root.x > root.width / 2)
-                    dismiss();
+                    root.dismiss();
                 else
                     root.x = 0;
             }

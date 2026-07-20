@@ -12,8 +12,8 @@ PanelWindow {
         right: true
     }
     implicitHeight: 34
-    color: "#01000000"
-    // color: "transparent"
+    // color: "#01000000"
+    color: "transparent"
     screen: Quickshell.screens[0]
 
     readonly property int gapIn: 8
@@ -28,7 +28,6 @@ PanelWindow {
         }
         spacing: root.gapIn
 
-        // AppMenuButton {}
         BarButton {
             icon: "󰣇"
             onClicked: ShellState.launcher = !ShellState.launcher

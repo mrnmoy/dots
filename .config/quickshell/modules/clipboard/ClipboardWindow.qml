@@ -171,8 +171,8 @@ PanelWindow {
                 fill: background
 
                 topMargin: 16
-                leftMargin: 32
-                rightMargin: 32
+                leftMargin: 36
+                rightMargin: 36
                 bottomMargin: 8
             }
             spacing: 16

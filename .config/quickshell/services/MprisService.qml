@@ -7,5 +7,6 @@ import Quickshell.Services.Mpris
 Singleton {
     id: root
 
-    readonly property list<MprisPlayer> players: Mpris.players
+    readonly property list<MprisPlayer> players: Mpris.players.values
+    readonly property MprisPlayer player: players[0]
 }

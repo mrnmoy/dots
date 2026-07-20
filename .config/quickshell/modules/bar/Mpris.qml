@@ -6,7 +6,7 @@ import "../../config"
 
 Item {
     id: root
-    implicitWidth: Math.min(Quickshell.screens[0].width / 3, 320)
+    implicitWidth: Math.min(Quickshell.screens[0].width / 3, 580)
     implicitHeight: 20
 
     property MprisPlayer player: Mpris.players.values[0] || null
