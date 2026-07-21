@@ -34,17 +34,6 @@ Item {
                 }
             }
 
-            // FrameAnimation {
-            //     running: root.player.isPlaying
-            //     onTriggered: root.player.positionChanged()
-            // }
-            Timer {
-                running: root.player.isPlaying
-                interval: root.player.length / 100
-                repeat: true
-                onTriggered: root.player.positionChanged()
-            }
-
             Item {
                 implicitWidth: Math.min(parent.width - 16, title.implicitWidth)
                 implicitHeight: parent.height

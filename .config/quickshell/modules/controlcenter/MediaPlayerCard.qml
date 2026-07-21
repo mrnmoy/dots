@@ -16,17 +16,6 @@ Rectangle {
     radius: 20
     color: "#0fffffff"
 
-    // FrameAnimation {
-    //     running: root.modelData.isPlaying
-    //     onTriggered: root.modelData.positionChanged()
-    // }
-    Timer {
-        running: root.modelData.isPlaying
-        interval: root.modelData.length / 100
-        repeat: true
-        onTriggered: root.modelData.positionChanged()
-    }
-
     RowLayout {
         id: content
         anchors.fill: parent

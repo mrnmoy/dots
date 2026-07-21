@@ -130,7 +130,7 @@ PanelWindow {
     RowLayout {
         id: content
 
-        spacing: 8
+        spacing: 16
 
         anchors {
             top: parent.top
@@ -144,6 +144,7 @@ PanelWindow {
         }
 
         Flickable {
+            visible: AudioService.applications.length > 0
             implicitWidth: Math.min(applicationsContent.width, 320)
             Layout.fillHeight: true
             contentWidth: applicationsContent.width
@@ -163,7 +164,7 @@ PanelWindow {
                         id: card
                         implicitWidth: 40
                         implicitHeight: content.height
-                        spacing: 8
+                        spacing: 0
 
                         required property PwNode modelData
 

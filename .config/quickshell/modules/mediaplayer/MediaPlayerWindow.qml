@@ -39,17 +39,6 @@ PanelWindow {
         ShellState.mediaplayer = false;
     }
 
-    // FrameAnimation {
-    //     running: root.player.isPlaying
-    //     onTriggered: root.player.positionChanged()
-    // }
-    Timer {
-        running: root.player.isPlaying
-        interval: root.player.length / 100
-        repeat: true
-        onTriggered: root.player.positionChanged()
-    }
-
     FocusScope {
         anchors.fill: parent
         focus: true
@@ -266,7 +255,7 @@ PanelWindow {
 
                     ListView {
                         id: lyricsList
-                        visible: MprisService.lyricsEnabled
+                        visible: MprisService.lyricsEnabled && !MprisService.loadingLyrics
                         model: MprisService.lyrics
                         // Layout.fillWidth: true
                         // Layout.fillHeight: true
@@ -275,9 +264,17 @@ PanelWindow {
                         highlightRangeMode: ListView.StrictlyEnforceRange
                         preferredHighlightBegin: height / 2 - currentItem.height / 2
                         preferredHighlightEnd: height / 2 + currentItem.height / 2
-                        // Rectangle {
-                        //     anchors.fill: parent
-                        //     color: "#0fffffff"
+                        interactive: false
+                        currentIndex: MprisService.currentLyricsIndex
+                        // Behavior on preferredHighlightBegin {
+                        //     NumberAnimation {
+                        //         duration: 500
+                        //     }
+                        // }
+                        // Behavior on preferredHighlightEnd {
+                        //     NumberAnimation {
+                        //         duration: 500
+                        //     }
                         // }
 
                         delegate: Text {
