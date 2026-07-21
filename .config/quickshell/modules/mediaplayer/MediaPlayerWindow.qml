@@ -278,6 +278,7 @@ PanelWindow {
                         // }
 
                         delegate: Text {
+                            id: card
                             required property var modelData
                             required property int index
                             readonly property int currentIndex: lyricsList.currentIndex
@@ -285,7 +286,60 @@ PanelWindow {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: modelData.text
                             color: "#ffffff"
-                            font.pixelSize: index === currentIndex ? 20 : (index === currentIndex + 1 || index === currentIndex - 1) ? 18 : (index === currentIndex + 2 || index === currentIndex - 2) ? 16 : (index === currentIndex + 3 || index === currentIndex - 3) ? 14 : 12
+                            // font.pixelSize: index === currentIndex ? 20 : (index === currentIndex + 1 || index === currentIndex - 1) ? 18 : (index === currentIndex + 2 || index === currentIndex - 2) ? 16 : (index === currentIndex + 3 || index === currentIndex - 3) ? 14 : 12
+
+                            states: [
+                                State {
+                                    name: "primary"
+                                    when: card.index === card.currentIndex
+
+                                    PropertyChanges {
+                                        target: card
+                                        font.pixelSize: 20
+                                        font.weight: Font.DemiBold
+                                    }
+                                },
+                                State {
+                                    name: "secondary"
+                                    when: card.index === card.currentIndex + 1 || card.index === card.currentIndex - 1
+
+                                    PropertyChanges {
+                                        target: card
+                                        font.pixelSize: 18
+                                        opacity: 0.8
+                                    }
+                                },
+                                State {
+                                    name: "tertiary"
+                                    when: card.index === card.currentIndex + 2 || card.index === card.currentIndex - 2
+
+                                    PropertyChanges {
+                                        target: card
+                                        font.pixelSize: 16
+                                        opacity: 0.6
+                                    }
+                                },
+                                State {
+                                    name: "others"
+                                    when: card.index === card.currentIndex + 3 || card.index === card.currentIndex - 3
+
+                                    PropertyChanges {
+                                        target: card
+                                        font.pixelSize: 14
+                                        opacity: 0.4
+                                    }
+                                },
+                                State {
+                                    name: "etc"
+                                    when: card.index >= card.currentIndex + 4 || card.index <= card.currentIndex - 4
+
+                                    PropertyChanges {
+                                        target: card
+                                        font.pixelSize: 12
+                                        opacity: 0
+                                    }
+                                }
+                            ]
                         }
                     }
                 }

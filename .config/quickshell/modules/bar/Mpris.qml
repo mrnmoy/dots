@@ -3,10 +3,11 @@ import Quickshell
 import Quickshell.Services.Mpris
 import "../../controls"
 import "../../config"
+import "../../services"
 
 Item {
     id: root
-    implicitWidth: Math.min(Quickshell.screens[0].width / 3, 580)
+    implicitWidth: Math.min(Quickshell.screens[0].width / 3, 540)
     implicitHeight: 20
 
     property MprisPlayer player: Mpris.players.values[0] || null
@@ -35,20 +36,49 @@ Item {
             }
 
             Item {
-                implicitWidth: Math.min(parent.width - 16, title.implicitWidth)
+                visible: lyrics
+                implicitWidth: Math.min(parent.width - 16, visibleText.implicitWidth)
+                // implicitWidth: Math.min(parent.width - 16, lyrics.visible ? lyrics.implicitWidth : title.implicitWidth)
                 implicitHeight: parent.height
                 anchors.horizontalCenter: parent.horizontalCenter
 
+                readonly property string title: "  " + root.player.trackTitle || "Unknown"
+                readonly property string currentText: MprisService.lyricsEnabled ? MprisService.lyrics.get(MprisService.currentLyricsIndex).text : title
+
                 Text {
-                    id: title
+                    id: visibleText
                     width: parent.width
                     anchors.verticalCenter: parent.verticalCenter
-                    text: "  " + root.player.trackTitle || "Unknown"
+                    text: parent.currentText
                     color: "#ffffff"
                     font.pixelSize: 12
                     font.weight: Font.DemiBold
                     elide: Text.ElideRight
                 }
+
+                // Text {
+                //     id: title
+                //     visible: !lyrics.visible
+                //     width: parent.width
+                //     anchors.verticalCenter: parent.verticalCenter
+                //     text: "  " + root.player.trackTitle || "Unknown"
+                //     color: "#ffffff"
+                //     font.pixelSize: 12
+                //     font.weight: Font.DemiBold
+                //     elide: Text.ElideRight
+                // }
+
+                // Text {
+                //     id: lyrics
+                //     visible: MprisService.lyricsEnabled && !ShellState.mediaplayer // || text !== ""
+                //     width: parent.width
+                //     anchors.verticalCenter: parent.verticalCenter
+                //     text: MprisService.lyrics.get(MprisService.currentLyricsIndex).text || ""
+                //     color: "#ffffff"
+                //     font.pixelSize: 12
+                //     font.weight: Font.DemiBold
+                //     elide: Text.ElideRight
+                // }
             }
         }
     }
