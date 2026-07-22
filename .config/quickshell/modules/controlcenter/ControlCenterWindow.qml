@@ -4,7 +4,6 @@ import QtQuick.Controls as QQC
 import QtQuick.Effects
 import QtQuick.Shapes
 import Quickshell
-import Quickshell.Wayland
 import Quickshell.Hyprland
 import Quickshell.Services.Mpris
 import Quickshell.Services.UPower
@@ -18,6 +17,10 @@ PanelWindow {
     id: root
 
     readonly property bool active: ShellState.controlcenter
+    onActiveChanged: {
+        if (active)
+            playersList.currentIndex = MprisService.playerIndex;
+    }
 
     HyprlandFocusGrab {
         active: root.active
@@ -346,7 +349,7 @@ PanelWindow {
                             visible: Mpris.players.values.length > 0
                             anchors.fill: parent
                             spacing: 8
-                            // clip: true
+                            // currentIndex: MprisService.playerIndex
 
                             Repeater {
                                 model: Mpris.players
