@@ -170,9 +170,6 @@ PanelWindow {
             spacing: 16
 
             RowLayout {
-                // Layout.fillWidth: true
-                anchors.left: parent.left
-                anchors.right: parent.right
                 spacing: 0
 
                 ColumnLayout {
@@ -196,8 +193,11 @@ PanelWindow {
                     }
                 }
 
+                Item {
+                    Layout.fillWidth: true
+                }
+
                 RowLayout {
-                    Layout.alignment: Qt.AlignRight
                     spacing: 8
 
                     BarButton {
@@ -342,11 +342,11 @@ PanelWindow {
                     Item {
                         Layout.fillWidth: true
                         implicitHeight: 100
-                        visible: Mpris.players.values.length > 0
+                        visible: MprisService.player !== null
+                        // visible: Mpris.players.values.length > 0
 
                         QQC.SwipeView {
                             id: playersList
-                            visible: Mpris.players.values.length > 0
                             anchors.fill: parent
                             spacing: 8
                             // currentIndex: MprisService.playerIndex

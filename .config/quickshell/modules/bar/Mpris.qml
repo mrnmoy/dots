@@ -2,7 +2,6 @@ import QtQuick
 import Quickshell
 import Quickshell.Services.Mpris
 import "../../controls"
-import "../../config"
 import "../../services"
 
 Item {
@@ -19,8 +18,6 @@ Item {
             id: slider
             enabled: root.player.canSeek
 
-            // required property MprisPlayer player
-
             from: 0
             to: root.player.length
             value: root.player.position
@@ -31,18 +28,17 @@ Item {
 
             Behavior on value {
                 NumberAnimation {
-                    duration: Config.appearence.animationDuration || 500
+                    duration: 1000
                 }
             }
 
             Item {
-                visible: lyrics
                 implicitWidth: Math.min(parent.width - 16, visibleText.implicitWidth)
                 implicitHeight: parent.height
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 readonly property string title: "  " + root.player.trackTitle || "Unknown"
-                readonly property string lyric: MprisService.lyrics.get(MprisService.currentLyricsIndex).text || ""
+                readonly property string lyric: MprisService.lyricsAvailable && MprisService.lyrics.get(MprisService.currentLyricsIndex).text || ""
                 readonly property string currentText: MprisService.lyricsEnabled && lyric !== "" ? lyric : title
 
                 Text {

@@ -3,7 +3,6 @@ import QtQuick.Layouts
 import QtQuick.Effects
 import Quickshell.Services.Mpris
 import "../../controls"
-import "../../config"
 
 Rectangle {
     id: root
@@ -132,28 +131,9 @@ Rectangle {
 
                 Behavior on value {
                     NumberAnimation {
-                        duration: Config.appearence.animationDuration || 500
+                        duration: 1000
                     }
                 }
-
-                // RowLayout {
-                //     Layout.fillWidth: true
-                //
-                //     Text {
-                //         Layout.fillWidth: true
-                //         text: `${parseInt(progress.value / 60)}:${parseInt(progress.value % 60)}`
-                //         color: "#ffffff"
-                //         font.pixelSize: 10
-                //         font.weight: Font.Medium
-                //     }
-                //     Text {
-                //         Layout.alignment: Qt.AlignRight
-                //         text: `${parseInt(root.modelData.length / 60)}:${parseInt(root.modelData.length % 60)}`
-                //         color: "#ffffff"
-                //         font.pixelSize: 10
-                //         font.weight: Font.Medium
-                //     }
-                // }
             }
 
             RowLayout {
