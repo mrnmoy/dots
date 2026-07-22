@@ -9,25 +9,32 @@ Singleton {
     id: root
 
     readonly property list<MprisPlayer> players: Mpris.players.values
-    // readonly property MprisPlayer player: players[0]
-    readonly property MprisPlayer player: players.find(plyr => plyr.isPlaying === true) || players[0]
-    readonly property int playerIndex: players.indexOf(player) || 0
+    readonly property list<MprisPlayer> activePlayers: players.filter(plyr => plyr.isPlaying === true)
+    readonly property MprisPlayer player: players[lastPlayerIndex].isPlaying ? players[lastPlayerIndex] : players.find(plyr => plyr.isPlaying === true) || players[0]
+    readonly property int playerIndex: players.indexOf(player)
+    property int lastPlayerIndex: 0
 
+    // TODO seperate lyrics control for each player
     property bool lyricsEnabled: false
     property bool lyricsAvailable: false
     property bool loadingLyrics: lyricsProc.running
     property ListModel lyrics: ListModel {}
     property int currentLyricsIndex: 0
 
-    // FrameAnimation {
-    //     running: root.player.isPlaying
-    //     onTriggered: root.player.positionChanged()
-    // }
     Timer {
         running: root.player.isPlaying
-        interval: root.player.length / 100
         repeat: true
-        onTriggered: root.player.positionChanged()
+        interval: 1000
+        // onTriggered: root.player.positionChanged()
+        onTriggered: {
+            for (const plyr of root.activePlayers) {
+                plyr.positionChanged();
+            }
+        }
+    }
+
+    onPlayerIndexChanged: {
+        lastPlayerIndex = playerIndex;
     }
 
     onLyricsChanged: {
@@ -48,6 +55,15 @@ Singleton {
             lyricsTimer.interval = lyrics.get(currentLyricsIndex + 1).time - player.position;
             lyricsTimer.reset();
         }
+    }
+
+    function formatTime(sec: real): string {
+        var sec_num = parseInt(sec, 10);
+        var hours = Math.floor(sec_num / 3600);
+        var minutes = Math.floor(sec_num / 60) % 60;
+        var seconds = sec_num % 60;
+
+        return [hours, minutes, seconds].map(v => v < 10 ? "0" + v : v).filter((v, i) => v !== "00" || i > 0).join(":");
     }
 
     function fetchLyrics(): void {
@@ -94,10 +110,12 @@ Singleton {
 
     Process {
         id: lyricsProc
-        command: ["/bin/sh", "-c", `curl "https://lrclib.net/api/get?artist_name=${encodeURI(root.player.trackArtist) + "&track_name=" + encodeURI(root.player.trackTitle) + "&album_name=" + encodeURI(root.player.trackAlbum) + "&duration=" + root.player.length}"`]
+        // command: ["/bin/sh", "-c", `curl "https://lrclib.net/api/get?artist_name=${encodeURI(root.player.trackArtist) + "&track_name=" + encodeURI(root.player.trackTitle) + "&album_name=" + encodeURI(root.player.trackAlbum) + "&duration=" + root.player.length}"`]
+        command: ["/bin/sh", "-c", `curl "https://lrclib.net/api/get?artist_name=${encodeURI(root.player.trackArtist) + "&track_name=" + encodeURI(root.player.trackTitle) + "&duration=" + root.player.length}"`]
 
         stdout: StdioCollector {
             onStreamFinished: {
+                console.log(text);
                 const data = JSON.parse(text);
                 if (!data.syncedLyrics) {
                     console.log("unalbe to fetch lyrics", lyricsProc.command);

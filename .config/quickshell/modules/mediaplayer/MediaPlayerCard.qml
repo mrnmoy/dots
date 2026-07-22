@@ -4,7 +4,6 @@ import QtQuick.Effects
 import Quickshell.Services.Mpris
 import "../../controls"
 import "../../services"
-import "../../config"
 
 RowLayout {
     id: card
@@ -103,7 +102,6 @@ RowLayout {
             Layout.fillWidth: true
 
             IconButton {
-                // Layout.alignment: Qt.AlignTop | Qt.AlignRight
                 anchors.top: parent.top
                 anchors.right: parent.right
                 icon: MprisService.lyricsEnabled ? "󰨖" : "󰨗"
@@ -126,8 +124,6 @@ RowLayout {
                 id: lyricsList
                 visible: !lyricsStatusText.visible
                 model: MprisService.lyrics
-                // Layout.fillWidth: true
-                // Layout.fillHeight: true
                 anchors.fill: parent
                 clip: true
                 highlightRangeMode: ListView.StrictlyEnforceRange
@@ -138,17 +134,9 @@ RowLayout {
                 interactive: false
                 currentIndex: MprisService.currentLyricsIndex
                 spacing: 2
-                // highlightFollowsCurrentItem: true
-                // highlight: Rectangle {
-                //     Behavior on y {
-                //         NumberAnimation {
-                //             duration: 250
-                //         }
-                //     }
-                // }
 
                 delegate: Text {
-                    id: card
+                    id: lyricsItem
                     required property var modelData
                     required property int index
                     readonly property int currentIndex: lyricsList.currentIndex
@@ -156,20 +144,21 @@ RowLayout {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: modelData.text
                     color: "#ffffff"
-                    Behavior on scale {
-                        NumberAnimation {
-                            duration: 250
-                        }
-                    }
+                    // font.family: "Inter"
+                    // Behavior on scale {
+                    //     NumberAnimation {
+                    //         duration: 250
+                    //     }
+                    // }
                     // font.pixelSize: index === currentIndex ? 20 : (index === currentIndex + 1 || index === currentIndex - 1) ? 18 : (index === currentIndex + 2 || index === currentIndex - 2) ? 16 : (index === currentIndex + 3 || index === currentIndex - 3) ? 14 : 12
 
                     states: [
                         State {
                             name: "primary"
-                            when: card.index === card.currentIndex
+                            when: lyricsItem.index === lyricsItem.currentIndex
 
                             PropertyChanges {
-                                target: card
+                                target: lyricsItem
                                 font.pixelSize: 20
                                 font.weight: Font.DemiBold
                                 // scale: 1
@@ -177,10 +166,10 @@ RowLayout {
                         },
                         State {
                             name: "secondary"
-                            when: card.index === card.currentIndex + 1 || card.index === card.currentIndex - 1
+                            when: lyricsItem.index === lyricsItem.currentIndex + 1 || lyricsItem.index === lyricsItem.currentIndex - 1
 
                             PropertyChanges {
-                                target: card
+                                target: lyricsItem
                                 font.pixelSize: 18
                                 opacity: 0.8
                                 // scale: 0.8
@@ -188,10 +177,10 @@ RowLayout {
                         },
                         State {
                             name: "tertiary"
-                            when: card.index === card.currentIndex + 2 || card.index === card.currentIndex - 2
+                            when: lyricsItem.index === lyricsItem.currentIndex + 2 || lyricsItem.index === lyricsItem.currentIndex - 2
 
                             PropertyChanges {
-                                target: card
+                                target: lyricsItem
                                 font.pixelSize: 16
                                 opacity: 0.6
                                 // scale: 0.6
@@ -199,10 +188,10 @@ RowLayout {
                         },
                         State {
                             name: "others"
-                            when: card.index === card.currentIndex + 3 || card.index === card.currentIndex - 3
+                            when: lyricsItem.index === lyricsItem.currentIndex + 3 || lyricsItem.index === lyricsItem.currentIndex - 3
 
                             PropertyChanges {
-                                target: card
+                                target: lyricsItem
                                 font.pixelSize: 14
                                 opacity: 0.4
                                 // scale: 0.4
@@ -210,10 +199,10 @@ RowLayout {
                         },
                         State {
                             name: "etc"
-                            when: card.index >= card.currentIndex + 4 || card.index <= card.currentIndex - 4
+                            when: lyricsItem.index >= lyricsItem.currentIndex + 4 || lyricsItem.index <= lyricsItem.currentIndex - 4
 
                             PropertyChanges {
-                                target: card
+                                target: lyricsItem
                                 font.pixelSize: 12
                                 opacity: 0
                                 // scale: 0.2
@@ -221,77 +210,6 @@ RowLayout {
                         }
                     ]
                 }
-
-                // delegate: Item {
-                //     id: lyricsItem
-                //     implicitWidth: parent.width
-                //     implicitHeight: lyricsText.height
-                //     required property var modelData
-                //     required property int index
-                //     readonly property int currentIndex: lyricsList.currentIndex
-                //
-                //     Text {
-                //         id: lyricsText
-                //         // horizontalAlignment: parent.horizontalCenter
-                //         anchors.horizontalCenter: parent.horizontalCenter
-                //         text: modelData.text
-                //         color: "#ffffff"
-                //         // font.pixelSize: index === currentIndex ? 20 : (index === currentIndex + 1 || index === currentIndex - 1) ? 18 : (index === currentIndex + 2 || index === currentIndex - 2) ? 16 : (index === currentIndex + 3 || index === currentIndex - 3) ? 14 : 12
-                //
-                //         states: [
-                //             State {
-                //                 name: "primary"
-                //                 when: lyricsItem.index === lyricsItem.currentIndex
-                //
-                //                 PropertyChanges {
-                //                     target: lyricsText
-                //                     font.pixelSize: 20
-                //                     font.weight: Font.DemiBold
-                //                 }
-                //             },
-                //             State {
-                //                 name: "secondary"
-                //                 when: lyricsItem.index === lyricsItem.currentIndex + 1 || lyricsItem.index === lyricsItem.currentIndex - 1
-                //
-                //                 PropertyChanges {
-                //                     target: lyricsText
-                //                     font.pixelSize: 18
-                //                     opacity: 0.8
-                //                 }
-                //             },
-                //             State {
-                //                 name: "tertiary"
-                //                 when: lyricsItem.index === lyricsItem.currentIndex + 2 || lyricsItem.index === lyricsItem.currentIndex - 2
-                //
-                //                 PropertyChanges {
-                //                     target: lyricsText
-                //                     font.pixelSize: 16
-                //                     opacity: 0.6
-                //                 }
-                //             },
-                //             State {
-                //                 name: "others"
-                //                 when: lyricsItem.index === lyricsItem.currentIndex + 3 || lyricsItem.index === lyricsItem.currentIndex - 3
-                //
-                //                 PropertyChanges {
-                //                     target: lyricsText
-                //                     font.pixelSize: 14
-                //                     opacity: 0.4
-                //                 }
-                //             },
-                //             State {
-                //                 name: "etc"
-                //                 when: lyricsItem.index >= lyricsItem.currentIndex + 4 || lyricsItem.index <= lyricsItem.currentIndex - 4
-                //
-                //                 PropertyChanges {
-                //                     target: lyricsText
-                //                     font.pixelSize: 12
-                //                     opacity: 0
-                //                 }
-                //             }
-                //         ]
-                //     }
-                // }
             }
         }
 
@@ -315,21 +233,21 @@ RowLayout {
 
             Behavior on value {
                 NumberAnimation {
-                    duration: Config.appearence.animationDuration || 500
+                    duration: 1000
                 }
             }
         }
         RowLayout {
             Text {
                 Layout.fillWidth: true
-                text: `${parseInt(progress.value / 60)}:${parseInt(progress.value % 60)}`
+                text: MprisService.formatTime(progress.value)
                 color: "#ffffff"
                 font.pixelSize: 10
                 font.weight: Font.Medium
             }
             Text {
                 Layout.alignment: Qt.AlignRight
-                text: `${parseInt(card.modelData.length / 60)}:${parseInt(card.modelData.length % 60)}`
+                text: MprisService.formatTime(card.modelData.length)
                 color: "#ffffff"
                 font.pixelSize: 10
                 font.weight: Font.Medium
