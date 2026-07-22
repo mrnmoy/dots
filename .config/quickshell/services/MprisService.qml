@@ -43,8 +43,6 @@ Singleton {
         if (lyrics.count > currentLyricsIndex + 1) {
             lyricsTimer.interval = lyrics.get(currentLyricsIndex + 1).time - player.position;
             lyricsTimer.reset();
-            // lyricsTimer.running = true;
-            console.log("next line interval", lyricsTimer.interval);
         }
     }
 
@@ -62,7 +60,6 @@ Singleton {
 
     function syncLyrics(): void {
         for (var i = 0; i < lyrics.count; i++) {
-            // console.log("time", lyrics.get(i).time, "position", player.position);
             if (lyrics.get(i).time > player.position) {
                 if (i > 0) {
                     currentLyricsIndex = i - 1;
@@ -80,14 +77,24 @@ Singleton {
     Connections {
         target: root.player
 
-        function onTrackChanged() {
+        function onPostTrackChanged() {
             console.log("postTrackChanged()");
             if (root.lyricsEnabled) {
-                if (root.lyrics.count === 0)
-                    root.fetchLyrics();
+                // if (root.lyrics.count === 0)
+                root.fetchLyrics();
 
-                root.syncLyrics();
+                // root.syncLyrics();
             }
+        }
+
+        function onIsPlayingChanged() {
+            console.log("onPlaybackStateChanged()");
+        }
+        function onPrevious() {
+            console.log("onPrevious()");
+        }
+        function onNext() {
+            console.log("onNext()");
         }
     }
 
@@ -96,22 +103,11 @@ Singleton {
         running: root.lyricsEnabled && root.player.isPlaying && root.lyrics.count > 0 && root.currentLyricsIndex !== root.lyrics.count - 1
         property real interval: 100
         onTriggered: {
-            // console.log("elapsedTime", elapsedTime);
             if (elapsedTime >= interval) {
                 root.currentLyricsIndex = root.currentLyricsIndex + 1;
             }
         }
     }
-    // Timer {
-    //     id: lyricsTimer
-    //     repeat: true
-    //     running: false
-    //     triggeredOnStart: false
-    //     onTriggered: {
-    //         root.currentLyricsIndex = root.currentLyricsIndex + 1;
-    //         running = false;
-    //     }
-    // }
 
     Process {
         id: lyricsProc
@@ -119,18 +115,27 @@ Singleton {
 
         stdout: StdioCollector {
             onStreamFinished: {
-                const lines = JSON.parse(text).syncedLyrics.split("\n");
-                console.log(lines);
+                const data = JSON.parse(text);
+                if (!data.syncedLyrics) {
+                    console.log("unalbe to fetch lyrics", lyricsProc.command);
+                    return;
+                }
+                const lines = data.syncedLyrics.split("\n");
+
+                root.lyrics.append({
+                    time: 0.00,
+                    text: ""
+                });
                 for (var i = 0; i < lines.length; i++) {
                     const parts = lines[i].split(/ (.*)/);
                     const times = parts[0].match(/\[(.*?)\]/)[1].split(":");
                     root.lyrics.append({
-                        time: times[0] * 60 + times[1],
+                        time: parseInt(times[0] * 60) + parseFloat(times[1]),
                         text: parts[1]
                     });
-                    root.lyricsChanged();
-                    // console.log("time:", times[0] * 60 + times[1], "text:", parts[1]);
+                    // console.log("time:", parseInt(times[0] * 60) + parseFloat(times[1]), "text:", parts[1]);
                 }
+                root.lyricsChanged();
             }
         }
     }

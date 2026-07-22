@@ -38,10 +38,7 @@ Item {
             Item {
                 visible: lyrics
                 implicitWidth: Math.min(parent.width - 16, visibleText.implicitWidth)
-                // implicitWidth: Math.min(parent.width - 16, lyrics.visible ? lyrics.implicitWidth : title.implicitWidth)
-                // implicitHeight: parent.height
-                implicitHeight: visibleText.height
-                anchors.verticalCenter: parent.verticalCenter
+                implicitHeight: parent.height
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 readonly property string title: "  " + root.player.trackTitle || "Unknown"
@@ -51,37 +48,14 @@ Item {
                 Text {
                     id: visibleText
                     width: parent.width
-                    // anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenter: parent.verticalCenter
                     text: parent.currentText
                     color: "#ffffff"
                     font.pixelSize: 12
                     font.weight: Font.DemiBold
                     elide: Text.ElideRight
+                    lineHeight: 0
                 }
-
-                // Text {
-                //     id: title
-                //     visible: !lyrics.visible
-                //     width: parent.width
-                //     anchors.verticalCenter: parent.verticalCenter
-                //     text: "  " + root.player.trackTitle || "Unknown"
-                //     color: "#ffffff"
-                //     font.pixelSize: 12
-                //     font.weight: Font.DemiBold
-                //     elide: Text.ElideRight
-                // }
-
-                // Text {
-                //     id: lyrics
-                //     visible: MprisService.lyricsEnabled && !ShellState.mediaplayer // || text !== ""
-                //     width: parent.width
-                //     anchors.verticalCenter: parent.verticalCenter
-                //     text: MprisService.lyrics.get(MprisService.currentLyricsIndex).text || ""
-                //     color: "#ffffff"
-                //     font.pixelSize: 12
-                //     font.weight: Font.DemiBold
-                //     elide: Text.ElideRight
-                // }
             }
         }
     }
@@ -91,6 +65,5 @@ Item {
         active: root.player !== null
         asynchronous: true
         sourceComponent: sliderComp
-        // property MprisPlayer player: root.player
     }
 }

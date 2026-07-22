@@ -263,18 +263,19 @@ PanelWindow {
                         anchors.fill: parent
                         clip: true
                         highlightRangeMode: ListView.StrictlyEnforceRange
-                        preferredHighlightBegin: height / 2 - currentItem.height / 2
-                        preferredHighlightEnd: height / 2 + currentItem.height / 2
+                        // preferredHighlightBegin: height / 2 - currentItem.height / 2
+                        // preferredHighlightEnd: height / 2 + currentItem.height / 2
+                        preferredHighlightBegin: height / 2 - 10
+                        preferredHighlightEnd: height / 2 + 10
                         interactive: false
                         currentIndex: MprisService.currentLyricsIndex
-                        // Behavior on preferredHighlightBegin {
-                        //     NumberAnimation {
-                        //         duration: 500
-                        //     }
-                        // }
-                        // Behavior on preferredHighlightEnd {
-                        //     NumberAnimation {
-                        //         duration: 500
+                        spacing: 2
+                        // highlightFollowsCurrentItem: true
+                        // highlight: Rectangle {
+                        //     Behavior on y {
+                        //         NumberAnimation {
+                        //             duration: 250
+                        //         }
                         //     }
                         // }
 
@@ -284,9 +285,14 @@ PanelWindow {
                             required property int index
                             readonly property int currentIndex: lyricsList.currentIndex
 
-                            anchors.horizontalCenter: lyricsContainer.horizontalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
                             text: modelData.text
                             color: "#ffffff"
+                            Behavior on scale {
+                                NumberAnimation {
+                                    duration: 250
+                                }
+                            }
                             // font.pixelSize: index === currentIndex ? 20 : (index === currentIndex + 1 || index === currentIndex - 1) ? 18 : (index === currentIndex + 2 || index === currentIndex - 2) ? 16 : (index === currentIndex + 3 || index === currentIndex - 3) ? 14 : 12
 
                             states: [
@@ -298,6 +304,7 @@ PanelWindow {
                                         target: card
                                         font.pixelSize: 20
                                         font.weight: Font.DemiBold
+                                        // scale: 1
                                     }
                                 },
                                 State {
@@ -308,6 +315,7 @@ PanelWindow {
                                         target: card
                                         font.pixelSize: 18
                                         opacity: 0.8
+                                        // scale: 0.8
                                     }
                                 },
                                 State {
@@ -318,6 +326,7 @@ PanelWindow {
                                         target: card
                                         font.pixelSize: 16
                                         opacity: 0.6
+                                        // scale: 0.6
                                     }
                                 },
                                 State {
@@ -328,6 +337,7 @@ PanelWindow {
                                         target: card
                                         font.pixelSize: 14
                                         opacity: 0.4
+                                        // scale: 0.4
                                     }
                                 },
                                 State {
@@ -338,6 +348,7 @@ PanelWindow {
                                         target: card
                                         font.pixelSize: 12
                                         opacity: 0
+                                        // scale: 0.2
                                     }
                                 }
                             ]

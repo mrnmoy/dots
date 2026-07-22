@@ -153,15 +153,10 @@ PanelWindow {
             flickableDirection: Flickable.HorizontalFlick
             clip: true
 
-            RowLayout {
+            Row {
                 id: applicationsContent
-                // implicitWidth: parent.width
-                Layout.fillHeight: true
+                height: parent.height
                 spacing: 8
-                Rectangle {
-                    anchors.fill: parent
-                    color: "#0fffffff"
-                }
 
                 Repeater {
                     model: AudioService.applications
@@ -169,9 +164,8 @@ PanelWindow {
                     ColumnLayout {
                         id: card
                         implicitWidth: 40
-                        // implicitHeight: content.height
-                        Layout.fillHeight: true
-                        spacing: 0
+                        implicitHeight: applicationsContent.height
+                        spacing: 8
 
                         required property PwNode modelData
 
