@@ -1,38 +1,65 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Effects
+import QtQuick.Shapes
 import Quickshell
-import Quickshell.Wayland
 import Quickshell.Hyprland
-import "../../components"
+import "../../controls"
 import "../../services"
 
 PanelWindow {
     id: root
-    visible: active
+
     readonly property bool active: ShellState.help
 
-    exclusionMode: ExclusionMode.Normal
+    HyprlandFocusGrab {
+        active: root.active
+        windows: [root]
+    }
 
-    implicitWidth: Math.min(640, screen.width - 40)
-    implicitHeight: Math.min(520, screen.height - 40)
+    anchors {
+        bottom: true
+    }
+
+    margins {
+        bottom: active ? 0 : -height
+    }
+
     color: "transparent"
+    implicitWidth: Math.min(540, screen.width - 40)
+    implicitHeight: Math.min(640, screen.height - 40)
 
     screen: Quickshell.screens[0]
-    WlrLayershell.keyboardFocus: active ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+    exclusionMode: ExclusionMode.Normal
+    // WlrLayershell.keyboardFocus: active ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+
+    property string query: ""
+
+    function launch(): void {
+    }
+
+    function close(): void {
+        ShellState.launcher = false;
+        root.query = "";
+    }
 
     FocusScope {
-        id: panelContent
         anchors.fill: parent
         focus: true
 
-        Keys.onEscapePressed: ShellState.help = false
+        Keys.onEscapePressed: root.close()
+        Keys.onDownPressed: list.incrementCurrentIndex()
+        Keys.onUpPressed: list.decrementCurrentIndex()
+        Keys.onReturnPressed: {
+            root.launch();
+        }
 
         HoverHandler {
             id: hoverHandler
             onHoveredChanged: {
                 if (hovered)
                     closeTimer.stop();
-                else if (root.active)
+                else if (root.visible)
                     closeTimer.restart();
             }
         }
@@ -41,87 +68,141 @@ PanelWindow {
             id: closeTimer
             interval: 500
             onTriggered: if (!hoverHandler.hovered)
-                ShellState.help = false
+                root.close()
+        }
+
+        MultiEffect {
+            source: background
+            anchors.fill: background
+            maskEnabled: true
+            maskSource: mask
+
+            // layer.smooth: true
+
+            maskThresholdMin: 0.5
+            maskSpreadAtMin: 1.0
         }
 
         Rectangle {
-            id: panel
+            id: background
             anchors.fill: parent
-            anchors.margins: 16
-            radius: 16
-            color: "#0fffffff"
-            clip: true
+            visible: false
+            // smooth: true
+            color: "#01000000"
+        }
 
-            ColumnLayout {
-                anchors.fill: parent
-                anchors.margins: 16
-                spacing: 16
+        Shape {
+            id: mask
+            anchors.fill: background
+            antialiasing: true
+
+            visible: false
+            layer.enabled: true
+
+            preferredRendererType: Shape.CurveRenderer
+
+            ShapePath {
+                strokeColor: "transparent"
+
+                startX: 0
+                startY: mask.height
+
+                PathArc {
+                    direction: PathArc.Counterclockwise
+                    radiusX: 20
+                    radiusY: 20
+                    x: 20
+                    y: mask.height - 20
+                }
+                PathLine {
+                    x: 20
+                    y: 20
+                }
+                PathArc {
+                    radiusX: 20
+                    radiusY: 20
+                    x: 40
+                    y: 0
+                }
+                PathLine {
+                    x: mask.width - 40
+                    y: 0
+                }
+                PathArc {
+                    direction: PathArc.Clockwise
+                    radiusX: 20
+                    radiusY: 20
+                    x: mask.width - 20
+                    y: 20
+                }
+                PathLine {
+                    x: mask.width - 20
+                    y: mask.height - 20
+                }
+                PathArc {
+                    direction: PathArc.Counterclockwise
+                    radiusX: 20
+                    radiusY: 20
+                    x: mask.width
+                    y: mask.height
+                }
+                PathLine {
+                    x: 0
+                    y: mask.height
+                }
+            }
+        }
+
+        ColumnLayout {
+            anchors {
+                fill: background
+
+                topMargin: 16
+                leftMargin: 36
+                rightMargin: 36
+                bottomMargin: 8
+            }
+            spacing: 16
+
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignTop
+                implicitHeight: 40
+                color: "#0fffffff"
+                radius: 20
 
                 RowLayout {
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignTop
+                    anchors.fill: parent
+                    Layout.leftMargin: 16
+                    Layout.rightMargin: 16
                     spacing: 16
 
-                    ColumnLayout {
-                        spacing: 0
-
-                        Text {
-                            text: "Keybinds"
-                            font.family: "Inter"
-                            font.pixelSize: 42
-                            font.weight: Font.Black
-                            color: "#ffffff"
-                            lineHeight: 0.9
-                        }
-                        Text {
-                            text: "Specified in hyprland config"
-                            font.family: "Inter"
-                            font.pixelSize: 12
-                            font.weight: Font.Medium
-                            color: "#f1f1f1"
-                            lineHeight: 1.5
-                        }
+                    Text {
+                        text: "󰣇"
+                        font.pixelSize: 20
+                        font.weight: Font.Black
+                        color: "#ffffff"
+                        Layout.leftMargin: 16
                     }
-
-                    Item {
+                    TextFieldBase {
+                        focus: true
                         Layout.fillWidth: true
-                    }
-
-                    RowLayout {
-                        spacing: 8
-
-                        BarButton {
-                            icon: "󰒓"
-                        }
+                        Layout.fillHeight: true
+                        font.pixelSize: 20
+                        placeholderText: "Search"
+                        text: root.query
+                        onTextChanged: root.query = text
                     }
                 }
+            }
 
-                Flickable {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    clip: true
-                    // contentHeight: content.height
-
-                    maximumFlickVelocity: 3000
-                    flickDeceleration: 1500
-                    boundsBehavior: Flickable.DragAndOvershootBounds
-                    boundsMovement: Flickable.FollowBoundsBehavior
-
-                    rebound: Transition {
-                        NumberAnimation {
-                            properties: "x,y"
-                            duration: 150
-                            easing.bezierCurve: [0.85, 0, 0.15, 1]
-                        }
-                    }
-
-                    // ListView {
-                    //     clip: true
-                    //     spacing: 8
-                    //     model: NotificationService.trackedNotifications ?? []
-                    //     delegate: NotificationCard {}
-                    // }
-                }
+            Loader {
+                active: root.active
+                asynchronous: true
+                focus: true
+                sourceComponent: HelpList {}
+                Layout.fillWidth: true
+                Layout.fillHeight: true
             }
         }
     }

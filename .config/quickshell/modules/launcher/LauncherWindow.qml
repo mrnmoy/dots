@@ -36,7 +36,6 @@ PanelWindow {
     // WlrLayershell.keyboardFocus: active ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     property string query: ""
-    // property int selectedIndex: 0
     readonly property list<DesktopEntry> apps: DesktopEntries.applications.values ?? []
 
     readonly property list<DesktopEntry> favouriteApps: {
@@ -46,8 +45,8 @@ PanelWindow {
     readonly property list<DesktopEntry> visibleEntries: {
         const q = query.trim();
 
-        if (q.length !== 0) {
-            return apps.filter(entry => entry.name.startsWith(q) || entry.name.includes(q) || entry.genericName.includes(q) || entry.execString.includes(q));
+        if (q.length > 0) {
+            return apps.filter(entry => entry.name.toLowerCase().startsWith(q) || entry.name.toLowerCase().includes(q) || entry.genericName.toLowerCase().includes(q) || entry.execString.toLowerCase().includes(q));
         }
 
         if (favouriteApps.length > 0)
@@ -63,15 +62,32 @@ PanelWindow {
 
     function close(): void {
         ShellState.launcher = false;
-        // root.selectedIndex = 0;
         root.query = "";
     }
 
     // Loader {
-    //     active: root.margins.bottom !== -root.height
+    //     active: root.active
     //     focus: true
     //     anchors.fill: parent
     //     sourceComponent: LauncherContent {}
+    //     states: [
+    //         State {
+    //             name: "active"
+    //             when: root.active === true
+    //         }
+    //     ]
+    //     transitions: [
+    //         Transition {
+    //             from: "active"
+    //             to: ""
+    //
+    //             NumberAnimation {
+    //                 property: root.margins.bottom
+    //                 target: root.active
+    //                 duration: 1000
+    //             }
+    //         }
+    //     ]
     // }
 
     FocusScope {
@@ -79,14 +95,10 @@ PanelWindow {
         focus: true
 
         Keys.onEscapePressed: root.close()
-        // Keys.onDownPressed: root.selectedIndex = Math.min(root.selectedIndex + 1, root.visibleEntries.length - 1)
-        // Keys.onUpPressed: root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
         Keys.onDownPressed: list.incrementCurrentIndex()
         Keys.onUpPressed: list.decrementCurrentIndex()
         Keys.onReturnPressed: {
             root.launch();
-            // root.visibleEntries[root.selectedIndex].execute();
-            // root.close();
         }
 
         HoverHandler {
@@ -193,8 +205,8 @@ PanelWindow {
                 fill: background
 
                 topMargin: 16
-                leftMargin: 32
-                rightMargin: 32
+                leftMargin: 36
+                rightMargin: 36
                 bottomMargin: 8
             }
             spacing: 16

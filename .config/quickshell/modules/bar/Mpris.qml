@@ -3,10 +3,11 @@ import Quickshell
 import Quickshell.Services.Mpris
 import "../../controls"
 import "../../config"
+import "../../services"
 
 Item {
     id: root
-    implicitWidth: Math.min(Quickshell.screens[0].width / 3, 320)
+    implicitWidth: Math.min(Quickshell.screens[0].width / 3, 540)
     implicitHeight: 20
 
     property MprisPlayer player: Mpris.players.values[0] || null
@@ -34,31 +35,26 @@ Item {
                 }
             }
 
-            // FrameAnimation {
-            //     running: root.player.isPlaying
-            //     onTriggered: root.player.positionChanged()
-            // }
-            Timer {
-                running: root.player.isPlaying
-                interval: root.player.length / 100
-                repeat: true
-                onTriggered: root.player.positionChanged()
-            }
-
             Item {
-                implicitWidth: Math.min(parent.width, title.implicitWidth) - 16
+                visible: lyrics
+                implicitWidth: Math.min(parent.width - 16, visibleText.implicitWidth)
                 implicitHeight: parent.height
                 anchors.horizontalCenter: parent.horizontalCenter
 
+                readonly property string title: "  " + root.player.trackTitle || "Unknown"
+                readonly property string lyric: MprisService.lyrics.get(MprisService.currentLyricsIndex).text || ""
+                readonly property string currentText: MprisService.lyricsEnabled && lyric !== "" ? lyric : title
+
                 Text {
-                    id: title
+                    id: visibleText
                     width: parent.width
                     anchors.verticalCenter: parent.verticalCenter
-                    text: "  " + root.player.trackTitle || "Unknown"
+                    text: parent.currentText
                     color: "#ffffff"
                     font.pixelSize: 12
                     font.weight: Font.DemiBold
                     elide: Text.ElideRight
+                    lineHeight: 0
                 }
             }
         }
@@ -69,6 +65,5 @@ Item {
         active: root.player !== null
         asynchronous: true
         sourceComponent: sliderComp
-        // property MprisPlayer player: root.player
     }
 }

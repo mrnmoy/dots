@@ -130,7 +130,7 @@ PanelWindow {
     RowLayout {
         id: content
 
-        spacing: 8
+        spacing: 16
 
         anchors {
             top: parent.top
@@ -144,16 +144,18 @@ PanelWindow {
         }
 
         Flickable {
+            visible: AudioService.applications.length > 0
             implicitWidth: Math.min(applicationsContent.width, 320)
             Layout.fillHeight: true
-            contentWidth: applicationsContent.width
-            contentHeight: parent.height
+            // contentWidth: applicationsContent.width
+            // contentHeight: parent.height
+            contentHeight: height
             flickableDirection: Flickable.HorizontalFlick
             clip: true
 
             Row {
                 id: applicationsContent
-                // implicitWidth: parent.width
+                height: parent.height
                 spacing: 8
 
                 Repeater {
@@ -162,7 +164,7 @@ PanelWindow {
                     ColumnLayout {
                         id: card
                         implicitWidth: 40
-                        implicitHeight: content.height
+                        implicitHeight: applicationsContent.height
                         spacing: 8
 
                         required property PwNode modelData

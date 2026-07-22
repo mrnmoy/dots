@@ -1,18 +1,20 @@
 import QtQuick
 import Quickshell
-import "./modules/bar"
 import "./modules/notification"
 import "./modules/controlcenter"
 import "./modules/launcher"
 import "./modules/clipboard"
 import "./modules/help"
 import "./modules/osd"
+import "./modules/mediaplayer"
 import "./modules"
 
 ShellRoot {
     id: root
 
-    // BarWindow {}
+    Shortcuts {}
+    Gestures {}
+
     Bar {}
 
     LauncherWindow {}
@@ -21,6 +23,5 @@ ShellRoot {
     OsdWindow {}
     HelpWindow {}
     ClipboardWindow {}
-
-    Shortcuts {}
+    MediaPlayerWindow {}
 }

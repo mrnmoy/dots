@@ -37,12 +37,9 @@ PanelWindow {
     readonly property list<string> visibleEntries: {
         const q = query.trim();
 
-        // if (q.length !== 0) {
-        //     return apps.filter(entry => entry.name.startsWith(q) || entry.name.includes(q) || entry.genericName.includes(q) || entry.execString.includes(q));
-        // }
-        //
-        // if (favouriteApps.length > 0)
-        //     return favouriteApps.slice(0, Config.launcher.maxResults);
+        if (q.length > 0) {
+            return ClipboardService.entries.filter(entry => entry.split("\t")[1].toLowerCase().includes(q));
+        }
 
         return ClipboardService.entries;
     }
@@ -174,8 +171,8 @@ PanelWindow {
                 fill: background
 
                 topMargin: 16
-                leftMargin: 32
-                rightMargin: 32
+                leftMargin: 36
+                rightMargin: 36
                 bottomMargin: 8
             }
             spacing: 16

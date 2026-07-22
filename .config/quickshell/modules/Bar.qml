@@ -57,7 +57,6 @@ Item {
             layer.enabled: true
 
             preferredRendererType: Shape.CurveRenderer
-            // preferredRendererType: Shape.SoftwareRenderer
 
             ShapePath {
                 strokeColor: "transparent"
@@ -75,6 +74,39 @@ Item {
                     x: 20
                     y: mask.height - 20
                 }
+
+                // PathLine {
+                //     x: mask.width - 20 - 320
+                //     y: mask.height - 20
+                // }
+                // PathArc {
+                //     radiusX: 20
+                //     radiusY: 20
+                //     x: mask.width - 320
+                //     y: mask.height
+                // }
+                // PathLine {
+                //     x: mask.width - 320
+                //     y: mask.height - 20 + 100
+                // }
+                // PathArc {
+                //     direction: PathArc.Counterclockwise
+                //     radiusX: 20
+                //     radiusY: 20
+                //     x: mask.width - 320 - 20
+                //     y: mask.height - 20 + 100
+                // }
+                // PathLine {
+                //     x: mask.width - 20
+                //     y: mask.height + 100 - 20
+                // }
+                // PathArc {
+                //     radiusX: 20
+                //     radiusY: 20
+                //     x: mask.width
+                //     y: mask.height + 100
+                // }
+
                 PathLine {
                     x: mask.width - 20
                     y: mask.height - 20
@@ -96,7 +128,7 @@ Item {
             }
         }
 
-        Bar {
+        BarContent {
             anchors.top: background.top
             anchors.left: background.left
             anchors.right: background.right

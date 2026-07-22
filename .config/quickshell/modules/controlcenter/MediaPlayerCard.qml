@@ -16,17 +16,6 @@ Rectangle {
     radius: 20
     color: "#0fffffff"
 
-    // FrameAnimation {
-    //     running: root.modelData.isPlaying
-    //     onTriggered: root.modelData.positionChanged()
-    // }
-    Timer {
-        running: root.modelData.isPlaying
-        interval: root.modelData.length / 100
-        repeat: true
-        onTriggered: root.modelData.positionChanged()
-    }
-
     RowLayout {
         id: content
         anchors.fill: parent
@@ -90,8 +79,8 @@ Rectangle {
         ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.topMargin: 8
-            spacing: 0
+            // Layout.topMargin: 8
+            spacing: 5
 
             ColumnLayout {
                 spacing: 0
@@ -125,6 +114,7 @@ Rectangle {
             }
 
             HorizontalSlider {
+                id: progress
                 visible: root.modelData.positionSupported
                 implicitHeight: 12
                 Layout.fillWidth: true
@@ -146,18 +136,28 @@ Rectangle {
                     }
                 }
 
-                // Text {
-                //     text: root.modelData.position
-                //     anchors.verticalCenter: parent.verticalCenter
-                //     color: "#ffffff"
-                //     font.pixelSize: 10
-                //     font.weight: Font.Medium
-                //     x: 2
+                // RowLayout {
+                //     Layout.fillWidth: true
+                //
+                //     Text {
+                //         Layout.fillWidth: true
+                //         text: `${parseInt(progress.value / 60)}:${parseInt(progress.value % 60)}`
+                //         color: "#ffffff"
+                //         font.pixelSize: 10
+                //         font.weight: Font.Medium
+                //     }
+                //     Text {
+                //         Layout.alignment: Qt.AlignRight
+                //         text: `${parseInt(root.modelData.length / 60)}:${parseInt(root.modelData.length % 60)}`
+                //         color: "#ffffff"
+                //         font.pixelSize: 10
+                //         font.weight: Font.Medium
+                //     }
                 // }
             }
 
             RowLayout {
-                Layout.alignment: Qt.AlignHCenter
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
                 IconButton {
                     icon: root.modelData.shuffle ? "󰒝" : "󰒞"
