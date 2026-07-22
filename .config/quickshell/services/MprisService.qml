@@ -9,8 +9,12 @@ Singleton {
     id: root
 
     readonly property list<MprisPlayer> players: Mpris.players.values
-    readonly property MprisPlayer player: players[0]
+    // readonly property MprisPlayer player: players[0]
+    readonly property MprisPlayer player: players.find(plyr => plyr.isPlaying === true) || players[0]
+    readonly property int playerIndex: players.indexOf(player) || 0
+
     property bool lyricsEnabled: false
+    property bool lyricsAvailable: false
     property bool loadingLyrics: lyricsProc.running
     property ListModel lyrics: ListModel {}
     property int currentLyricsIndex: 0
@@ -48,14 +52,6 @@ Singleton {
 
     function fetchLyrics(): void {
         lyricsProc.running = true;
-        // console.log("fetchLyrics()");
-        // for (var i = 0; i < 10; i++) {
-        //     lyrics.append({
-        //         time: i * 20.0,
-        //         text: `line ${i}`
-        //     });
-        // }
-        // lyricsChanged();
     }
 
     function syncLyrics(): void {
@@ -78,23 +74,10 @@ Singleton {
         target: root.player
 
         function onPostTrackChanged() {
-            console.log("postTrackChanged()");
             if (root.lyricsEnabled) {
-                // if (root.lyrics.count === 0)
+                root.lyrics.clear();
                 root.fetchLyrics();
-
-                // root.syncLyrics();
             }
-        }
-
-        function onIsPlayingChanged() {
-            console.log("onPlaybackStateChanged()");
-        }
-        function onPrevious() {
-            console.log("onPrevious()");
-        }
-        function onNext() {
-            console.log("onNext()");
         }
     }
 
@@ -118,8 +101,10 @@ Singleton {
                 const data = JSON.parse(text);
                 if (!data.syncedLyrics) {
                     console.log("unalbe to fetch lyrics", lyricsProc.command);
+                    root.lyricsAvailable = false;
                     return;
                 }
+                root.lyricsAvailable = true;
                 const lines = data.syncedLyrics.split("\n");
 
                 root.lyrics.append({
