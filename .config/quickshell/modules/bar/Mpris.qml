@@ -39,16 +39,19 @@ Item {
                 visible: lyrics
                 implicitWidth: Math.min(parent.width - 16, visibleText.implicitWidth)
                 // implicitWidth: Math.min(parent.width - 16, lyrics.visible ? lyrics.implicitWidth : title.implicitWidth)
-                implicitHeight: parent.height
+                // implicitHeight: parent.height
+                implicitHeight: visibleText.height
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 readonly property string title: "  " + root.player.trackTitle || "Unknown"
-                readonly property string currentText: MprisService.lyricsEnabled ? MprisService.lyrics.get(MprisService.currentLyricsIndex).text : title
+                readonly property string lyric: MprisService.lyrics.get(MprisService.currentLyricsIndex).text || ""
+                readonly property string currentText: MprisService.lyricsEnabled && lyric !== "" ? lyric : title
 
                 Text {
                     id: visibleText
                     width: parent.width
-                    anchors.verticalCenter: parent.verticalCenter
+                    // anchors.verticalCenter: parent.verticalCenter
                     text: parent.currentText
                     color: "#ffffff"
                     font.pixelSize: 12

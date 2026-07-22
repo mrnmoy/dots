@@ -242,6 +242,7 @@ PanelWindow {
                 }
 
                 Item {
+                    id: lyricsContainer
                     Layout.fillHeight: true
                     Layout.fillWidth: true
 
@@ -283,7 +284,7 @@ PanelWindow {
                             required property int index
                             readonly property int currentIndex: lyricsList.currentIndex
 
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.horizontalCenter: lyricsContainer.horizontalCenter
                             text: modelData.text
                             color: "#ffffff"
                             // font.pixelSize: index === currentIndex ? 20 : (index === currentIndex + 1 || index === currentIndex - 1) ? 18 : (index === currentIndex + 2 || index === currentIndex - 2) ? 16 : (index === currentIndex + 3 || index === currentIndex - 3) ? 14 : 12
@@ -341,6 +342,77 @@ PanelWindow {
                                 }
                             ]
                         }
+
+                        // delegate: Item {
+                        //     id: lyricsItem
+                        //     implicitWidth: parent.width
+                        //     implicitHeight: lyricsText.height
+                        //     required property var modelData
+                        //     required property int index
+                        //     readonly property int currentIndex: lyricsList.currentIndex
+                        //
+                        //     Text {
+                        //         id: lyricsText
+                        //         // horizontalAlignment: parent.horizontalCenter
+                        //         anchors.horizontalCenter: parent.horizontalCenter
+                        //         text: modelData.text
+                        //         color: "#ffffff"
+                        //         // font.pixelSize: index === currentIndex ? 20 : (index === currentIndex + 1 || index === currentIndex - 1) ? 18 : (index === currentIndex + 2 || index === currentIndex - 2) ? 16 : (index === currentIndex + 3 || index === currentIndex - 3) ? 14 : 12
+                        //
+                        //         states: [
+                        //             State {
+                        //                 name: "primary"
+                        //                 when: lyricsItem.index === lyricsItem.currentIndex
+                        //
+                        //                 PropertyChanges {
+                        //                     target: lyricsText
+                        //                     font.pixelSize: 20
+                        //                     font.weight: Font.DemiBold
+                        //                 }
+                        //             },
+                        //             State {
+                        //                 name: "secondary"
+                        //                 when: lyricsItem.index === lyricsItem.currentIndex + 1 || lyricsItem.index === lyricsItem.currentIndex - 1
+                        //
+                        //                 PropertyChanges {
+                        //                     target: lyricsText
+                        //                     font.pixelSize: 18
+                        //                     opacity: 0.8
+                        //                 }
+                        //             },
+                        //             State {
+                        //                 name: "tertiary"
+                        //                 when: lyricsItem.index === lyricsItem.currentIndex + 2 || lyricsItem.index === lyricsItem.currentIndex - 2
+                        //
+                        //                 PropertyChanges {
+                        //                     target: lyricsText
+                        //                     font.pixelSize: 16
+                        //                     opacity: 0.6
+                        //                 }
+                        //             },
+                        //             State {
+                        //                 name: "others"
+                        //                 when: lyricsItem.index === lyricsItem.currentIndex + 3 || lyricsItem.index === lyricsItem.currentIndex - 3
+                        //
+                        //                 PropertyChanges {
+                        //                     target: lyricsText
+                        //                     font.pixelSize: 14
+                        //                     opacity: 0.4
+                        //                 }
+                        //             },
+                        //             State {
+                        //                 name: "etc"
+                        //                 when: lyricsItem.index >= lyricsItem.currentIndex + 4 || lyricsItem.index <= lyricsItem.currentIndex - 4
+                        //
+                        //                 PropertyChanges {
+                        //                     target: lyricsText
+                        //                     font.pixelSize: 12
+                        //                     opacity: 0
+                        //                 }
+                        //             }
+                        //         ]
+                        //     }
+                        // }
                     }
                 }
 

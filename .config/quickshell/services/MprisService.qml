@@ -27,12 +27,10 @@ Singleton {
     }
 
     onLyricsChanged: {
-        console.log("lyricsChanged()");
         syncLyrics();
     }
 
     onLyricsEnabledChanged: {
-        console.log("lyricsEnabledChanged()");
         if (lyricsEnabled) {
             if (lyrics.count === 0)
                 fetchLyrics();
@@ -42,30 +40,27 @@ Singleton {
     }
 
     onCurrentLyricsIndexChanged: {
-        console.log("timer running", lyricsTimer.running, "timer paused", lyricsTimer.paused);
-        console.log("currentLyricsIndexChanged()");
         if (lyrics.count > currentLyricsIndex + 1) {
             lyricsTimer.interval = lyrics.get(currentLyricsIndex + 1).time - player.position;
             lyricsTimer.reset();
+            // lyricsTimer.running = true;
             console.log("next line interval", lyricsTimer.interval);
         }
     }
 
     function fetchLyrics(): void {
-        console.log("fetchLyrics()");
-        // console.log("fetching lyrics: ", lyricsProc.command);
-        // lyricsProc.running = true;
-        for (var i = 0; i < 10; i++) {
-            lyrics.append({
-                time: i * 20.0,
-                text: `line ${i}`
-            });
-        }
-        lyricsChanged();
+        lyricsProc.running = true;
+        // console.log("fetchLyrics()");
+        // for (var i = 0; i < 10; i++) {
+        //     lyrics.append({
+        //         time: i * 20.0,
+        //         text: `line ${i}`
+        //     });
+        // }
+        // lyricsChanged();
     }
 
     function syncLyrics(): void {
-        console.log("syncLyrics()");
         for (var i = 0; i < lyrics.count; i++) {
             // console.log("time", lyrics.get(i).time, "position", player.position);
             if (lyrics.get(i).time > player.position) {
@@ -80,13 +75,12 @@ Singleton {
                 break;
             }
         }
-        console.log("current lyrics index", currentLyricsIndex);
     }
 
     Connections {
         target: root.player
 
-        function onPostTrackChanged() {
+        function onTrackChanged() {
             console.log("postTrackChanged()");
             if (root.lyricsEnabled) {
                 if (root.lyrics.count === 0)
@@ -102,7 +96,7 @@ Singleton {
         running: root.lyricsEnabled && root.player.isPlaying && root.lyrics.count > 0 && root.currentLyricsIndex !== root.lyrics.count - 1
         property real interval: 100
         onTriggered: {
-            console.log("elapsedTime", elapsedTime);
+            // console.log("elapsedTime", elapsedTime);
             if (elapsedTime >= interval) {
                 root.currentLyricsIndex = root.currentLyricsIndex + 1;
             }
@@ -110,10 +104,13 @@ Singleton {
     }
     // Timer {
     //     id: lyricsTimer
+    //     repeat: true
     //     running: false
-    //     repeat: false
     //     triggeredOnStart: false
-    //     onTriggered: root.currentLyricsIndex = root.currentLyricsIndex + 1
+    //     onTriggered: {
+    //         root.currentLyricsIndex = root.currentLyricsIndex + 1;
+    //         running = false;
+    //     }
     // }
 
     Process {
@@ -123,14 +120,16 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 const lines = JSON.parse(text).syncedLyrics.split("\n");
+                console.log(lines);
                 for (var i = 0; i < lines.length; i++) {
-                    const parts = lines[i].split(/\s+/);
+                    const parts = lines[i].split(/ (.*)/);
                     const times = parts[0].match(/\[(.*?)\]/)[1].split(":");
                     root.lyrics.append({
                         time: times[0] * 60 + times[1],
                         text: parts[1]
                     });
-                    console.log("time:", parts[0], "text:", parts[1]);
+                    root.lyricsChanged();
+                    // console.log("time:", times[0] * 60 + times[1], "text:", parts[1]);
                 }
             }
         }
