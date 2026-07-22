@@ -51,6 +51,12 @@ Item {
                     font.weight: Font.DemiBold
                     elide: Text.ElideRight
                     lineHeight: 0
+
+                    // Behavior on text {
+                    //     NumberAnimation {
+                    //         duration: 250
+                    //     }
+                    // }
                 }
             }
         }

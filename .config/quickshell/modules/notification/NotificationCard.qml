@@ -4,6 +4,7 @@ import QtQuick.Effects
 import Quickshell.Services.Notifications
 import "../../config"
 
+// TODO collapsable card height
 Rectangle {
     id: root
 

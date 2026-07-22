@@ -144,11 +144,12 @@ RowLayout {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: modelData.text
                     color: "#ffffff"
-                    Behavior on scale {
-                        NumberAnimation {
-                            duration: 250
-                        }
-                    }
+                    // font.family: "Inter"
+                    // Behavior on scale {
+                    //     NumberAnimation {
+                    //         duration: 250
+                    //     }
+                    // }
                     // font.pixelSize: index === currentIndex ? 20 : (index === currentIndex + 1 || index === currentIndex - 1) ? 18 : (index === currentIndex + 2 || index === currentIndex - 2) ? 16 : (index === currentIndex + 3 || index === currentIndex - 3) ? 14 : 12
 
                     states: [
