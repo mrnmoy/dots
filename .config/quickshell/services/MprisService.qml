@@ -9,10 +9,13 @@ Singleton {
     id: root
 
     readonly property list<MprisPlayer> players: Mpris.players.values
-    readonly property list<MprisPlayer> activePlayers: players.filter(plyr => plyr.isPlaying === true)
-    readonly property MprisPlayer player: players[lastPlayerIndex].isPlaying ? players[lastPlayerIndex] : players.find(plyr => plyr.isPlaying === true) || players[0]
+    readonly property list<MprisPlayer> activePlayers: players.filter(plyr => plyr.isPlaying === true) || players[0]
+    // readonly property MprisPlayer player: players[lastPlayerIndex].isPlaying ? players[lastPlayerIndex] : players.find(plyr => plyr.isPlaying === true) || players[0]
+    // readonly property MprisPlayer player: players[lastPlayerIndex].isPlaying ? players[lastPlayerIndex] : activePlayers[0] || players[0]
+    readonly property MprisPlayer player: players.find(plyr => plyr.isPlaying === true) || players[0]
     readonly property int playerIndex: players.indexOf(player)
     property int lastPlayerIndex: 0
+    onPlayersChanged: console.log("player", JSON.stringify(player))
 
     // TODO seperate lyrics control for each player
     property bool lyricsEnabled: false
@@ -29,6 +32,10 @@ Singleton {
         onTriggered: {
             for (const plyr of root.activePlayers) {
                 plyr.positionChanged();
+                if (plyr.position < 1 && root.lyricsEnabled && root.lyricsAvailable) {
+                    console.log("synch lyrics");
+                    root.syncLyrics();
+                }
             }
         }
     }

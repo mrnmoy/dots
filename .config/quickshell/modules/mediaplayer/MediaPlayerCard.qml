@@ -129,11 +129,11 @@ RowLayout {
                 highlightRangeMode: ListView.StrictlyEnforceRange
                 // preferredHighlightBegin: height / 2 - currentItem.height / 2
                 // preferredHighlightEnd: height / 2 + currentItem.height / 2
-                preferredHighlightBegin: height / 2 - 10
-                preferredHighlightEnd: height / 2 + 10
+                preferredHighlightBegin: height / 2 - 8
+                preferredHighlightEnd: height / 2 + 8
                 interactive: false
                 currentIndex: MprisService.currentLyricsIndex
-                spacing: 2
+                spacing: 4
 
                 delegate: Text {
                     id: lyricsItem
@@ -144,12 +144,7 @@ RowLayout {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: modelData.text
                     color: "#ffffff"
-                    // font.family: "Inter"
-                    // Behavior on scale {
-                    //     NumberAnimation {
-                    //         duration: 250
-                    //     }
-                    // }
+                    lineHeight: 0
                     // font.pixelSize: index === currentIndex ? 20 : (index === currentIndex + 1 || index === currentIndex - 1) ? 18 : (index === currentIndex + 2 || index === currentIndex - 2) ? 16 : (index === currentIndex + 3 || index === currentIndex - 3) ? 14 : 12
 
                     states: [
@@ -159,7 +154,7 @@ RowLayout {
 
                             PropertyChanges {
                                 target: lyricsItem
-                                font.pixelSize: 20
+                                font.pixelSize: 16
                                 font.weight: Font.DemiBold
                                 // scale: 1
                             }
@@ -170,7 +165,7 @@ RowLayout {
 
                             PropertyChanges {
                                 target: lyricsItem
-                                font.pixelSize: 18
+                                font.pixelSize: 14
                                 opacity: 0.8
                                 // scale: 0.8
                             }
@@ -181,7 +176,7 @@ RowLayout {
 
                             PropertyChanges {
                                 target: lyricsItem
-                                font.pixelSize: 16
+                                font.pixelSize: 12
                                 opacity: 0.6
                                 // scale: 0.6
                             }
@@ -192,7 +187,7 @@ RowLayout {
 
                             PropertyChanges {
                                 target: lyricsItem
-                                font.pixelSize: 14
+                                font.pixelSize: 10
                                 opacity: 0.4
                                 // scale: 0.4
                             }
@@ -203,7 +198,7 @@ RowLayout {
 
                             PropertyChanges {
                                 target: lyricsItem
-                                font.pixelSize: 12
+                                font.pixelSize: 8
                                 opacity: 0
                                 // scale: 0.2
                             }
