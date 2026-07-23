@@ -11,6 +11,10 @@ PanelWindow {
     id: root
 
     readonly property bool active: ShellState.clipboard
+    onActiveChanged: {
+        if (active)
+            ClipboardService.refresh();
+    }
 
     HyprlandFocusGrab {
         active: root.active

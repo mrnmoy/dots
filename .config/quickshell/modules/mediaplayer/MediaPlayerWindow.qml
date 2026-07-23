@@ -46,9 +46,6 @@ PanelWindow {
         focus: true
 
         Keys.onEscapePressed: root.close()
-        Keys.onReturnPressed: {
-            root.close();
-        }
 
         HoverHandler {
             id: hoverHandler
@@ -91,6 +88,7 @@ PanelWindow {
             id: mask
             anchors.fill: background
             antialiasing: true
+            smooth: true
 
             visible: false
             layer.enabled: true
