@@ -108,102 +108,107 @@ RowLayout {
                 onClicked: MprisService.lyricsEnabled = !MprisService.lyricsEnabled
             }
 
-            Text {
-                id: lyricsStatusText
-                anchors.centerIn: parent
-                visible: MprisService.lyricsEnabled && !MprisService.lyricsAvailable
-                text: MprisService.loadingLyrics ? "Loading lyrics..." : "Lyrics unavailable"
-                color: "#ffffff"
-                font.pixelSize: 12
-                font.weight: Font.DemiBold
-                elide: Text.ElideRight
-                lineHeight: 0
-            }
-
-            ListView {
-                id: lyricsList
-                visible: !lyricsStatusText.visible
-                model: MprisService.lyrics
+            Item {
                 anchors.fill: parent
-                clip: true
-                highlightRangeMode: ListView.StrictlyEnforceRange
-                // preferredHighlightBegin: height / 2 - currentItem.height / 2
-                // preferredHighlightEnd: height / 2 + currentItem.height / 2
-                preferredHighlightBegin: height / 2 - 8
-                preferredHighlightEnd: height / 2 + 8
-                interactive: false
-                currentIndex: MprisService.currentLyricsIndex
-                spacing: 4
+                visible: MprisService.lyricsEnabled
 
-                delegate: Text {
-                    id: lyricsItem
-                    required property var modelData
-                    required property int index
-                    readonly property int currentIndex: lyricsList.currentIndex
-
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: modelData.text
+                Text {
+                    id: lyricsStatusText
+                    anchors.centerIn: parent
+                    visible: !MprisService.lyricsAvailable
+                    text: MprisService.loadingLyrics ? "Loading lyrics..." : "Lyrics unavailable"
                     color: "#ffffff"
+                    font.pixelSize: 12
+                    font.weight: Font.DemiBold
+                    elide: Text.ElideRight
                     lineHeight: 0
-                    // font.pixelSize: index === currentIndex ? 20 : (index === currentIndex + 1 || index === currentIndex - 1) ? 18 : (index === currentIndex + 2 || index === currentIndex - 2) ? 16 : (index === currentIndex + 3 || index === currentIndex - 3) ? 14 : 12
+                }
 
-                    states: [
-                        State {
-                            name: "primary"
-                            when: lyricsItem.index === lyricsItem.currentIndex
+                ListView {
+                    id: lyricsList
+                    visible: !lyricsStatusText.visible
+                    model: MprisService.lyrics
+                    anchors.fill: parent
+                    clip: true
+                    highlightRangeMode: ListView.StrictlyEnforceRange
+                    // preferredHighlightBegin: height / 2 - currentItem.height / 2
+                    // preferredHighlightEnd: height / 2 + currentItem.height / 2
+                    preferredHighlightBegin: height / 2 - 8
+                    preferredHighlightEnd: height / 2 + 8
+                    interactive: false
+                    currentIndex: MprisService.currentLyricsIndex
+                    spacing: 4
 
-                            PropertyChanges {
-                                target: lyricsItem
-                                font.pixelSize: 16
-                                font.weight: Font.DemiBold
-                                // scale: 1
+                    delegate: Text {
+                        id: lyricsItem
+                        required property var modelData
+                        required property int index
+                        readonly property int currentIndex: lyricsList.currentIndex
+
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: modelData.text
+                        color: "#ffffff"
+                        lineHeight: 0
+                        // font.pixelSize: index === currentIndex ? 20 : (index === currentIndex + 1 || index === currentIndex - 1) ? 18 : (index === currentIndex + 2 || index === currentIndex - 2) ? 16 : (index === currentIndex + 3 || index === currentIndex - 3) ? 14 : 12
+
+                        states: [
+                            State {
+                                name: "primary"
+                                when: lyricsItem.index === lyricsItem.currentIndex
+
+                                PropertyChanges {
+                                    target: lyricsItem
+                                    font.pixelSize: 16
+                                    font.weight: Font.DemiBold
+                                    // scale: 1
+                                }
+                            },
+                            State {
+                                name: "secondary"
+                                when: lyricsItem.index === lyricsItem.currentIndex + 1 || lyricsItem.index === lyricsItem.currentIndex - 1
+
+                                PropertyChanges {
+                                    target: lyricsItem
+                                    font.pixelSize: 14
+                                    opacity: 0.8
+                                    // scale: 0.8
+                                }
+                            },
+                            State {
+                                name: "tertiary"
+                                when: lyricsItem.index === lyricsItem.currentIndex + 2 || lyricsItem.index === lyricsItem.currentIndex - 2
+
+                                PropertyChanges {
+                                    target: lyricsItem
+                                    font.pixelSize: 12
+                                    opacity: 0.6
+                                    // scale: 0.6
+                                }
+                            },
+                            State {
+                                name: "others"
+                                when: lyricsItem.index === lyricsItem.currentIndex + 3 || lyricsItem.index === lyricsItem.currentIndex - 3
+
+                                PropertyChanges {
+                                    target: lyricsItem
+                                    font.pixelSize: 10
+                                    opacity: 0.4
+                                    // scale: 0.4
+                                }
+                            },
+                            State {
+                                name: "etc"
+                                when: lyricsItem.index >= lyricsItem.currentIndex + 4 || lyricsItem.index <= lyricsItem.currentIndex - 4
+
+                                PropertyChanges {
+                                    target: lyricsItem
+                                    font.pixelSize: 8
+                                    opacity: 0
+                                    // scale: 0.2
+                                }
                             }
-                        },
-                        State {
-                            name: "secondary"
-                            when: lyricsItem.index === lyricsItem.currentIndex + 1 || lyricsItem.index === lyricsItem.currentIndex - 1
-
-                            PropertyChanges {
-                                target: lyricsItem
-                                font.pixelSize: 14
-                                opacity: 0.8
-                                // scale: 0.8
-                            }
-                        },
-                        State {
-                            name: "tertiary"
-                            when: lyricsItem.index === lyricsItem.currentIndex + 2 || lyricsItem.index === lyricsItem.currentIndex - 2
-
-                            PropertyChanges {
-                                target: lyricsItem
-                                font.pixelSize: 12
-                                opacity: 0.6
-                                // scale: 0.6
-                            }
-                        },
-                        State {
-                            name: "others"
-                            when: lyricsItem.index === lyricsItem.currentIndex + 3 || lyricsItem.index === lyricsItem.currentIndex - 3
-
-                            PropertyChanges {
-                                target: lyricsItem
-                                font.pixelSize: 10
-                                opacity: 0.4
-                                // scale: 0.4
-                            }
-                        },
-                        State {
-                            name: "etc"
-                            when: lyricsItem.index >= lyricsItem.currentIndex + 4 || lyricsItem.index <= lyricsItem.currentIndex - 4
-
-                            PropertyChanges {
-                                target: lyricsItem
-                                font.pixelSize: 8
-                                opacity: 0
-                                // scale: 0.2
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             }
         }
