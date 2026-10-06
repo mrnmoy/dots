@@ -82,10 +82,12 @@ PanelWindow {
         Keys.onEscapePressed: root.close()
 
         HoverHandler {
+            id: hoverHandler
+            enabled: root.visible
             onHoveredChanged: {
                 if (hovered) {
                     closeTimer.stop();
-                } else if (root.active) {
+                } else {
                     closeTimer.restart();
                 }
             }
