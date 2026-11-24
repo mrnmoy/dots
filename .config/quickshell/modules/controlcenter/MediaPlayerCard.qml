@@ -131,7 +131,9 @@ Rectangle {
 
                 value: root.modelData.source.position
                 onMoved: if (root.modelData.source.canSeek) {
-                    root.modelData.source.position = value;
+                    // root.modelData.source.position = value;
+                    root.modelData.source.seek(value);
+                    root.modelData.syncLyrics(); // TODO add connection to source.seek
                 }
 
                 Behavior on value {

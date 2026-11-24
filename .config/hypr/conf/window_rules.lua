@@ -86,3 +86,8 @@ hl.window_rule({
     match = { class = "org.freecad.FreeCAD" },
     float = true
 })
+hl.window_rule({
+    name = "qalculate-float",
+    match = { class = "qalculate-gtk" },
+    float = true
+})

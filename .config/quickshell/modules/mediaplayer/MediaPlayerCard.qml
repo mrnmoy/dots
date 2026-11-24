@@ -129,103 +129,222 @@ RowLayout {
                     lineHeight: 0
                 }
 
-                Loader {
-                    active: parent.visible && !lyricsStatusText.visible
+                ListView {
+                    id: lyricsList
+                    visible: parent.visible && !lyricsStatusText.visible
                     anchors.fill: parent
+                    model: root.modelData.lyrics
+                    currentIndex: root.modelData.currentLyricsIndex
+                    clip: true
+                    spacing: 4
+                    interactive: false
+                    snapMode: ListView.NoSnap
+                    highlightRangeMode: ListView.StrictlyEnforceRange
+                    preferredHighlightBegin: (lyricsContainer.height / 2) - (currentItem.height / 2)
+                    preferredHighlightEnd: (lyricsContainer.height / 2) + (currentItem.height / 2)
+                    // highlightMoveDuration: 1000
+                    // highlightMoveVelocity: 0.25
+                    // Behavior on preferredHighlightBegin {
+                    //     NumberAnimation {
+                    //         duration: 1000
+                    //     }
+                    // }
+                    // Behavior on preferredHighlightEnd {
+                    //     NumberAnimation {
+                    //         duration: 1000
+                    //     }
+                    // }
 
-                    sourceComponent: Component {
-                        ListView {
-                            id: lyricsList
-                            model: root.modelData.lyrics
-                            anchors.fill: parent
-                            clip: true
-                            highlightRangeMode: ListView.StrictlyEnforceRange
-                            preferredHighlightBegin: height / 2 - currentItem.height / 2
-                            preferredHighlightEnd: height / 2 + currentItem.height / 2
-                            interactive: false
-                            currentIndex: root.modelData.currentLyricsIndex
-                            spacing: 4
+                    delegate: Item {
+                        id: lyricsItem
+                        // anchors.left: parent.left
+                        // anchors.right: parent.right
+                        width: lyricsContainer.width
+                        height: lyricsText.height
 
-                            delegate: Item {
-                                id: lyricsItem
-                                // anchors.left: parent.left
-                                // anchors.right: parent.right
-                                width: lyricsContainer.width
-                                height: lyricsText.height
+                        required property var modelData
+                        required property int index
+                        // readonly property int currentIndex: lyricsList.currentIndex
+                        Text {
+                            id: lyricsText
+                            anchors.left: parent.left
+                            anchors.right: parent.right
 
-                                required property var modelData
-                                required property int index
-                                readonly property int currentIndex: lyricsList.currentIndex
-                                Text {
-                                    id: lyricsText
-                                    anchors.left: parent.left
-                                    anchors.right: parent.right
-
-                                    horizontalAlignment: Text.AlignHCenter
-                                    text: lyricsItem.modelData.text
-                                    color: "#ffffff"
-                                    // lineHeight: 0
-                                    wrapMode: Text.WordWrap
-                                    font.pixelSize: 16
-                                    font.weight: Font.DemiBold
-                                }
-
-                                states: [
-                                    State {
-                                        name: "primary"
-                                        when: lyricsItem.index === lyricsItem.currentIndex
-
-                                        PropertyChanges {
-                                            target: lyricsItem
-                                            scale: 1
-                                            opacity: 1
-                                        }
-                                    },
-                                    State {
-                                        name: "secondary"
-                                        when: lyricsItem.index === lyricsItem.currentIndex + 1 || lyricsItem.index === lyricsItem.currentIndex - 1
-
-                                        PropertyChanges {
-                                            target: lyricsItem
-                                            scale: 0.75
-                                            opacity: 0.75
-                                        }
-                                    },
-                                    State {
-                                        name: "tertiary"
-                                        when: lyricsItem.index === lyricsItem.currentIndex + 2 || lyricsItem.index === lyricsItem.currentIndex - 2
-
-                                        PropertyChanges {
-                                            target: lyricsItem
-                                            scale: 0.5
-                                            opacity: 0.5
-                                        }
-                                    },
-                                    State {
-                                        name: "others"
-                                        when: lyricsItem.index === lyricsItem.currentIndex + 3 || lyricsItem.index === lyricsItem.currentIndex - 3
-
-                                        PropertyChanges {
-                                            target: lyricsItem
-                                            scale: 0.25
-                                            opacity: 0.25
-                                        }
-                                    },
-                                    State {
-                                        name: "etc"
-                                        when: lyricsItem.index >= lyricsItem.currentIndex + 4 || lyricsItem.index <= lyricsItem.currentIndex - 4
-
-                                        PropertyChanges {
-                                            target: lyricsItem
-                                            scale: 0
-                                            opacity: 0
-                                        }
-                                    }
-                                ]
-                            }
+                            horizontalAlignment: Text.AlignHCenter
+                            text: lyricsItem.modelData.text
+                            color: "#ffffff"
+                            // lineHeight: 0
+                            wrapMode: Text.WordWrap
+                            font.pixelSize: 16
+                            font.weight: Font.DemiBold
                         }
+
+                        states: [
+                            State {
+                                name: "primary"
+                                when: lyricsItem.index == lyricsList.currentIndex
+
+                                PropertyChanges {
+                                    target: lyricsItem
+                                    scale: 1
+                                    opacity: 1
+                                }
+                            },
+                            State {
+                                name: "secondary"
+                                when: lyricsItem.index == lyricsList.currentIndex + 1 || lyricsItem.index == lyricsList.currentIndex - 1
+
+                                PropertyChanges {
+                                    target: lyricsItem
+                                    scale: 0.75
+                                    opacity: 0.75
+                                }
+                            },
+                            State {
+                                name: "tertiary"
+                                when: lyricsItem.index == lyricsList.currentIndex + 2 || lyricsItem.index == lyricsList.currentIndex - 2
+
+                                PropertyChanges {
+                                    target: lyricsItem
+                                    scale: 0.5
+                                    opacity: 0.5
+                                }
+                            },
+                            State {
+                                name: "others"
+                                when: lyricsItem.index == lyricsList.currentIndex + 3 || lyricsItem.index == lyricsList.currentIndex - 3
+
+                                PropertyChanges {
+                                    target: lyricsItem
+                                    scale: 0.25
+                                    opacity: 0.25
+                                }
+                            },
+                            State {
+                                name: "etc"
+                                when: lyricsItem.index >= lyricsList.currentIndex + 4 || lyricsItem.index <= lyricsList.currentIndex - 4
+
+                                PropertyChanges {
+                                    target: lyricsItem
+                                    scale: 0
+                                    opacity: 0
+                                }
+                            }
+                        ]
                     }
                 }
+
+                // Loader {
+                //     active: parent.visible && !lyricsStatusText.visible
+                //     anchors.fill: parent
+                //
+                //     sourceComponent: Component {
+                //         ListView {
+                //             id: lyricsList
+                //             model: root.modelData.lyrics
+                //             anchors.fill: parent
+                //             clip: true
+                //             // highlightRangeMode: ListView.StrictlyEnforceRange
+                //             preferredHighlightBegin: (height / 2) - (currentItem.height / 2)
+                //             preferredHighlightEnd: (height / 2) + (currentItem.height / 2)
+                //             snapMode: ListView.SnapOneItem
+                //             highlightRangeMode: ListView.ApplyRange
+                //             interactive: false
+                //             currentIndex: root.modelData.currentLyricsIndex
+                //             spacing: 4
+                //             // highlightMoveDuration: 1000
+                //             // highlightMoveVelocity: 0.25
+                //             // Behavior on preferredHighlightBegin {
+                //             //     NumberAnimation {
+                //             //         duration: 1000
+                //             //     }
+                //             // }
+                //             // Behavior on preferredHighlightEnd {
+                //             //     NumberAnimation {
+                //             //         duration: 1000
+                //             //     }
+                //             // }
+                //
+                //             delegate: Item {
+                //                 id: lyricsItem
+                //                 anchors.left: parent.left
+                //                 anchors.right: parent.right
+                //                 // width: lyricsContainer.width
+                //                 height: lyricsText.height
+                //
+                //                 required property var modelData
+                //                 required property int index
+                //                 // readonly property int currentIndex: lyricsList.currentIndex
+                //                 Text {
+                //                     id: lyricsText
+                //                     anchors.left: parent.left
+                //                     anchors.right: parent.right
+                //
+                //                     horizontalAlignment: Text.AlignHCenter
+                //                     text: lyricsItem.modelData.text
+                //                     color: "#ffffff"
+                //                     // lineHeight: 0
+                //                     wrapMode: Text.WordWrap
+                //                     font.pixelSize: 16
+                //                     font.weight: Font.DemiBold
+                //                 }
+                //
+                //                 states: [
+                //                     State {
+                //                         name: "primary"
+                //                         when: lyricsItem.index == lyricsList.currentIndex
+                //
+                //                         PropertyChanges {
+                //                             target: lyricsItem
+                //                             scale: 1
+                //                             opacity: 1
+                //                         }
+                //                     },
+                //                     State {
+                //                         name: "secondary"
+                //                         when: lyricsItem.index == lyricsList.currentIndex + 1 || lyricsItem.index == lyricsList.currentIndex - 1
+                //
+                //                         PropertyChanges {
+                //                             target: lyricsItem
+                //                             scale: 0.75
+                //                             opacity: 0.75
+                //                         }
+                //                     },
+                //                     State {
+                //                         name: "tertiary"
+                //                         when: lyricsItem.index == lyricsList.currentIndex + 2 || lyricsItem.index == lyricsList.currentIndex - 2
+                //
+                //                         PropertyChanges {
+                //                             target: lyricsItem
+                //                             scale: 0.5
+                //                             opacity: 0.5
+                //                         }
+                //                     },
+                //                     State {
+                //                         name: "others"
+                //                         when: lyricsItem.index == lyricsList.currentIndex + 3 || lyricsItem.index == lyricsList.currentIndex - 3
+                //
+                //                         PropertyChanges {
+                //                             target: lyricsItem
+                //                             scale: 0.25
+                //                             opacity: 0.25
+                //                         }
+                //                     },
+                //                     State {
+                //                         name: "etc"
+                //                         when: lyricsItem.index > lyricsList.currentIndex + 4 || lyricsItem.index < lyricsList.currentIndex - 4
+                //
+                //                         PropertyChanges {
+                //                             target: lyricsItem
+                //                             scale: 0
+                //                             opacity: 0
+                //                         }
+                //                     }
+                //                 ]
+                //             }
+                //         }
+                //     }
+                // }
             }
         }
 
@@ -244,14 +363,16 @@ RowLayout {
             value: root.modelData.source.position
             onMoved: {
                 root.modelData.source.seek(value);
+                root.modelData.syncLyrics(); // TODO add connection to source.seek
                 // root.modelData.source.position = value;
             }
+            // onValueChanged: console.log("progress", value)
 
-            Behavior on value {
-                NumberAnimation {
-                    duration: 1000
-                }
-            }
+            // Behavior on value {
+            //     NumberAnimation {
+            //         duration: 1000
+            //     }
+            // }
         }
         RowLayout {
             Text {

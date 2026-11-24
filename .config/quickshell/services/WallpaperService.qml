@@ -8,17 +8,36 @@ Singleton {
     id: root
 
     property list<string> wallpapers: []
+    property string wallpapersDir: "~/Documents"
+
+    FileView {
+        // path: "~/.cache/qs/colors.json"
+        path: "~/.config/themes/colors.json"
+    }
+
+    function set(path): void {
+        setWallProc.path = path;
+        setWallProc.running = true;
+    }
 
     Process {
         id: fetchWallpapersProc
         running: true
-        command: ["/bin/sh", "-c", `find ~/Documents -type f -print0 | xargs -0 file --mime-type | grep -F 'image/' | cut -d ':' -f 1`]
+        // command: ["/bin/sh", "-c", `find ${root.wallpapersDir} -type f -print0 | xargs -0 file --mime-type | grep -F 'image/' | cut -d ':' -f 1`]
+        command: ["/bin/sh", "-c", `find ${root.wallpapersDir} -maxdepth 1 -type f -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp"`]
 
         stdout: StdioCollector {
             onStreamFinished: {
                 root.wallpapers = text.trim().split("\n");
-                // console.log("wallpapers", JSON.stringify(root.wallpapers));
+                console.log("wallpapers", JSON.stringify(root.wallpapers));
             }
         }
+    }
+
+    Process {
+        id: setWallProc
+        property string path: ""
+        command: ["/bin/sh", "-c", `~/.config/quickshell/scripts/setwal.sh ${path}`]
+        // command: ["/bin/sh", "-c", `hyprctl hyprpaper wallpaper ", ${path}, cover"`]
     }
 }

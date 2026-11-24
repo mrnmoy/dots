@@ -12,8 +12,8 @@ QtObject {
     property ListModel lyrics: ListModel {}
     property int currentLyricsIndex: 0
     property bool loadingLyrics: lyricsProc.running
-    property string positionString: "00:00"
-    property string lengthString: formatTime(source.length)
+    readonly property string positionString: formatTime(source.position)
+    readonly property string lengthString: formatTime(source.length)
 
     onLyricsChanged: {
         syncLyrics();
@@ -40,7 +40,7 @@ QtObject {
     }
 
     function syncLyrics(): void {
-        for (var i = 0; i < lyrics.count; i++) {
+        for (let i = 0; i < lyrics.count; i++) {
             if (lyrics.get(i).time > source.position) {
                 if (i > 0) {
                     currentLyricsIndex = i - 1;
@@ -68,16 +68,19 @@ QtObject {
         target: root.source
 
         function onPostTrackChanged() {
+            root.source.position = 0; // TODO fix non-zero position after track ends
             if (root.lyricsEnabled) {
-                root.lyrics.clear();
-                root.fetchLyrics();
+                // if (root.source.loopState !== MprisLoopState.Track && root.lyrics.count !== 0) {
+                    root.lyrics.clear();
+                    root.fetchLyrics();
+                // }
             }
         }
     }
 
     property FrameAnimation lyricsTimer: FrameAnimation {
         running: root.lyricsEnabled && root.source.isPlaying && root.lyrics.count > 0 && root.currentLyricsIndex !== root.lyrics.count - 1
-        property real interval: 100
+        property real interval: 0.00
         onTriggered: {
             if (elapsedTime >= interval) {
                 root.currentLyricsIndex = root.currentLyricsIndex + 1;
@@ -90,20 +93,27 @@ QtObject {
 
         stdout: StdioCollector {
             onStreamFinished: {
+                // console.log(text);
+                if (text === "") {
+                    console.warn(root.source.identity, "Network error");
+                    root.lyricsAvailable = false;
+                    return;
+                }
                 const data = JSON.parse(text);
                 if (!data.syncedLyrics) {
                     console.warn(root.source.identity, "Unalbe to fetch lyrics", root.lyricsProc.command);
                     root.lyricsAvailable = false;
                     return;
                 }
-                root.lyricsAvailable = true;
+
                 const lines = data.syncedLyrics.split("\n");
 
+                root.lyrics.clear();
                 root.lyrics.append({
                     time: 0.00,
                     text: ""
                 });
-                for (var i = 0; i < lines.length; i++) {
+                for (let i = 0; i < lines.length; i++) {
                     const parts = lines[i].split(/ (.*)/);
                     const times = parts[0].match(/\[(.*?)\]/)[1].split(":");
                     root.lyrics.append({
@@ -111,6 +121,7 @@ QtObject {
                         text: parts[1]
                     });
                 }
+                root.lyricsAvailable = true;
                 root.lyricsChanged();
             }
         }
@@ -121,10 +132,7 @@ QtObject {
         repeat: true
         interval: 1000
         onTriggered: {
-            root.positionString = root.formatTime(root.source.position);
             root.source.positionChanged();
-            if (root.source.position < 1 && root.lyricsEnabled && root.lyricsAvailable)
-                root.syncLyrics();
         }
     }
 }

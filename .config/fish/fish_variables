@@ -1,3 +1,4 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export ZEPHYR_BASE:\x7e/zephyrproject/zephyr
 SETUVAR __fish_initialized:4300

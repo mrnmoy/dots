@@ -66,17 +66,17 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 --         configurationSection = { 'html', 'css', 'javascript' },
 --     },
 -- })
--- vim.lsp.config("cssls", {
---     cmd = { 'vscode-css-language-server', '--stdio' },
---     filetypes = { 'css', 'scss', 'less' },
---     root_markers = { 'package.json' },
---     init_options = { provideFormatter = true },
---     settings = {
---         css = { validate = true },
---         scss = { validate = true },
---         less = { validate = true },
---     },
--- })
+vim.lsp.config("cssls", {
+    cmd = { 'vscode-css-language-server', '--stdio' },
+    filetypes = { 'css', 'scss', 'less', 'astro' },
+    root_markers = { 'package.json' },
+    init_options = { provideFormatter = true },
+    settings = {
+        css = { validate = true },
+        scss = { validate = true },
+        less = { validate = true },
+    },
+})
 -- vim.lsp.config("ts_ls", {
 --     init_options = { hostInfo = 'neovim' },
 --     cmd = { 'typescript-language-server', '--stdio' },

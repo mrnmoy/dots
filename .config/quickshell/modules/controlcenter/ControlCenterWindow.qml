@@ -5,6 +5,7 @@ import QtQuick.Effects
 import QtQuick.Shapes
 import Quickshell
 import Quickshell.Hyprland
+import Quickshell.Networking
 import Quickshell.Services.UPower
 import "../../components"
 import "../../services"
@@ -81,10 +82,12 @@ PanelWindow {
         Keys.onEscapePressed: root.close()
 
         HoverHandler {
+            id: hoverHandler
+            enabled: root.visible
             onHoveredChanged: {
                 if (hovered) {
                     closeTimer.stop();
-                } else if (root.active) {
+                } else {
                     closeTimer.restart();
                 }
             }
@@ -261,6 +264,9 @@ PanelWindow {
                         QuickActionButton {
                             icon: ""
                             label: "Wifi"
+                            enabled: Networking.wifiHardwareEnabled
+                            active: Networking.wifiEnabled
+                            onClicked: Networking.wifiEnabled = !Networking.wifiEnabled
                         }
 
                         QuickActionButton {
@@ -382,6 +388,10 @@ PanelWindow {
                         }
                     }
 
+                    // Loader {
+                    //     active: root.active
+                    //     Layout.fillWidth: true
+                    //     sourceComponent: Component {
                     ColumnLayout {
                         id: notificationsContainer
                         Layout.fillWidth: true
@@ -405,23 +415,19 @@ PanelWindow {
                             }
                         }
 
-                        Loader {
-                            active: root.active
-                            Layout.fillWidth: true
-                            sourceComponent: Component {
-                                Repeater {
-                                    model: NotificationService.trackedNotificationsModel
-                                    // model: NotificationService.trackedNotifications
+                        Repeater {
+                            model: NotificationService.trackedNotificationsModel
+                            // model: NotificationService.trackedNotifications
 
-                                    NotificationCard {
-                                        onDismiss: {
-                                            NotificationService.trackedNotificationsModel.remove(index);
-                                            NotificationService.dismiss(modelData.id);
-                                        }
-                                    }
+                            NotificationCard {
+                                onDismiss: {
+                                    NotificationService.trackedNotificationsModel.remove(index);
+                                    NotificationService.dismiss(modelData.id);
                                 }
                             }
                         }
+                        // }
+                        //     }
                     }
                 }
             }

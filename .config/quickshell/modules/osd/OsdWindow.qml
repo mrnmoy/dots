@@ -10,9 +10,12 @@ import "../../config"
 
 PanelWindow {
     id: root
-    visible: ShellState.osd
+    visible: active
 
-    onVisibleChanged: if (visible)
+    readonly property bool active: ShellState.osd
+
+    onActiveChanged: if (active)
+        // onVisibleChanged: if (visible)
         inAnimation.start()
 
     anchors {
@@ -35,6 +38,7 @@ PanelWindow {
             top: parent.top
             right: parent.right
             bottom: parent.bottom
+            // fill: parent
         }
         width: 0
 
@@ -42,8 +46,8 @@ PanelWindow {
             id: inAnimation
             target: scope
             property: "width"
-            alwaysRunToEnd: true
             to: root.width
+            alwaysRunToEnd: true
             duration: Config.appearence.animationDuration || 500
             easing.type: Easing.InOutCirc
         }
@@ -51,30 +55,31 @@ PanelWindow {
             id: outAnimation
             target: scope
             property: "width"
-            alwaysRunToEnd: true
             to: 0
+            alwaysRunToEnd: true
             duration: Config.appearence.animationDuration || 500
             easing.type: Easing.InOutCirc
             onFinished: {
+                applicationsContent.visible = false;
                 ShellState.osd = false;
             }
         }
 
         HoverHandler {
             id: hoverHandler
-            enabled: root.visible
-            // onHoveredChanged: {
-            //     if (hovered)
-            //         closeTimer.stop();
-            //     else
-            //         closeTimer.restart();
-            // }
+            enabled: root.active
+            onHoveredChanged: {
+                if (hovered)
+                    closeTimer.stop();
+                else
+                    closeTimer.restart();
+            }
         }
 
         Timer {
             id: closeTimer
-            running: root.visible && !hoverHandler.hovered
-            interval: 2000
+            running: root.active && !hoverHandler.hovered
+            interval: 3000
             // onTriggered: if (!hoverHandler.hovered)
             //     outAnimation.start()
             onTriggered: outAnimation.start()
@@ -168,8 +173,9 @@ PanelWindow {
 
             anchors {
                 top: parent.top
-                bottom: parent.bottom
                 right: parent.right
+                bottom: parent.bottom
+                // fill: parent
 
                 topMargin: 36
                 leftMargin: 16
@@ -181,16 +187,14 @@ PanelWindow {
                 id: applicationsContent
                 implicitHeight: parent.height
                 // implicitWidth: active ? applicationsList.width : 0
-                visible: active
+                visible: false
                 spacing: 8
 
-                property bool active: false
-
-                Binding {
-                    target: applicationsContent
-                    property: "active"
-                    value: !ShellState.osd && false
-                }
+                // Binding {
+                //     target: applicationsContent
+                //     property: "active"
+                //     value: !ShellState.osd && false
+                // }
 
                 Repeater {
                     model: AudioService.applications
@@ -276,7 +280,7 @@ PanelWindow {
                     icon: "󰮫"
                     enabled: AudioService.applications.length > 0
                     Layout.fillWidth: true
-                    onClicked: applicationsContent.active = !applicationsContent.active
+                    onClicked: applicationsContent.visible = !applicationsContent.visible
                 }
             }
         }
