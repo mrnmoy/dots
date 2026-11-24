@@ -1,6 +1,7 @@
 import QtQuick
 // import qs.config as Config
 import "../config"
+import "../services"
 
 Item {
     id: root
@@ -9,6 +10,8 @@ Item {
     property int lineWidth: 5
     property real value: 0
     property string icon: ""
+    property color primaryColor: ThemeService.colors.primary
+    onPrimaryColorChanged: canvas.requestPaint()
 
     implicitWidth: size
     implicitHeight: size
@@ -57,7 +60,7 @@ Item {
 
             ctx.beginPath();
             ctx.arc(center, center, radius, startAngle, progressAngle);
-            ctx.strokeStyle = "#E3701B";
+            ctx.strokeStyle = root.primaryColor;
             ctx.stroke();
         }
 

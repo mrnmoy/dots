@@ -3,21 +3,37 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import "../config"
 
 Singleton {
     id: root
 
     property list<string> wallpapers: []
     property string wallpapersDir: "~/Documents"
+    property var colors: {
+        var clrs = colorsFile.text().trim().split("\n");
+        return {
+            // primary: clrs[13]
+            // primary: clrs[4]
+            primary: clrs[11]
+        };
+    }
 
     FileView {
-        // path: "~/.cache/qs/colors.json"
-        path: "~/.config/themes/colors.json"
+        id: colorsFile
+        path: ("/home/mrinmoy/.config/themes/colors")
+        blockLoading: true
+        watchChanges: true
+        onFileChanged: reload()
     }
 
     function set(path): void {
         setWallProc.path = path;
         setWallProc.running = true;
+        if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "wallpaper") {
+            refreshColorsProc.path = path;
+            refreshColorsProc.running = true;
+        }
     }
 
     Process {
@@ -29,7 +45,7 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 root.wallpapers = text.trim().split("\n");
-                console.log("wallpapers", JSON.stringify(root.wallpapers));
+                // console.log("wallpapers", JSON.stringify(root.wallpapers));
             }
         }
     }
@@ -37,7 +53,12 @@ Singleton {
     Process {
         id: setWallProc
         property string path: ""
-        command: ["/bin/sh", "-c", `~/.config/quickshell/scripts/setwal.sh ${path}`]
-        // command: ["/bin/sh", "-c", `hyprctl hyprpaper wallpaper ", ${path}, cover"`]
+        command: ["/bin/sh", "-c", `hyprctl hyprpaper wallpaper ", ${path}, cover"`]
+    }
+
+    Process {
+        id: refreshColorsProc
+        property string path: ""
+        command: ["/bin/sh", "-c", `cwal -i ${path} -o /home/mrinmoy/.config/themes`]
     }
 }

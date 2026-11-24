@@ -71,8 +71,15 @@ QtObject {
             root.source.position = 0; // TODO fix non-zero position after track ends
             if (root.lyricsEnabled) {
                 // if (root.source.loopState !== MprisLoopState.Track && root.lyrics.count !== 0) {
-                    root.lyrics.clear();
-                    root.fetchLyrics();
+                root.lyrics.clear();
+                root.fetchLyrics();
+
+                if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "media")
+                    root.mediaArtColorsProc.running = true;
+
+                if (Config.appearence.dynamicWallpaper)
+                    root.dynamicWallpaperProc.running = true;
+                console.log(root.source.trackArtUrl.split("file://")[1]);
                 // }
             }
         }
@@ -134,5 +141,15 @@ QtObject {
         onTriggered: {
             root.source.positionChanged();
         }
+    }
+
+    property Process mediaArtColorsProc: Process {
+        running: Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "media"
+        command: ["/bin/sh", "-c", `cwal -i ${root.source.trackArtUrl.split("file://")[1]} -o /home/mrinmoy/.config/themes`]
+    }
+
+    property Process dynamicWallpaperProc: Process {
+        running: Config.appearence.dynamicWallpaper
+        command: ["/bin/sh", "-c", `hyprctl hyprpaper wallpaper ", ${root.source.trackArtUrl.split("file://")[1]}, fill"`]
     }
 }

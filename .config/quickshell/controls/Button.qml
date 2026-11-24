@@ -1,5 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
+import "../config"
+import "../services"
 
 Rectangle {
     id: root
@@ -9,7 +11,7 @@ Rectangle {
     property string text: ""
     property string desc: ""
     property color textColor: "#ffffff"
-    property color hoveredTextColor: "#E3701B"
+    property color hoveredTextColor: ThemeService.colors.primary
     readonly property bool hovered: mouseArea.containsMouse
 
     signal clicked

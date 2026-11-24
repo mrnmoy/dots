@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Hyprland
-import "../../components"
+import "../../controls"
 import "../../services"
 
 PanelWindow {
@@ -112,7 +112,7 @@ PanelWindow {
                     RowLayout {
                         spacing: 8
 
-                        BarButton {
+                        IconButton {
                             icon: "󰒓"
                         }
                     }

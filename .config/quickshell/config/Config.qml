@@ -2,6 +2,7 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
+import "../services"
 
 Singleton {
     id: root
@@ -16,7 +17,12 @@ Singleton {
         })
 
     readonly property var appearence: ({
-            theme: "auto" | "light" | "dark",
+            theme: "auto" // "auto" | "light" | "dark"
+            ,
+            dynamicColors: "auto" // "auto" | "wallpaper" | "media" | "none"
+            ,
+            dynamicWallpaper: true,
+            // wallpaperBlur:, 20 // TODO
             animationDuration: 250,
             timeout: 0
         })

@@ -2,6 +2,7 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import Quickshell.Services.Mpris
 import "../types"
 
@@ -33,8 +34,9 @@ Singleton {
     property int lastPlayerIndex: 0
 
     onPlayerChanged: {
-        if (player !== undefined)
+        if (player !== undefined) {
             lastPlayerIndex = players.indexOf(player);
+        }
     }
     // onActivePlayersChanged: {
     //     console.log(activePlayers.length, activePlayers[activePlayers.length - 1].source.trackTitle);

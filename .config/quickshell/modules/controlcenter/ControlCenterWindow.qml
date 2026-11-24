@@ -7,7 +7,6 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Networking
 import Quickshell.Services.UPower
-import "../../components"
 import "../../services"
 import "../notification"
 import "../../controls"
@@ -278,6 +277,7 @@ PanelWindow {
                             icon: ""
                             label: "Power"
                             desc: UPower.profile === PowerProfile.PowerSaver ? "PowerSaver" : UPower.profile === PowerProfile.Balanced ? "Balanced" : "Performance"
+                            // label: UPower.profile === PowerProfile.PowerSaver ? "PowerSaver" : UPower.profile === PowerProfile.Balanced ? "Balanced" : "Performance"
                             onClicked: {
                                 if (UPower.hasPerformanceProfile) {
                                     switch (UPower.profile) {
@@ -409,7 +409,7 @@ PanelWindow {
                                 color: "#ffffff"
                             }
 
-                            BarButton {
+                            IconButton {
                                 icon: "󰎟"
                                 onClicked: NotificationService.dismissAll()
                             }
