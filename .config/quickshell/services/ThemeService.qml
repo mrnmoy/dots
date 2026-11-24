@@ -9,34 +9,20 @@ import "../config"
 Singleton {
     id: root
 
-    // readonly property var colors: {
-    //     if (Config.appearence.dynamicColors === "auto") {
-    //         return MprisService.player.colors || WallpaperService.colors;
-    //     } else if (Config.appearence.dynamicColors === "wallpaper") {
-    //         return WallpaperService.colors;
-    //     } else if (Config.appearence.dynamicColors === "media") {
-    //         return MprisService.player.colors;
-    //     } else {
-    //         return {
-    //             primary: "red"
-    //         };
-    //     }
-    // }
-
-    property var colors: undefined
+    property var colors: {
+        var clrs = colorsFile.text().trim().split("\n");
+        return {
+            // primary: clrs[13]
+            // primary: clrs[4]
+            primary: clrs[11]
+        };
+    }
 
     FileView {
         id: colorsFile
         path: ("/home/mrinmoy/.config/themes/colors")
-        // blockLoading: true
+        blockLoading: true
         watchChanges: true
         onFileChanged: reload()
-        onTextChanged: {
-            var clrs = text().trim().split("\n");
-            root.colors = {
-                // primary: clrs[13]
-                primary: clrs[4]
-            };
-        }
     }
 }

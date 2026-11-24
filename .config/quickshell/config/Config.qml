@@ -21,8 +21,8 @@ Singleton {
             ,
             dynamicColors: "auto" // "auto" | "wallpaper" | "media" | "none"
             ,
-            dynamicWallpaper: false // TODO
-            ,
+            dynamicWallpaper: true,
+            // wallpaperBlur:, 20 // TODO
             animationDuration: 250,
             timeout: 0
         })
