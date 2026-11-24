@@ -1,5 +1,6 @@
 [Bookmarks]
 [Recent]
+/home/mrinmoy/namaste-blender/
+/home/mrinmoy/namaste-blender/spoon-cam-new/
 /home/mrinmoy/Downloads/
 /home/mrinmoy/namaste-blender/animation/
-/home/mrinmoy/namaste-blender/

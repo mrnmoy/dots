@@ -202,7 +202,7 @@ Rectangle {
 
             IconButton {
                 id: expandBtn
-                visible: false
+                visible: summary.truncated || body.truncated
                 icon: root.expanded ? "󰞙" : "󰞖"
                 // enabled:
                 size: 16
@@ -273,7 +273,7 @@ Rectangle {
         // }
     }
     Component.onCompleted: {
-        if (summary.truncated || body.truncated)
-            expandBtn.visible = true;
+        // if (summary.truncated || body.truncated)
+        //     expandBtn.visible = true;
     }
 }

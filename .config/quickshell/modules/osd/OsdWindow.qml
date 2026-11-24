@@ -15,6 +15,7 @@ PanelWindow {
     readonly property bool active: ShellState.osd
 
     onActiveChanged: if (active)
+        // onVisibleChanged: if (visible)
         inAnimation.start()
 
     anchors {

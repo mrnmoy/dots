@@ -16,6 +16,7 @@ Singleton {
         })
 
     readonly property var appearence: ({
+            theme: "auto" | "light" | "dark",
             animationDuration: 250,
             timeout: 0
         })

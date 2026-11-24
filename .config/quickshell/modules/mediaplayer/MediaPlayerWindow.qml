@@ -14,7 +14,7 @@ Item {
 
     onVisibleChanged: if (visible) {
         inAnimation.start();
-        // playersList.currentIndex = MprisService.playerIndex;
+        playersList.currentIndex = MprisService.playerIndex;
     }
 
     PropertyAnimation {

@@ -11,7 +11,13 @@ Singleton {
     property string wallpapersDir: "~/Documents"
 
     FileView {
-        path: "~/.cache/qs/colors.json"
+        // path: "~/.cache/qs/colors.json"
+        path: "~/.config/themes/colors.json"
+    }
+
+    function set(path): void {
+        setWallProc.path = path;
+        setWallProc.running = true;
     }
 
     Process {
@@ -26,5 +32,12 @@ Singleton {
                 console.log("wallpapers", JSON.stringify(root.wallpapers));
             }
         }
+    }
+
+    Process {
+        id: setWallProc
+        property string path: ""
+        command: ["/bin/sh", "-c", `~/.config/quickshell/scripts/setwal.sh ${path}`]
+        // command: ["/bin/sh", "-c", `hyprctl hyprpaper wallpaper ", ${path}, cover"`]
     }
 }

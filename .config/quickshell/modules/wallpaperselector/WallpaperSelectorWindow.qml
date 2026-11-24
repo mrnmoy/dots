@@ -130,10 +130,17 @@ PanelWindow {
                                 fillMode: Image.PreserveAspectCrop
                                 cache: false
                             }
+                            TapHandler {
+                                onTapped: {
+                                    console.log(modelData);
+                                    WallpaperService.set(modelData);
+                                }
+                            }
                         }
                     }
                 }
             }
+
             // GridView {
             //     id: wallpaperList
             //     anchors.fill: parent

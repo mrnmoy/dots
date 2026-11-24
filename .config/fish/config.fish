@@ -1,64 +1,20 @@
-# source $HOME/.config/themes/colors.fish
-
-# if uwsm check may-start && uwsm select; then
-# 	uwsm start default
-# end
-# if uwsm check may-start; then
-# uwsm start hyprland.desktop && hyprlock
-# end
-
 set -g fish_greeting
-
-# set fish_color_autosuggestion $onPrimary
 
 export QT_STYLE_OVERRIDE=kvantum
 export QT_QPA_PLATFORM=wayland
-#export QT_QPA_PLATFORMTHEME=qt5ct
-
-# export XDG_CONFIG_HOME=/home/notscripter/.config
-
-#starship
 starship init fish | source
 
-# export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-# export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel ${_JAVA_OPTIONS}"
-
-# for nix-on-droid
-# export PATH="$PATH:/opt/nvim/"
-# for arch
-# export PATH=$PATH:/home/notscripter/.local/bin
-# for fedora
-# export PATH=$PATH:/home/notscripter/bin
-
-export DOTFILES=~/dotfiles
+export DOTFILES="$HOME/dotfiles"
 export ANDROID_HOME=/opt/android-sdk
 export ANDROID_SDK=/opt/android-sdk
 export ANDROID_NDK=/opt/android-ndk
 export ANDROID_NDK_HOME=/opt/android-ndk
 export NDK_HOME=/opt/android-ndk
-# export PATH=/opt/android-sdk/platform-tools/
-# export PATH=/opt/android-sdk/tools/bin/
-# export PATH=/opt/android-sdk/emulator/
-# set -x HOME /opt/android-sdk/platform-tools/
-# set -x HOME /opt/android-sdk/tools/bin/
-# set -x HOME /opt/android-sdk/emulator/
 
-# bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# set -U PATH "/opt/xtensa-lx106-elf-gcc/bin"
-# set -U PATH /etc/profile.d/xtensa-lx106-elf-gcc.sh
-
-# eval "$(fzf --zsh)"
-# eval "$(zoxide init zsh)"
-
-#ESP 
-# source /opt/esp-idf/export.fish
-
-# export MDK=$HOME/mdk
-# export ARCH=esp32
-# export PORT=/dev/ttyUSB0
+export ZEPHYR_BASE="$HOME/zephyrproject/zephyr"
 
 # Aliases
 alias ls='ls --color'
@@ -119,12 +75,5 @@ alias pde='processing cli'
 alias gen-colors='wal -i ~/dotfiles/hypr/background.jpg -n -s --out-dir ~/dotfiles/wal'
 
 alias setwal='~/dotfiles/scripts/setwal.sh'
-
-# alias cbuild="cmake -S . -B build && cmake --build build --target $basename $pwd"
-# set bn $basename $pwd
-# alias bname="bname is $bn"
-
-# bun completions
-# [ -s "/home/notscripter/.bun/_bun" ] && source "/home/notscripter/.bun/_bun"
 
 zoxide init fish | source
