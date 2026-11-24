@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import "../../components"
 import "../../services"
+import "../../controls"
 
 Item {
     id: root
@@ -22,7 +22,7 @@ Item {
         spacing: root.gapIn
 
         // AppMenuButton {}
-        BarButton {
+        IconButton {
             icon: "󰣇"
             onClicked: ShellState.launcher = !ShellState.launcher
         }
@@ -51,7 +51,7 @@ Item {
         Network {}
         SystemUsage {}
         Clock {}
-        BarButton {
+        IconButton {
             icon: ""
             onClicked: ShellState.controlcenter = true
         }

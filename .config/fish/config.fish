@@ -74,6 +74,7 @@ alias inor='arduino-cli compile && arduino-cli upload'
 alias pde='processing cli'
 alias gen-colors='wal -i ~/dotfiles/hypr/background.jpg -n -s --out-dir ~/dotfiles/wal'
 
-alias setwal='~/dotfiles/scripts/setwal.sh'
+# alias setwal='~/dotfiles/scripts/setwal.sh'
+alias setwal='~/dotfiles-stow/.config/quickshell/scripts/setwal.sh'
 
 zoxide init fish | source

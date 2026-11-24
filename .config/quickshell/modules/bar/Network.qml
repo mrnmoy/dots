@@ -6,7 +6,6 @@ import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import "../../services"
-import "../../components"
 import "../../controls"
 
 RowLayout {

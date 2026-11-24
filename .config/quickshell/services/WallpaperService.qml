@@ -9,10 +9,35 @@ Singleton {
 
     property list<string> wallpapers: []
     property string wallpapersDir: "~/Documents"
+    // property alias colors: colors
+    property var colors: JSON.parse(colorsFile.text())
+    onColorsChanged: console.log("colors changed")
 
     FileView {
+        id: colorsFile
         // path: "~/.cache/qs/colors.json"
-        path: "~/.config/themes/colors.json"
+        // path: "~/.config/themes/colors.json"
+        // path: Qt.resolveUrl("~/.config/themes/colors.json")
+        path: "/home/mrinmoy/.config/themes/colors.json"
+        blockLoading: true
+        watchChanges: true
+        onFileChanged: reload()
+        // adapter: JsonAdapter {}
+
+        // onDataChanged: root.colorsChanged()
+        // JsonAdapter {
+        //     id: colors
+        //     property string wallpaper: ""
+        //     property string primary: ""
+        //     property string secondary: ""
+        //     property string tertiary: ""
+        //     property string surface: ""
+        //     property string oPrimary: ""
+        //     property string oSecondary: ""
+        //     property string oTertiary: ""
+        //     property string oSurface: ""
+        //     property string highlight: ""
+        // }
     }
 
     function set(path): void {
@@ -29,7 +54,7 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 root.wallpapers = text.trim().split("\n");
-                console.log("wallpapers", JSON.stringify(root.wallpapers));
+                // console.log("wallpapers", JSON.stringify(root.wallpapers));
             }
         }
     }
@@ -37,7 +62,7 @@ Singleton {
     Process {
         id: setWallProc
         property string path: ""
-        command: ["/bin/sh", "-c", `~/.config/quickshell/scripts/setwal.sh ${path}`]
         // command: ["/bin/sh", "-c", `hyprctl hyprpaper wallpaper ", ${path}, cover"`]
+        command: ["/bin/sh", "-c", `~/.config/quickshell/scripts/setwal.sh ${path}`]
     }
 }

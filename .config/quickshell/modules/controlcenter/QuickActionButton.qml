@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import "../../config"
 
 Rectangle {
     id: root
@@ -31,7 +32,7 @@ Rectangle {
         Rectangle {
             Layout.fillHeight: true
             Layout.preferredWidth: height
-    color: root.active ? "#E3701B" : "#0fffffff"
+            color: root.active ? Config.appearence.colors.primary : "#0fffffff"
             radius: 20
 
             Text {

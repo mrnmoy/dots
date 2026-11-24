@@ -1,12 +1,13 @@
 import QtQuick
 import QtQuick.Controls
+import "../config"
 
 Slider {
     id: root
 
     property string icon: ""
     property color bgColor: "#0fffffff"
-    property color handleColor: "#ff9933"
+    property color handleColor: Config.appearence.colors.primary
 
     from: 0
     to: 100

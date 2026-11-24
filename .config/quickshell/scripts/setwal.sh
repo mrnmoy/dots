@@ -278,17 +278,33 @@ echo "" > $themes/starship.toml
 
 # Json colors
 echo "{
-    wallpaper: url('$wallpaper');
+    \"wallpaper\": \"$wallpaper\",
 
-    primary: $primary;
-    secondary: $secondary;
-    tertiary: $tertiary;
-    surface: $surface;
-    onPrimary: $onPrimary;
-    onSecondary: $onSecondary;
-    onTertiary: $onTertiary;
-    onSurface: $onSurface;
+    \"primary\": \"$primary\",
+    \"secondary\": \"$secondary\",
+    \"tertiary\": \"$tertiary\",
+    \"surface\": \"$surface\",
+    \"onPrimary\": \"$onPrimary\",
+    \"onSecondary\": \"$onSecondary\",
+    \"onTertiary\": \"$onTertiary\",
+    \"onSurface\": \"$onSurface\",
 
-    highlight: $highlight;
-    radius: $radius;
+    \"highlight\": \"$highlight\",
+    \"radius\": \"$radius\"
 }" > $themes/colors.json
+
+echo "{
+    \"wallpaper\": \"$wallpaper\",
+
+    \"primary\": \"$primary\",
+    \"secondary\": \"$secondary\",
+    \"tertiary\": \"$tertiary\",
+    \"surface\": \"$surface\",
+    \"onPrimary\": \"$onPrimary\",
+    \"onSecondary\": \"$onSecondary\",
+    \"onTertiary\": \"$onTertiary\",
+    \"onSurface\": \"$onSurface\",
+
+    \"highlight\": \"$highlight\",
+    \"radius\": \"$radius\"
+}"
