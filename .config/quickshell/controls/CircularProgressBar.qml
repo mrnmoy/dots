@@ -1,6 +1,7 @@
 import QtQuick
 // import qs.config as Config
 import "../config"
+import "../services"
 
 Item {
     id: root
@@ -9,7 +10,7 @@ Item {
     property int lineWidth: 5
     property real value: 0
     property string icon: ""
-    property color primaryColor: Config.appearence.colors.primary
+    property color primaryColor: ThemeService.colors.primary
     onPrimaryColorChanged: canvas.requestPaint()
 
     implicitWidth: size

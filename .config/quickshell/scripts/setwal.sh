@@ -19,9 +19,12 @@ hyprctl hyprpaper wallpaper ", $wallpaper, cover"
 readarray -t colors <<< $(palgen -i $wallpaper -c 16)
 colors=($(printf "%s\n" "${colors[@]}" | sort -r -t'#' -k2,2))
 
-primary=${colors[3]}
+# primary=${colors[3]}
+# secondary=${colors[4]}
+# tertiary=${colors[5]}
+primary=${colors[5]}
 secondary=${colors[4]}
-tertiary=${colors[5]}
+tertiary=${colors[3]}
 surface='#00000001'
 onPrimary=${colors[0]}
 onSecondary=${colors[0]}

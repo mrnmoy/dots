@@ -14,6 +14,7 @@ QtObject {
     property bool loadingLyrics: lyricsProc.running
     readonly property string positionString: formatTime(source.position)
     readonly property string lengthString: formatTime(source.length)
+    property var colors: undefined
 
     onLyricsChanged: {
         syncLyrics();
@@ -37,6 +38,9 @@ QtObject {
 
     function fetchLyrics(): void {
         lyricsProc.running = true;
+    }
+    function fetchColors(): void {
+        mediaArtColorsProc.running = true;
     }
 
     function syncLyrics(): void {
@@ -71,8 +75,10 @@ QtObject {
             root.source.position = 0; // TODO fix non-zero position after track ends
             if (root.lyricsEnabled) {
                 // if (root.source.loopState !== MprisLoopState.Track && root.lyrics.count !== 0) {
-                    root.lyrics.clear();
-                    root.fetchLyrics();
+                root.lyrics.clear();
+                root.fetchLyrics();
+                if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "media")
+                    root.fetchColors();
                 // }
             }
         }
@@ -134,5 +140,34 @@ QtObject {
         onTriggered: {
             root.source.positionChanged();
         }
+    }
+
+    property Process mediaArtColorsProc: Process {
+        running: Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "media"
+        // command: ["/bin/sh", "-c", `palgen -i ${root.source.trackArtUrl.split("file://")[1]} -c 24`]
+        command: ["/bin/sh", "-c", `cwal -i ${root.source.trackArtUrl.split("file://")[1]} -o /home/mrinmoy/.config/themes`]
+
+        // stdout: StdioCollector {
+        //     onStreamFinished: {
+        //         var clrs = text.trim().split("\n");
+        //
+        //         if (clrs.length < 5) {
+        //             console.warn("Failed getting colors from media art using palgen");
+        //             return;
+        //         }
+        //
+        //         root.colors = {
+        //             primary: clrs[5],
+        //             secondary: clrs[4],
+        //             tertiary: clrs[3],
+        //             // surface: '#00000001',
+        //             surface: '#01000000',
+        //             onPrimary: clrs[0],
+        //             onSecondary: clrs[0],
+        //             onTertiary: clrs[0],
+        //             onSurface: clrs[0]
+        //         };
+        //     }
+        // }
     }
 }
