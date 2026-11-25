@@ -105,7 +105,7 @@ PanelWindow {
                     readonly property bool active: index === root.selectedIndex || mouseArea.containsMouse
 
                     radius: 56
-                    color: active ? "#E3701B" : "#0fffffff"
+                    color: active ? ThemeService.colors.primary : "#0fffffff"
 
                     function exec(): void {
                         if (itemDelegate.modelData.cmd !== "") {

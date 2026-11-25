@@ -71,10 +71,10 @@ PanelWindow {
                         // model: WallpaperService.wallpapers
                         model: ListModel {
                             ListElement {
-                                modelData: "/home/mrinmoy/Documents/can-anyone-please-give-me-similar-wallpaper-for-laptop-and-v0-motbre9rx6ag1.webp"
+                                modelData: "/home/mrinmoy/Downloads/HB7F0ctbgAAd2tN.jpg"
                             }
                             ListElement {
-                                modelData: "/home/mrinmoy/Documents/can-anyone-please-give-me-similar-wallpaper-for-laptop-and-v0-motbre9rx6ag1.webp"
+                                modelData: "/home/mrinmoy/Documents/G2HR0bvWcAAnEqS.jpg"
                             }
                             ListElement {
                                 modelData: "/home/mrinmoy/Documents/HB6Qleya4AA-r9k.jpg"
@@ -112,11 +112,12 @@ PanelWindow {
                             id: card
                             required property string modelData
                             required property int index
-                            // Layout.fillWidth: true
-                            implicitWidth: 400
-                            implicitHeight: 225
+                            property bool vertical: image.sourceSize.width > image.sourceSize.height
+
+                            implicitWidth: vertical ? 225 : 400
+                            implicitHeight: vertical ? 400 : 225
                             scale: index === root.selectedIndex ? 1.05 : 1
-                            Layout.rowSpan: image.sourceSize.width < image.sourceSize.height ? 2 : 1
+                            Layout.rowSpan: vertical ? 2 : 1
                             Behavior on scale {
                                 NumberAnimation {
                                     duration: 180
@@ -132,7 +133,7 @@ PanelWindow {
                             TapHandler {
                                 onTapped: {
                                     console.log(modelData);
-                                    WallpaperService.set(modelData);
+                                    WallpaperService.setWallpaper(modelData);
                                 }
                             }
                         }

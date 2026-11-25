@@ -3,8 +3,6 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Quickshell.Services.Mpris
-import "../config"
 
 Singleton {
     id: root
@@ -18,11 +16,22 @@ Singleton {
         };
     }
 
+    function refreshColors(path): void {
+        refreshColorsProc.path = path;
+        refreshColorsProc.running = true;
+    }
+
     FileView {
         id: colorsFile
         path: ("/home/mrinmoy/.config/themes/colors")
         blockLoading: true
         watchChanges: true
         onFileChanged: reload()
+    }
+
+    Process {
+        id: refreshColorsProc
+        property string path: ""
+        command: ["/bin/sh", "-c", `cwal -i ${path} -o /home/mrinmoy/.config/themes`]
     }
 }

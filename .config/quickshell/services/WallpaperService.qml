@@ -10,29 +10,12 @@ Singleton {
 
     property list<string> wallpapers: []
     property string wallpapersDir: "~/Documents"
-    property var colors: {
-        var clrs = colorsFile.text().trim().split("\n");
-        return {
-            // primary: clrs[13]
-            // primary: clrs[4]
-            primary: clrs[11]
-        };
-    }
 
-    FileView {
-        id: colorsFile
-        path: ("/home/mrinmoy/.config/themes/colors")
-        blockLoading: true
-        watchChanges: true
-        onFileChanged: reload()
-    }
-
-    function set(path): void {
-        setWallProc.path = path;
-        setWallProc.running = true;
+    function setWallpaper(path, persist = true): void {
+        setWallpaperProc.path = path;
+        setWallpaperProc.running = true;
         if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "wallpaper") {
-            refreshColorsProc.path = path;
-            refreshColorsProc.running = true;
+            ThemeService.refreshColors(path);
         }
     }
 
@@ -51,14 +34,8 @@ Singleton {
     }
 
     Process {
-        id: setWallProc
+        id: setWallpaperProc
         property string path: ""
         command: ["/bin/sh", "-c", `hyprctl hyprpaper wallpaper ", ${path}, cover"`]
-    }
-
-    Process {
-        id: refreshColorsProc
-        property string path: ""
-        command: ["/bin/sh", "-c", `cwal -i ${path} -o /home/mrinmoy/.config/themes`]
     }
 }
