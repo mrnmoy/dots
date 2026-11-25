@@ -5,6 +5,7 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Mpris
 import "../types"
+import "../config"
 
 Singleton {
     id: root
@@ -36,6 +37,10 @@ Singleton {
     onPlayerChanged: {
         if (player !== undefined) {
             lastPlayerIndex = players.indexOf(player);
+            if (Config.appearence.dynamicWallpaper)
+                WallpaperService.setWallpaper(root.player.source.trackArtUrl.split("file://")[1], false);
+            if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "media")
+                ThemeService.refreshColors(root.player.source.trackArtUrl.split("file://")[1]);
         }
     }
     // onActivePlayersChanged: {

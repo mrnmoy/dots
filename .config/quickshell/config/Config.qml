@@ -7,16 +7,16 @@ import "../services"
 Singleton {
     id: root
 
-    readonly property var launcher: ({
+    property var launcher: ({
             favourites: ["Alacritty", "Zen Browser", "thunar",]
         })
 
-    readonly property var onScreenNotification: ({
+    property var onScreenNotification: ({
             maxLength: 3,
             timeout: 5000
         })
 
-    readonly property var appearence: ({
+    property var appearence: ({
             theme: "auto" // "auto" | "light" | "dark"
             ,
             dynamicColors: "auto" // "auto" | "wallpaper" | "media" | "none"
@@ -27,8 +27,10 @@ Singleton {
             timeout: 0
         })
 
-    readonly property var media: ({
+    property var media: ({
             lyricsEnabled: true,
             blacklist: ["Mozilla zen"]
         })
+
+    property string wallpapersDir: "Desktop"
 }

@@ -1,18 +1,18 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import QtQuick.Dialogs
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import "../../services"
+import "../../config"
 
 PanelWindow {
     id: root
     visible: ShellState.wallpaper
 
-    property list<string> wallpapers: WallpaperService.wallpapers
     property int selectedIndex: 0
-    // onWallpapersChanged: console.log("wallpapers", JSON.stringify(wallpapers))
 
     // anchors.top: true
     // anchors.right: true
@@ -37,13 +37,23 @@ PanelWindow {
         focus: true
 
         Keys.onEscapePressed: ShellState.wallpaper = false
+        // Keys.onUpPressed: if (root.selectedIndex > 2)
+        //     root.selectedIndex = root.selectedIndex - 3
+        // Keys.onDownPressed: if (root.selectedIndex < 4 - 3)
+        //     root.selectedIndex = root.selectedIndex + 3
+        // Keys.onLeftPressed: if (root.selectedIndex > 0)
+        //     root.selectedIndex = root.selectedIndex - 1
+        // Keys.onRightPressed: if (root.selectedIndex < 3)
+        //     root.selectedIndex = root.selectedIndex + 1
+        Keys.onReturnPressed: WallpaperService.setWallpaper(WallpaperService.wallpapers[root.selectedIndex])
+
         Keys.onUpPressed: if (root.selectedIndex > 2)
             root.selectedIndex = root.selectedIndex - 3
-        Keys.onDownPressed: if (root.selectedIndex < 4 - 3)
+        Keys.onDownPressed: if (root.selectedIndex < WallpaperService.wallpapers.length - 3)
             root.selectedIndex = root.selectedIndex + 3
         Keys.onLeftPressed: if (root.selectedIndex > 0)
             root.selectedIndex = root.selectedIndex - 1
-        Keys.onRightPressed: if (root.selectedIndex < 3)
+        Keys.onRightPressed: if (root.selectedIndex < WallpaperService.wallpapers.length)
             root.selectedIndex = root.selectedIndex + 1
 
         Rectangle {
@@ -54,90 +64,101 @@ PanelWindow {
             color: "#0fffffff"
             clip: true
 
-            ScrollView {
-                id: wallpaperList
+            ColumnLayout {
                 anchors.fill: parent
                 anchors.margins: 20
+                spacing: 20
 
-                GridLayout {
-                    anchors.fill: parent
-                    columns: 3
-                    rowSpacing: 20
-                    columnSpacing: 20
-                    uniformCellWidths: true
-                    uniformCellHeights: true
+                RowLayout {
+                    Layout.fillWidth: true
 
-                    Repeater {
-                        // model: WallpaperService.wallpapers
-                        model: ListModel {
-                            ListElement {
-                                modelData: "/home/mrinmoy/Downloads/HB7F0ctbgAAd2tN.jpg"
-                            }
-                            ListElement {
-                                modelData: "/home/mrinmoy/Documents/G2HR0bvWcAAnEqS.jpg"
-                            }
-                            ListElement {
-                                modelData: "/home/mrinmoy/Documents/HB6Qleya4AA-r9k.jpg"
-                            }
-                            ListElement {
-                                modelData: "/home/mrinmoy/Documents/can-anyone-please-give-me-similar-wallpaper-for-laptop-and-v0-motbre9rx6ag1.webp"
-                            }
-                            ListElement {
-                                modelData: "/home/mrinmoy/Documents/can-anyone-please-give-me-similar-wallpaper-for-laptop-and-v0-motbre9rx6ag1.webp"
-                            }
-                            ListElement {
-                                modelData: "/home/mrinmoy/Documents/can-anyone-please-give-me-similar-wallpaper-for-laptop-and-v0-motbre9rx6ag1.webp"
-                            }
-                            ListElement {
-                                modelData: "/home/mrinmoy/Documents/can-anyone-please-give-me-similar-wallpaper-for-laptop-and-v0-motbre9rx6ag1.webp"
-                            }
-                            ListElement {
-                                modelData: "/home/mrinmoy/Documents/can-anyone-please-give-me-similar-wallpaper-for-laptop-and-v0-motbre9rx6ag1.webp"
-                            }
-                            ListElement {
-                                modelData: "/home/mrinmoy/Documents/can-anyone-please-give-me-similar-wallpaper-for-laptop-and-v0-motbre9rx6ag1.webp"
-                            }
-                            ListElement {
-                                modelData: "/home/mrinmoy/Documents/can-anyone-please-give-me-similar-wallpaper-for-laptop-and-v0-motbre9rx6ag1.webp"
-                            }
-                            ListElement {
-                                modelData: "/home/mrinmoy/Documents/can-anyone-please-give-me-similar-wallpaper-for-laptop-and-v0-motbre9rx6ag1.webp"
-                            }
-                            ListElement {
-                                modelData: "/home/mrinmoy/Documents/can-anyone-please-give-me-similar-wallpaper-for-laptop-and-v0-motbre9rx6ag1.webp"
-                            }
-                        }
+                    Text {
+                        text: "Wallpapers"
+                        font.pixelSize: 32
+                        font.bold: true
+                        color: "white"
+                    }
 
-                        delegate: Item {
-                            id: card
-                            required property string modelData
-                            required property int index
-                            property bool vertical: image.sourceSize.width > image.sourceSize.height
+                    Item {
+                        Layout.fillWidth: true
+                    }
 
-                            implicitWidth: vertical ? 225 : 400
-                            implicitHeight: vertical ? 400 : 225
-                            scale: index === root.selectedIndex ? 1.05 : 1
-                            Layout.rowSpan: vertical ? 2 : 1
-                            Behavior on scale {
-                                NumberAnimation {
-                                    duration: 180
+                    // ComboBox {
+                    //     model: ["Desktop", "Documents", "Downloads"]
+                    //     editable: true
+                    // }
+                    // Button {
+                    //     text: "Folder: " + Config.wallpapersDir
+                    //     onClicked: folderDialog.open()
+                    // }
+
+                    // FolderDialog {
+                    //     id: folderDialog
+                    //     // currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+                    // }
+                }
+
+                ScrollView {
+                    id: wallpaperList
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+
+                    Text {
+                        visible: WallpaperService.loading
+                        text: "Loading..."
+                        color: "white"
+                        anchors.centerIn: parent
+                    }
+
+                    // Loader {
+                    //     id: wallpapersListLoader
+                    //     active: !WallpaperService.loading
+
+                    GridLayout {
+                        columns: 3
+                        rowSpacing: 20
+                        columnSpacing: 20
+                        uniformCellWidths: true
+                        uniformCellHeights: true
+                        anchors.fill: parent
+
+                        Repeater {
+                            model: WallpaperService.wallpapers
+
+                            delegate: Item {
+                                id: card
+                                required property string modelData
+                                // required property string model
+                                required property int index
+                                property bool vertical: image.sourceSize.width > image.sourceSize.height
+
+                                implicitWidth: 400
+                                // implicitHeight: vertical ? 400 : 225
+                                implicitHeight: 225
+                                scale: index === root.selectedIndex ? 1.05 : 1
+                                // Layout.rowSpan: vertical ? 2 : 1
+                                Layout.rowSpan: 1
+                                Behavior on scale {
+                                    NumberAnimation {
+                                        duration: 180
+                                    }
                                 }
-                            }
-                            Image {
-                                id: image
-                                anchors.fill: parent
-                                source: modelData
-                                fillMode: Image.PreserveAspectCrop
-                                cache: false
-                            }
-                            TapHandler {
-                                onTapped: {
-                                    console.log(modelData);
-                                    WallpaperService.setWallpaper(modelData);
+                                Image {
+                                    id: image
+                                    anchors.fill: parent
+                                    source: modelData
+                                    fillMode: Image.PreserveAspectCrop
+                                    cache: false
+                                }
+                                TapHandler {
+                                    onTapped: {
+                                        WallpaperService.setWallpaper(modelData);
+                                    }
                                 }
                             }
                         }
                     }
+                    // }
                 }
             }
 

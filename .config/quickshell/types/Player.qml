@@ -68,17 +68,21 @@ QtObject {
     property Connections trackChangeConn: Connections {
         target: root.source
 
+        function onTrackArtUrlChanged() {
+            if (root.source.trackArtUrl !== "") {
+                if (Config.appearence.dynamicWallpaper)
+                    WallpaperService.setWallpaper(root.source.trackArtUrl.split("file://")[1]);
+                if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "media")
+                    ThemeService.refreshColors(root.source.trackArtUrl.split("file://")[1], true);
+            }
+        }
+
         function onPostTrackChanged() {
-            root.source.position = 0; // TODO fix non-zero position after track ends
+            root.source.position = 0; // TODO: fix non-zero position after track ends
             if (root.lyricsEnabled) {
                 // if (root.source.loopState !== MprisLoopState.Track && root.lyrics.count !== 0) {
                 root.lyrics.clear();
                 root.fetchLyrics();
-
-                if (Config.appearence.dynamicWallpaper)
-                    WallpaperService.setWallpaper(root.source.trackArtUrl.split("file://")[1], false);
-                if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "media")
-                    ThemeService.refreshColors(root.source.trackArtUrl.split("file://")[1]);
                 // }
             }
         }
