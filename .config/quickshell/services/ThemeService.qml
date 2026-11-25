@@ -4,6 +4,7 @@ import QtCore
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import "../config"
 
 Singleton {
     id: root
@@ -19,22 +20,10 @@ Singleton {
         };
     }
 
-    function refreshColors(path, temp = false): void {
-        var ogWal;
-        if (temp) {
-            hyprlandColorsFile.reload();
-            ogWal = hyprlandColorsFile.text().split("\n")[0].split("=")[1].trim();
-            console.log(ogWal);
-        }
-
-        refreshColorsProc.path = path;
-        refreshColorsProc.running = true;
-    }
-
-    FileView {
-        id: hyprlandColorsFile
-        path: `${root.homeDir}/.config/themes/colors-hyprland.conf`
-        blockLoading: true
+    function refreshColors(path, tmp = false): void {
+        // refreshColorsProc.path = path;
+        // refreshColorsProc.running = true;
+        Quickshell.execDetached(["/bin/sh", "-c", `${Quickshell.shellDir}/scripts/refresh-colors.sh ${path} ${tmp && "tmp"}`]);
     }
 
     FileView {
@@ -48,6 +37,7 @@ Singleton {
     Process {
         id: refreshColorsProc
         property string path: ""
-        command: ["/bin/sh", "-c", `cwal -i ${path} -o ${root.homeDir}/.config/themes`]
+        // command: ["/bin/sh", "-c", `cwal -i ${path} -o ${root.homeDir}/.config/themes`]
+        command: ["/bin/sh", "-c", `${Quickshell.shellDir}/scripts/refresh-colors.sh ${path} ${Config.appearence.dynamicWallpaper && "tmp"}`]
     }
 }

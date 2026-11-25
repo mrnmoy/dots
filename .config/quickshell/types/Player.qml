@@ -72,7 +72,7 @@ QtObject {
             if (root.source.trackArtUrl !== "") {
                 if (Config.appearence.dynamicWallpaper)
                     WallpaperService.setWallpaper(root.source.trackArtUrl.split("file://")[1]);
-                if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "media")
+                else if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "media")
                     ThemeService.refreshColors(root.source.trackArtUrl.split("file://")[1], true);
             }
         }

@@ -41,8 +41,10 @@ Singleton {
     // }
 
     function setWallpaper(path): void {
-        setWallpaperProc.path = path;
-        setWallpaperProc.running = true;
+        // setWallpaperProc.path = path;
+        // setWallpaperProc.running = true;
+        Quickshell.execDetached(["/bin/sh", "-c", `hyprctl hyprpaper wallpaper ", ${path}, cover"`]);
+
         if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "wallpaper") {
             ThemeService.refreshColors(path);
         }
