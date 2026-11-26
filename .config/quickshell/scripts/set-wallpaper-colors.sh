@@ -40,13 +40,13 @@ while true; do
 done
 
 genColors() {
-    cwal -i $1 -o "$HOME/.config/themes"
+    cwal -i $image -o "$HOME/.config/themes" -q
 }
 
 if [[ $wallpaper ]]; then
-    hyprctl hyprpaper wallpaper ", $1, cover"
+    hyprctl hyprpaper wallpaper ", $image, cover"
 
-    if ! [[ $colors ]]; then
+    if [[ ! $colors ]]; then
         sed -i 's/$wallpaper = .*/$wallpaper = '$image'/' $THEME_CONF 
     fi
 fi
@@ -54,9 +54,9 @@ fi
 if [[ $colors ]]; then 
     if [[ $temporary ]]; then
         og_wal="$(sed -n '1p' $THEME_CONF | cut -d "=" -f2 | sed 's/^\s*\|\s*$//g')"
-        genColors()
+        genColors
         sed -i 's/$wallpaper = .*/$wallpaper = '$og_wal'/' $THEME_CONF 
     else
-        genColors()
+        genColors
     fi
 fi

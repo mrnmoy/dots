@@ -70,10 +70,11 @@ QtObject {
 
         function onTrackArtUrlChanged() {
             if (root.source.trackArtUrl !== "") {
-                if (Config.appearence.dynamicWallpaper)
-                    WallpaperService.setWallpaper(root.source.trackArtUrl.split("file://")[1], true);
-                else if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "media")
-                    ThemeService.refreshColors(root.source.trackArtUrl.split("file://")[1], true);
+                WallpaperService.set(root.source.trackArtUrl.split("file://")[1], Config.appearence.dynamicWallpaper, true);
+                // if (Config.appearence.dynamicWallpaper)
+                //     WallpaperService.setWallpaper(root.source.trackArtUrl.split("file://")[1], true);
+                // else if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "media")
+                //     ThemeService.refreshColors(root.source.trackArtUrl.split("file://")[1], true);
             }
         }
 

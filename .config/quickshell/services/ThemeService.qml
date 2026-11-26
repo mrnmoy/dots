@@ -23,6 +23,7 @@ Singleton {
     function refreshColors(path, tmp = false): void {
         // refreshColorsProc.path = path;
         // refreshColorsProc.running = true;
+
         Quickshell.execDetached(["/bin/sh", "-c", `${Quickshell.shellDir}/scripts/refresh-colors.sh ${path} ${tmp && "tmp"}`]);
     }
 

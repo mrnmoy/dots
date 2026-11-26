@@ -45,7 +45,7 @@ PanelWindow {
         //     root.selectedIndex = root.selectedIndex - 1
         // Keys.onRightPressed: if (root.selectedIndex < 3)
         //     root.selectedIndex = root.selectedIndex + 1
-        Keys.onReturnPressed: WallpaperService.setWallpaper(WallpaperService.wallpapers[root.selectedIndex])
+        Keys.onReturnPressed: WallpaperService.set(WallpaperService.wallpapers[root.selectedIndex])
 
         Keys.onUpPressed: if (root.selectedIndex > 2)
             root.selectedIndex = root.selectedIndex - 3
@@ -152,7 +152,7 @@ PanelWindow {
                                 }
                                 TapHandler {
                                     onTapped: {
-                                        WallpaperService.setWallpaper(modelData);
+                                        WallpaperService.set(modelData);
                                     }
                                 }
                             }

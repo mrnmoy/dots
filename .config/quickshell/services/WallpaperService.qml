@@ -40,14 +40,17 @@ Singleton {
     //     }
     // }
 
-    function setWallpaper(path): void {
+    function set(path, wallpaper = true, tmp = false): void {
         // setWallpaperProc.path = path;
         // setWallpaperProc.running = true;
-        Quickshell.execDetached(["/bin/sh", "-c", `hyprctl hyprpaper wallpaper ", ${path}, cover"`]);
 
-        if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "wallpaper") {
-            ThemeService.refreshColors(path);
-        }
+        // Quickshell.execDetached(["/bin/sh", "-c", `hyprctl hyprpaper wallpaper ", ${path}, cover"`]);
+        //
+        // if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "wallpaper") {
+        //     ThemeService.refreshColors(path);
+        // }
+
+        Quickshell.execDetached(["/bin/sh", "-c", `${Quickshell.shellDir}/scripts/set-wallpaper-colors.sh -i ${path} -m dark${Config.appearence.dynamicColors !== "none" && " -c"}${wallpaper && "-w"}${tmp && "-t"}`]);
     }
 
     // Process {
