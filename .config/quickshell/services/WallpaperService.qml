@@ -3,7 +3,6 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Qt.labs.folderlistmodel
 import "../config"
 
 Singleton {
@@ -17,41 +16,9 @@ Singleton {
         thumbGenProc.running = true;
     }
 
-    // FolderListModel {
-    //     id: folderModel
-    //     // folder: "/home/mrinmoy/Desktop/"
-    //     // folder: Qt.resolvedUrl(`${Directories.pictures}`)
-    //     folder: Qt.resolvedUrl("/home/mrinmoy/Desktop")
-    //     // nameFilters: ["*.jpg", "*.jpeg", "*.webp"]
-    //     nameFilters: root.extensions.map(ext => `*.${ext}`)
-    //     showDotAndDotDot: false
-    //     // rootFolder: true
-    //     showDirs: true
-    //     showFiles: true
-    //     sortField: FolderListModel.Time
-    //     caseSensitive: true
-    //     onCountChanged: {
-    //         console.log("wallpapers count changed", count);
-    //         root.wallpapers = [];
-    //         for (let i = 0; i < folderModel.count; i++) {
-    //             const path = folderModel.get(i, "filePath");
-    //             console.log("path: ", path);
-    //         }
-    //     }
+    // function set(path, wallpaper = true, tmp = false): void {
+    //     Quickshell.execDetached(["/bin/sh", "-c", `${Quickshell.shellDir}/scripts/set-wallpaper-colors.sh -i ${path} -m dark${Config.appearence.dynamicColors !== "none" && " -c"}${wallpaper && "-w"}${tmp && "-t"}`]);
     // }
-
-    function set(path, wallpaper = true, tmp = false): void {
-        // setWallpaperProc.path = path;
-        // setWallpaperProc.running = true;
-
-        // Quickshell.execDetached(["/bin/sh", "-c", `hyprctl hyprpaper wallpaper ", ${path}, cover"`]);
-        //
-        // if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "wallpaper") {
-        //     ThemeService.refreshColors(path);
-        // }
-
-        Quickshell.execDetached(["/bin/sh", "-c", `${Quickshell.shellDir}/scripts/set-wallpaper-colors.sh -i ${path} -m dark${Config.appearence.dynamicColors !== "none" && " -c"}${wallpaper && "-w"}${tmp && "-t"}`]);
-    }
 
     // Process {
     //     id: fetchWallpapersProc
@@ -66,13 +33,6 @@ Singleton {
     //         }
     //     }
     // }
-
-    Process {
-        id: setWallpaperProc
-        property string path: ""
-        command: ["/bin/sh", "-c", `hyprctl hyprpaper wallpaper ", ${path}, cover"`]
-        // command: ["/bin/sh", "-c", `${Quickshell.shellDir}/scripts/set-wallpaper.sh ${path} ${Config.appearence.dynamicWallpaper && "tmp"}`]
-    }
 
     Process {
         id: thumbGenProc

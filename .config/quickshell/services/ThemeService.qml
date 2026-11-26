@@ -6,39 +6,49 @@ import Quickshell
 import Quickshell.Io
 import "../config"
 
+// import "file:///home/mrinmoy/.config/themes"
+
 Singleton {
     id: root
 
-    readonly property string homeDir: StandardPaths.standardLocations(StandardPaths.HomeLocation).toString().split("://")[1]
+    // readonly property string homeDir: StandardPaths.standardLocations(StandardPaths.HomeLocation).toString().split("://")[1]
 
-    property var colors: {
-        var clrs = colorsFile.text().trim().split("\n");
-        return {
-            // primary: clrs[13]
-            // primary: clrs[4]
-            primary: clrs[11]
-        };
-    }
-
-    function refreshColors(path, tmp = false): void {
-        // refreshColorsProc.path = path;
-        // refreshColorsProc.running = true;
-
-        Quickshell.execDetached(["/bin/sh", "-c", `${Quickshell.shellDir}/scripts/refresh-colors.sh ${path} ${tmp && "tmp"}`]);
-    }
+    // readonly property var colors: Colors
+    // readonly property alias colors: qmlcolors.item
+    readonly property var colors: JSON.parse(colorsFile.data()).colors
 
     FileView {
         id: colorsFile
-        path: `${root.homeDir}/.config/themes/colors`
-        blockLoading: true
+        path: `${Quickshell.env("HOME")}/.config/themes/colors.json`
         watchChanges: true
         onFileChanged: reload()
+        onDataChanged: console.log("jsoncolors: ", data())
     }
 
-    Process {
-        id: refreshColorsProc
-        property string path: ""
-        // command: ["/bin/sh", "-c", `cwal -i ${path} -o ${root.homeDir}/.config/themes`]
-        command: ["/bin/sh", "-c", `${Quickshell.shellDir}/scripts/refresh-colors.sh ${path} ${Config.appearence.dynamicWallpaper && "tmp"}`]
+    // Loader {
+    //     id: qmlcolors
+    //     source: "file://" + Quickshell.env("HOME") + "/.config/themes/colors-quickshell.qml"
+    // }
+
+    // property var colors: {
+    //     console.log(qmlcolors.item.wallpaper);
+    //     var clrs = colorsFile.text().trim().split("\n");
+    //     return {
+    //         // primary: clrs[13]
+    //         // primary: clrs[4]
+    //         primary: clrs[11]
+    //     };
+    // }
+
+    // FileView {
+    //     id: colorsFile
+    //     path: `${Quickshell.env("HOME")}/.config/themes/colors`
+    //     blockLoading: true
+    //     watchChanges: true
+    //     onFileChanged: reload()
+    // }
+
+    function set(path, wallpaper = true, tmp = false): void {
+        Quickshell.execDetached(["/bin/sh", "-c", `${Quickshell.shellDir}/scripts/set-wallpaper-colors.sh -i ${path} -m dark${Config.appearence.dynamicColors !== "none" && " -c"}${wallpaper && "-w"}${tmp && "-t"}`]);
     }
 }

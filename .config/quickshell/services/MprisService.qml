@@ -37,10 +37,7 @@ Singleton {
     onPlayerChanged: {
         if (player !== undefined) {
             lastPlayerIndex = players.indexOf(player);
-            if (Config.appearence.dynamicWallpaper)
-                WallpaperService.setWallpaper(root.player.source.trackArtUrl.split("file://")[1], false);
-            if (Config.appearence.dynamicColors === "auto" || Config.appearence.dynamicColors === "media")
-                ThemeService.refreshColors(root.player.source.trackArtUrl.split("file://")[1]);
+            ThemeService.set(root.player.source.trackArtUrl.split("file://")[1], Config.appearence.dynamicWallpaper, true);
         }
     }
     // onActivePlayersChanged: {

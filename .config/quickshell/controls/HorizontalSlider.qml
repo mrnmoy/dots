@@ -8,8 +8,8 @@ Slider {
 
     property string icon: ""
     property color bgColor: "#0fffffff"
-    // property color handleColor: Config.appearence.colors.primary
-    property color handleColor: ThemeService.colors.primary
+    // property color handleColor: ThemeService.colors.primary
+    property color handleColor: ThemeService.colors.color4
 
     from: 0
     to: 100
