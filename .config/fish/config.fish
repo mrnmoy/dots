@@ -52,6 +52,7 @@ alias ytda='yt-dlp -i -x -f ba -o "%(title)s.%(ext)s" --embed-metadata --embed-t
 alias ytdv='yt-dlp --embed-metadata --embed-thumbnail -t mkv'
 alias ytdp='sh ~/dotfiles/scripts/ytdlp-segment.sh'
 alias ytdh='yt-dlp --cookies-from-browser firefox:$HOME/.zen/6t9sh81n.Default\ \(beta\)'
+alias ytdam='yt-dlp -t mp3'
 
 alias bunst='bun start'
 alias bunrd='bun run dev'

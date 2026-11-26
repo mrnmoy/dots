@@ -23,6 +23,7 @@ Rectangle {
 
     MouseArea {
         id: mouseArea
+        enabled: root.enabled
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor

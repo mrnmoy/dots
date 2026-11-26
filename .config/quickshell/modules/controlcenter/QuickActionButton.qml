@@ -32,7 +32,7 @@ Rectangle {
         Rectangle {
             Layout.fillHeight: true
             Layout.preferredWidth: height
-            color: root.active ? ThemeService.colors.color4 : "#0fffffff"
+            color: root.active ? ThemeService.colors.color3 : "#0fffffff"
             radius: 20
 
             Text {

@@ -8,7 +8,7 @@ Slider {
 
     property string icon: ""
     property color bgColor: "#0fffffff"
-    property color handleColor: ThemeService.colors.color4
+    property color handleColor: ThemeService.colors.color3
 
     from: 0
     to: 100

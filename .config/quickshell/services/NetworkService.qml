@@ -13,9 +13,15 @@ Singleton {
     readonly property NetworkDevice device: activeDevices[0]
     readonly property real downBytesSec: rxBytes
     readonly property real upBytesSec: txBytes
-    onDeviceChanged: console.log("network device changed", device.name)
     readonly property bool connected: device.connected
-    onConnectedChanged: console.log("network state changed", connected)
+    onDeviceChanged: {
+        console.log("network device changed", device.name);
+    }
+    onConnectedChanged: {
+        rxBytes = 0;
+        txBytes = 0;
+        console.log("network state changed", connected);
+    }
 
     property int rxBytes: 0
     property int txBytes: 0

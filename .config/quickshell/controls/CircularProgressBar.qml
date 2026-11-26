@@ -10,7 +10,7 @@ Item {
     property int lineWidth: 5
     property real value: 0
     property string icon: ""
-    property color primaryColor: ThemeService.colors.color4
+    property color primaryColor: ThemeService.colors.color3
     onPrimaryColorChanged: canvas.requestPaint()
 
     implicitWidth: size

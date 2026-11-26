@@ -48,7 +48,9 @@ Item {
         }
         spacing: root.gapIn
 
-        Network {}
+        Network {
+            visible: NetworkService.connected
+        }
         SystemUsage {}
         Clock {}
         IconButton {
