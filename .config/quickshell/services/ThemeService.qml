@@ -49,6 +49,6 @@ Singleton {
     // }
 
     function set(path, wallpaper = true, tmp = false): void {
-        Quickshell.execDetached(["/bin/sh", "-c", `${Quickshell.shellDir}/scripts/set-wallpaper-colors.sh -i ${path} -m dark${Config.appearence.dynamicColors !== "none" && " -c"}${wallpaper && "-w"}${tmp && "-t"}`]);
+        Quickshell.execDetached(["/bin/sh", "-c", `${Quickshell.shellDir}/scripts/set-wallpaper-colors.sh -i ${path} -m dark${wallpaper ? " -w" : ""}${Config.appearence.dynamicColors !== "none" ? " -c" : ""}${tmp ? " -t" : ""}`]);
     }
 }

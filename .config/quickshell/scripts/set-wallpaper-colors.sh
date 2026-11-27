@@ -2,7 +2,7 @@
 
 THEME_CONF="$HOME/.config/themes/colors-hyprland.conf"
 
-options=$(getopt -l "help,image:,mode:,colors,wallpaper,tmp" -o "hi:m:cw:t" -a -- "$@")
+options=$(getopt -l "help,image:,mode:,colors,wallpaper,tmp" -o "hi:m:cwt" -a -- "$@")
 eval set -- "$options"
 
 while true; do
@@ -17,20 +17,18 @@ while true; do
             echo "image: $1"
             ;;
         -m|--mode)
+            shift
             mode="$1"
             echo "theme_mode: $1"
             ;;
         -c|--colors)
             colors=1
-            echo "dynamicColors: true"
             ;;
         -w|--wallpaper)
             wallpaper=1
-            echo "dynamicWallpaper: true"
             ;;
         -t|--temporary)
             temporary=1
-            echo "temporaryWallpaper: true"
             ;;
         --)
             shift
@@ -44,18 +42,25 @@ genColors() {
 }
 
 if [[ $wallpaper ]]; then
+    echo "wallpaper: true"
     hyprctl hyprpaper wallpaper ", $image, cover"
 
     if [[ ! $colors ]]; then
-        sed -i 's/$wallpaper = .*/$wallpaper = '$image'/' $THEME_CONF 
+    echo "colors: false"
+        # sed -i 's/$wallpaper = .*/$wallpaper = '$image'/' $THEME_CONF 
+        sed -i "s#\$wallpaper = .*#\$wallpaper = $image#" $THEME_CONF
     fi
 fi
 
 if [[ $colors ]]; then 
+    echo "colors: true"
     if [[ $temporary ]]; then
+        echo "temporary: true"
         og_wal="$(sed -n '1p' $THEME_CONF | cut -d "=" -f2 | sed 's/^\s*\|\s*$//g')"
+        echo $og_wal
         genColors
-        sed -i 's/$wallpaper = .*/$wallpaper = '$og_wal'/' $THEME_CONF 
+        # sed -i 's/$wallpaper = .*/$wallpaper = '$og_wal'/' $THEME_CONF 
+        sed -i "s#\$wallpaper = .*#\$wallpaper = $og_wal#" $THEME_CONF
     else
         genColors
     fi
