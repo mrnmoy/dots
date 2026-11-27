@@ -30,10 +30,14 @@ QtObject {
     }
 
     onCurrentLyricsIndexChanged: {
-        if (lyrics.count > currentLyricsIndex + 1) {
+        if (currentLyricsIndex === 0) {
+            lyricsTimer.interval = lyrics.get(currentLyricsIndex + 1).time;
+        } else if (currentLyricsIndex < lyrics.count - 1) {
             lyricsTimer.interval = lyrics.get(currentLyricsIndex + 1).time - source.position;
-            lyricsTimer.reset();
+        } else {
+            lyricsTimer.interval = source.length - source.position;
         }
+        lyricsTimer.reset();
     }
 
     function fetchLyrics(): void {
@@ -77,20 +81,22 @@ QtObject {
         function onPostTrackChanged() {
             root.source.position = 0; // TODO: fix non-zero position after track ends
             if (root.lyricsEnabled) {
-                // if (root.source.loopState !== MprisLoopState.Track && root.lyrics.count !== 0) {
                 root.lyrics.clear();
                 root.fetchLyrics();
-                // }
             }
         }
     }
 
     property FrameAnimation lyricsTimer: FrameAnimation {
-        running: root.lyricsEnabled && root.source.isPlaying && root.lyrics.count > 0 && root.currentLyricsIndex !== root.lyrics.count - 1
+        // running: root.lyricsEnabled && root.source.isPlaying && root.lyrics.count > 0 && root.currentLyricsIndex !== root.lyrics.count - 1
+        running: root.lyricsEnabled && root.source.isPlaying && root.lyrics.count > 0
         property real interval: 0.00
         onTriggered: {
             if (elapsedTime >= interval) {
-                root.currentLyricsIndex = root.currentLyricsIndex + 1;
+                if (root.currentLyricsIndex < root.lyrics.count - 1)
+                    root.currentLyricsIndex = root.currentLyricsIndex + 1;
+                else
+                    root.currentLyricsIndex = 0;
             }
         }
     }
