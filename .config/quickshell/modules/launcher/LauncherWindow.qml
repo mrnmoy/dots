@@ -4,6 +4,7 @@ import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
 import Quickshell
+import Quickshell.Widgets
 import Quickshell.Hyprland
 import "../../config"
 import "../../controls"
@@ -331,24 +332,31 @@ PanelWindow {
                                         implicitWidth: height
                                         Layout.margins: 8
 
+                                        // Image {
+                                        //     id: appIcon
+                                        //     anchors.fill: parent
+                                        //     fillMode: Image.PreserveAspectFit
+                                        //
+                                        //     property int sourceIndex: 0
+                                        //     property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
+                                        //
+                                        //     source: iconSources[sourceIndex]
+                                        //     asynchronous: true
+                                        //     onStatusChanged: {
+                                        //         if (status === Image.Error) {
+                                        //             if (sourceIndex < iconSources.length - 1)
+                                        //                 sourceIndex = sourceIndex + 1;
+                                        //             else
+                                        //                 visible = false;
+                                        //         }
+                                        //     }
+                                        // }
+
                                         Image {
                                             id: appIcon
+                                            // source: `/usr/share/pixmaps/${card.modelData.icon}`
+                                            source: "../../assets/ic_om.svg"
                                             anchors.fill: parent
-                                            fillMode: Image.PreserveAspectFit
-
-                                            property int sourceIndex: 0
-                                            property var iconSources: [`/usr/share/pixmaps/${card.modelData.icon}`, `/usr/share/icons/hicolor/scalable/apps/${card.modelData.icon}.svg`, `/usr/share/icons/hicolor/32x32/apps/${card.modelData.icon}`]
-
-                                            source: iconSources[sourceIndex]
-                                            asynchronous: true
-                                            onStatusChanged: {
-                                                if (status === Image.Error) {
-                                                    if (sourceIndex < iconSources.length - 1)
-                                                        sourceIndex = sourceIndex + 1;
-                                                    else
-                                                        visible = false;
-                                                }
-                                            }
                                         }
 
                                         Rectangle {

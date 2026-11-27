@@ -14,13 +14,15 @@ Singleton {
     readonly property real downBytesSec: rxBytes
     readonly property real upBytesSec: txBytes
     readonly property bool connected: device.connected
-    onDeviceChanged: {
-        console.log("network device changed", device.name);
-    }
+
     onConnectedChanged: {
-        rxBytes = 0;
-        txBytes = 0;
-        console.log("network state changed", connected);
+        if (connected) {
+            refreshTimer.restart();
+        } else {
+            _state.initialized = false;
+            rxBytes = 0;
+            txBytes = 0;
+        }
     }
 
     property int rxBytes: 0
@@ -43,6 +45,7 @@ Singleton {
     }
 
     Timer {
+        id: refreshTimer
         running: rxFile.loaded && txFile.loaded
         interval: 1000
         repeat: true
@@ -53,11 +56,8 @@ Singleton {
 
             rxFile.reload();
             txFile.reload();
-            // const rxBytes = parseInt(rxFile.text().trim() || "0", 10) || 0;
-            // const txBytes = parseInt(txFile.text().trim() || "0", 10) || 0;
             let rxBytes = parseInt(rxFile.text().trim());
             let txBytes = parseInt(txFile.text().trim());
-            // console.log("rxBytes", rxBytes, "txBytes", txBytes);
 
             if (!state.initialized) {
                 state.prevRxBytes = rxBytes;
